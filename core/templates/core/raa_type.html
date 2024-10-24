@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}{{ object.name|capfirst }} - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="float-end mt-2">
+    <button type="button" data-bs-toggle="modal" data-bs-target="#shareModal" class="btn btn-primary btn-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16"><path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"></path></svg>
+      Dela
+    </button>
+  </div>
+  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/DefinedTerm">
+    <h1 itemprop="name">{{ object.name|capfirst }}</h1>
+    <div itemprop="description"><strong>Riksantikvarieämbetets definition:</strong> {{ object.description }}</div>
+  </div>
+
+  <div class="list-group">
+    {% for record in object_list %}
+        <a class="list-group-item list-group-item-action" href="{% url 'raa_lamning' record.id %}">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ record.type }} ({{ record.label }})</h5>
+          </div>
+          {% if record.description %}
+          <p class="mb-0">
+            {% if record.description|length > 150 %}
+            {{  record.description|slice:":150" }}...
+            {% else %}
+              {{ record.description }}
+            {% endif %}
+          </p>
+          {% endif %}
+        </a>
+    {% endfor %}
+  </div>
+
+  {% if paginator.count > 0 %}
+    {% include "core/_partials/pagination-control.html" %}
+  {% else %}
+  <p>Det finns inga lämningar med denna typ för tillfället.</p>
+  {% endif %}
+
+</div>
+{% include "core/_partials/share-modal.html" %}
+{% endblock %}

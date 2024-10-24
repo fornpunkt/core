@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ flatpage.title }} - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        {% include "core/_partials/sidebar.html" %}
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="container">
+                {% if user.is_staff %}
+                <div class="float-end mt-2">
+                    <a href="{% url 'admin:flatpages_flatpage_change' flatpage.id %}" class="btn btn-primary btn-sm">Redigera</a>
+                </div>
+                {% endif %}
+
+                <h1>{{ flatpage.title }}</h1>
+                {{ flatpage.content }}
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
+
+{% block css %}
+<style>
+main h2 {
+    margin-top: 1.5rem;
+}
+</style>
+{% endblock %}

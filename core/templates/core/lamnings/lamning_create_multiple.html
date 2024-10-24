@@ -1,0 +1,360 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Registrera flera lämningar | FornPunkt{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        {% include "core/_partials/sidebar.html" %}
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <h1>Registrera flera lämningar</h1>
+            <p>Här kan du registrera flera kulturlämningar samtidigt.</p>
+
+            <p class="alert alert-info">
+                <span class="badge rounded-pill bg-danger me-1">Beta</span> Denna funktion är under utveckling. Spara ofta och ladda inte upp för många lämningar samtidigt. <a href="{% url 'feedback_create' %}" class="text-light">Dela gärna dina synpunkter med oss!</a>
+            </p>
+
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Titel</th>
+                    <th>Beskrivning</th>
+                    <th>Taggar</th>
+                    <th>Observationstyp</th>
+                    <th>Plats</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody class="align-middle" id="lamning-table"></tbody>
+            </table>
+            {% include "core/_partials/copyright-notice.html" %}
+            <div class="my-2 float-end">
+                <button class="btn btn-secondary" id="add">Lägg till</button>
+                <button class="btn btn-secondary" id="add-with-data">Lägg till liknande</button>
+                <button class="btn btn-primary" id="save">Spara</button>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<div class="modal z-1" id="mapPickerModal" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Välj plats</h5>
+            </div>
+            <div class="modal-body">
+                {% include "core/_partials/map-edit-tools.html" %}
+                <div id="map"></div>
+                <button class="btn btn-primary my-2 float-end" data-bs-dismiss="modal">Spara</button>
+            </div>
+        </div>
+    </div>
+    {% include "core/_partials/lamning-popup.html" %}
+</div>
+
+<div class="modal" id="saveAndValidateModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Spara</h5>
+            </div>
+            <div class="modal-body">
+                <div id="uploadingSpinner" class="d-none text-center">
+                    <div class="spinner-border text-success" role="status">
+                        <span class="visually-hidden">Laddar...</span>
+                    </div>
+                    <p>Uppladdning pågår, var god vänta.</p>
+                </div>
+                <div id="successIndicator" class="text-center text-success">
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="64" height="64" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                    </svg>
+                </div>
+                <button class="btn btn-secondary my-2" data-bs-dismiss="modal" id="saveModalCloseButton">Stäng</button>
+                <button class="btn btn-primary my-2 float-end" disabled id="finalSaveButton">Spara</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'ol-v7.2.2.js' %}"></script>
+<script src="{% static 'map-popup.js' %}"></script>
+<script src="{% static 'exif.min.js' %}"></script>
+<script src="{% static 'openlayers-shared.js' %}"></script>
+<script src="{% static 'coordinate-parser.js' %}"></script>
+<script src="{% static 'ol-editing.js' %}"></script>
+
+<script>
+const lamningTable = document.querySelector('#lamning-table');
+const addBtn = document.querySelector('#add');
+const addWithDataBtn = document.querySelector('#add-with-data');
+const locationPickerModal = new bootstrap.Modal('#mapPickerModal', { backdrop: false });
+const saveBtn = document.querySelector('#save');
+const saveAndValidateModal = new bootstrap.Modal('#saveAndValidateModal', { backdrop: 'static' });
+const finalSaveButton = document.querySelector('#finalSaveButton');
+const uploadingSpinner = document.querySelector('#uploadingSpinner');
+const successIndicator = document.querySelector('#successIndicator');
+const saveModalCloseButton = document.querySelector('#saveModalCloseButton');
+var currentGeojsonTarget;
+var featuresAwaitingSaveLayer;
+
+function setupMap(e) {
+    currentGeojsonTarget = e.target;
+    if (currentGeojsonTarget.getAttribute('data-geojson') && currentGeojsonTarget.getAttribute('data-geojson').length > 0) {
+        const existing = editSource.getFormat().readFeatures(currentGeojsonTarget.getAttribute('data-geojson'));
+        editSource.addFeatures(existing);
+        view.fit(editSource.getExtent(), {padding: [10, 10, 10, 10]});
+    }
+
+    const mapButtons = document.querySelectorAll('[data-geojson]');
+    let featuresAwaitingSave = {
+        type: 'FeatureCollection',
+        features: [],
+    };
+    mapButtons.forEach(button => {
+        if (button.getAttribute('data-geojson') && button.getAttribute('data-geojson').length > 0) {
+            featuresAwaitingSave.features.push(JSON.parse(button.getAttribute('data-geojson')));
+        }
+    });
+
+    featuresAwaitingSaveLayer = new Layer('GEOJSON', null, 'Lämningar som väntar på att bli sparade.', JSON.stringify(featuresAwaitingSave));
+    featuresAwaitingSaveLayer.addToMap(map);
+
+    locationPickerModal.show();
+}
+
+function removeRow(e) {
+    e.target.closest('tr').remove();
+    // if the last row is removed, add a blank row
+    if (lamningTable.querySelectorAll('tr').length === 0) {
+        addBlankRow();
+    }
+}
+
+function addBlankRow() {
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+        <td>
+            <input type="text" class="form-control" placeholder="Titel">
+        </td>
+        <td>
+            <textarea class="form-control" placeholder="Beskrivning"></textarea>
+        </td>
+        <td>
+            <input type="text" class="form-control" placeholder="tagg 1, tagg 2">
+        </td>
+        <td>
+            <select class="form-select" aria-label="Observationstyp">
+                <option selected>Okänd</option>
+                <option value="FO">Fältobservation</option>
+                <option value="RO">Fjärrobservation</option>
+            </select>
+        </td>
+        <td>
+            <button class="btn btn-primary w-100" data-geojson="">Välj plats</button>
+        </td>
+        <td>
+            <button class="btn btn-warning text-warning-emphasis" title="Ta bort"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16"><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/></svg></button>
+        </td>
+    `;
+    let locationButton = newRow.querySelector('button.btn-primary');
+    locationButton.addEventListener('click', e => setupMap(e));
+
+    let deleteButton = newRow.querySelector('button.btn-warning');
+    deleteButton.addEventListener('click', e => removeRow(e));
+
+    lamningTable.appendChild(newRow);
+}
+
+document.querySelector('#mapPickerModal').addEventListener('hide.bs.modal', () => {
+    if (currentGeojsonTarget && currentGeojsonTarget.getAttribute('data-geojson') && currentGeojsonTarget.getAttribute('data-geojson').length > 0) {
+        currentGeojsonTarget.textContent = 'Redigera plats';
+        currentGeojsonTarget.classList.remove('btn-primary');
+        currentGeojsonTarget.classList.add('btn-secondary');
+    } else {
+        currentGeojsonTarget.textContent = 'Välj plats';
+        currentGeojsonTarget.classList.remove('btn-secondary');
+        currentGeojsonTarget.classList.add('btn-primary');
+    }
+    currentGeojsonTarget = null;
+    editSource.clear(); // clears the editing source
+    featuresAwaitingSaveLayer.removeFromMap(map);
+});
+
+addBlankRow(); // the initial row
+
+addBtn.addEventListener('click', () => {
+    addBlankRow();
+});
+
+addWithDataBtn.addEventListener('click', () => {
+    const lastRow = lamningTable.lastElementChild;
+    const newRow = lastRow.cloneNode(true);
+    lamningTable.appendChild(newRow);
+    // preserve select value
+    const select = newRow.querySelector('select');
+    select.value = lastRow.querySelector('select').value;
+
+    const locationButton = newRow.querySelector('[data-geojson]');
+    locationButton.setAttribute('data-geojson', '');
+    locationButton.textContent = 'Välj plats';
+    if (locationButton.classList.contains('btn-secondary')) {
+        locationButton.classList.remove('btn-secondary');
+        locationButton.classList.add('btn-primary');
+    }
+
+    locationButton.addEventListener('click', e => setupMap(e));
+
+    const deleteButton = newRow.querySelector('button.btn-warning');
+    deleteButton.addEventListener('click', e => removeRow(e));
+});
+
+saveBtn.addEventListener('click', () => {
+    const successMessage = document.querySelector('#saveAndValidateModal p');
+    if (successMessage) {
+        successMessage.remove();
+    }
+    const errorList = document.querySelector('#saveAndValidateModal ul');
+    if (errorList) {
+        errorList.remove();
+    }
+
+    successIndicator.classList.add('d-none');
+
+    saveAndValidateModal.show();
+
+    const rows = lamningTable.querySelectorAll('tr');
+    let hasErrors = false;
+    let errorMessages = new Set();
+    rows.forEach(row => {
+        const inputs = row.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            if (!input.value.trim().length) {
+                input.classList.add('is-invalid');
+                hasErrors = true;
+                errorMessages.add('Några fält är tomma.');
+            } else {
+                input.classList.remove('is-invalid');
+            }
+        });
+
+        const select = row.querySelector('select');
+        if (select.value === 'Okänd') {
+            select.classList.add('is-invalid');
+            hasErrors = true;
+            errorMessages.add('Någon eller några lämningar saknar observationstyp.');
+        } else {
+            select.classList.remove('is-invalid');
+        }
+
+        const locationButton = row.querySelector('[data-geojson]');
+        if (!locationButton.getAttribute('data-geojson') || locationButton.getAttribute('data-geojson').length === 0) {
+            locationButton.classList.add('btn-danger');
+            locationButton.classList.remove('btn-primary');
+            hasErrors = true;
+            errorMessages.add('Någon eller några lämningar saknar plats.');
+        } else {
+            locationButton.classList.remove('btn-danger');
+            locationButton.classList.add('btn-primary');
+        }
+    });
+
+    if (hasErrors) {
+        const errorList = document.createElement('ul'); // TODO deal with these as predefined elements, which we just show/hide
+        errorMessages.forEach(message => {
+            const li = document.createElement('li');
+            li.textContent = message;
+            errorList.appendChild(li);
+        });
+        document.querySelector('#saveAndValidateModal .modal-body').prepend(errorList);
+        finalSaveButton.disabled = true;
+    } else {
+        const successMessage = document.createElement('p'); // TODO deal with these as predefined elements which we just show/hide
+        successMessage.textContent = 'Alla fält är ifyllda. Klicka på "Spara" för att spara lämningarna, stäng inte sidan innan uppladdningen är klar.';
+        document.querySelector('#saveAndValidateModal .modal-body').prepend(successMessage);
+        finalSaveButton.disabled = false;
+    }
+});
+
+function upload() {
+    finalSaveButton.disabled = true;
+    saveModalCloseButton.disabled = true;
+
+    const rows = lamningTable.querySelectorAll('tr');
+    let fetchPromises = [];
+    rows.forEach(row => {
+        const inputs = row.querySelectorAll('input, textarea, select');
+        const title = inputs[0].value;
+        const description = inputs[1].value;
+        const tags = inputs[2].value;
+        const observationType = inputs[3].value;
+        const geojson = JSON.parse(row.querySelector('[data-geojson]').dataset.geojson);
+        const feature = {
+            type: 'Feature',
+            properties: {
+                title: title,
+                description: description,
+                tags: tags,
+                observation_type: observationType,
+            },
+            geometry: geojson.geometry,
+        };
+        const featureCollection = {
+            type: 'FeatureCollection',
+            features: [feature],
+        };
+        fetchPromises.push(fetch('{% url 'api_lamning_create' %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/geo+json',
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            body: JSON.stringify(featureCollection),
+        }));
+    });
+
+    Promise.all(fetchPromises).then(responses => {
+        responses.forEach(response => {
+            // TODO in the best of worlds we never get errors but we might want to play with failed connections
+            if (response.ok) {
+                console.log(response);
+            } else {
+                console.error(response);
+            }
+        });
+
+        lamningTable.innerHTML = '';
+        addBlankRow();
+        uploadingSpinner.classList.add('d-none');
+        successIndicator.classList.remove('d-none');
+        saveModalCloseButton.disabled = false;
+    }).catch(error => {
+        uploadingSpinner.classList.add('d-none');
+        console.error(error);
+        document.querySelector('#saveAndValidateModal .modal-body').prepend('Något gick fel.');
+        saveModalCloseButton.disabled = false;
+    });
+}
+
+finalSaveButton.addEventListener('click', () => {
+    uploadingSpinner.classList.remove('d-none');
+    upload();
+});
+</script>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'ol-v7.2.2.css' %}">
+<style>
+#map {
+    height: calc(100vh - 355px);
+}
+</style>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Registrera dig - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container pb-5">
+  <h2>Registrera dig</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+          <small>{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+        <div class="alert alert-warning mt-3">{{ error }}</div>
+        {% endfor %}
+      </p>
+    {% endfor %}
+    <button class="btn btn-primary" type="submit">Registrera</button>
+    </form>
+</div>
+{% endblock %}

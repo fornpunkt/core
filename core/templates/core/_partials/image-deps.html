@@ -1,0 +1,216 @@
+<script>
+  let lamningIdentifier = window.location.pathname.split('/').pop();
+  const fpOrKmr = (lamningIdentifier.length === 36) ? 'kmr' : 'fp';
+
+  if (fpOrKmr === 'kmr') {
+    lamningIdentifier = 'kulturarvsdata.se/raa/lamning/html/' + lamningIdentifier;
+  } else {
+    lamningIdentifier = window.location.toString().replace('https://', '').split('?')[0];
+  }
+
+  let imageLookupURL = 'https://commons.wikimedia.org/w/api.php?action=query&eulimit=50&format=json&list=exturlusage&utf8=1&eunamespace=6&origin=*&euquery=' + lamningIdentifier;
+  const imageDetailsEndpoint = 'https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&utf8=1&iiprop=mediatype%7Curl%7Cextmetadata&iiurlwidth=200&iiextmetadatalanguage=sv&iiextmetadatafilter=UsageTerms%7CLicenseUrl%7CArtist%7CObjectName&pageids='
+
+  if (fpOrKmr === 'fp') {
+    imageLookupURL += '&euprotocol=https';
+  }
+
+  const imagesContainer = document.querySelector('#images');
+
+  let images = [];
+  function renderImages(numberOfImages) {
+    for (let i = 0; i < numberOfImages; i++) {
+      document.querySelector('#moreImagesBtn').style.display = 'block';
+      if (!images[i]) {
+        document.querySelector('#moreImagesBtn').style.display = 'none';
+        break;
+      }
+
+      // we set src here as we didn't want to fetch images without them being rendered
+      const image = images[i];
+      image.firstChild.src = image.dataset.imageSrc;
+      imagesContainer.appendChild(images[i]);
+    }
+    images.splice(0, numberOfImages);
+  }
+
+  function getInnerText(string) {
+    const span = document.createElement('span');
+    span.innerHTML = string;
+    string = span.textContent || span.innerText
+    return string.trim();
+  }
+
+  function navigate(direction) {
+    const imageModalImage = document.querySelector('#imageModal img');
+    const currentImage = document.querySelector(`[data-fullres-img="${imageModalImage.src}"]`);
+
+    // check position of current image and if close to the end, fetch more images
+    const currentImageIndex = Array.from(imagesContainer.children).indexOf(currentImage);
+    if (currentImageIndex > imagesContainer.children.length - 5) {
+      renderImages(10);
+    }
+
+    let nextImage = (direction === 'left') ? currentImage.previousSibling : currentImage.nextSibling;
+
+    if (!nextImage) {
+      // pick the first or last image depending on direction
+      nextImage = (direction === 'left') ? imagesContainer.lastChild : imagesContainer.firstChild;
+    }
+
+    showImage(nextImage);
+  }
+
+  function showImage(imageElm) {
+    const imageModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('imageModal'));
+    const imageModalHeader = document.querySelector('#imageModal h5');
+    const imageModalImage = document.querySelector('#imageModal img');
+    const imageModalSourceLink = document.querySelector('#imageModal a');
+    const imageModalLicense = document.querySelector('#imageLicense');
+    const imageModalAuthor = document.querySelector('#imageAuthor');
+
+    imageModalHeader.innerText = imageElm.dataset.mHeader;
+    imageModalImage.src = imageElm.dataset.fullresImg;
+    imageModalSourceLink.href = imageElm.dataset.sourceUrl;
+    imageModalLicense.innerText = imageElm.dataset.license;
+    imageModalAuthor.innerText = imageElm.dataset.artist;
+    imageModal.show();
+  }
+
+  fetch(imageLookupURL)
+    .then(data => data.json())
+    .then(data => {
+      if (!data.query.exturlusage.length) {
+        imagesContainer.innerHTML = '';
+        imagesContainer.innerHTML = '<p class="alert alert-info" role="alert">Vi fann inga bilder men du kan hjälpa till att dokumentera denna lämning genom att ladda upp en.</p>';
+        return;
+      }
+
+      const imageModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('imageModal'));
+      const imageModalHeader = document.querySelector('#imageModal h5');
+      const imageModalImage = document.querySelector('#imageModal img');
+      const imageModalSourceLink = document.querySelector('#imageModal a');
+      const imageModalLicense = document.querySelector('#imageLicense');
+      const imageModalAuthor = document.querySelector('#imageAuthor');
+
+      // not removing the old image would result in it being displayed when the modal is used for another image
+      document.querySelector('#imageModal').addEventListener('hidden.bs.modal', () => {
+        imageModalHeader.innerText = 'Laddar...';
+        imageModalImage.src = '';
+      });
+
+      if (data.query.exturlusage.length > 1) {
+        const modalBtns = document.querySelectorAll('.image-modal-btn');
+        modalBtns.forEach(btn => {
+          btn.style.display = 'block';
+          btn.addEventListener('click', e => {
+            e.target.id === 'image-modal-navigation-right' ? navigate('next') : navigate('prev');
+          });
+        });
+
+        document.addEventListener('keydown', e => {
+          if (!imageModal._element.classList.contains('show')) return;
+          if (e.key === 'ArrowLeft') {
+            navigate('prev');
+          } else if (e.key === 'ArrowRight') {
+            navigate('next');
+          }
+        });
+      }
+
+      const pageids = data.query.exturlusage.map(usage => usage.pageid).join('|');
+      fetch(imageDetailsEndpoint + pageids)
+        .then(data => data.json())
+        .then(data => {
+          Object.values(data.query.pages).forEach(img => {
+            img = img.imageinfo[0];
+            let imgBtn = document.createElement('button');
+            
+            try {
+              imgBtn.dataset.mHeader = getInnerText(img.extmetadata.ObjectName.value);
+            } catch (error) {
+              imgBtn.dataset.mHeader = 'Okänd';
+            }
+
+            // #TODO this could be done in some neat responsive manner
+            // we use the thumburl instead of the raw files because some file formats like TIFF wont render in browsers
+            imgBtn.dataset.fullresImg = img.thumburl.replace('200px-', '1280px-');
+            imgBtn.dataset.sourceUrl = img.descriptionurl;
+            try {
+              imgBtn.dataset.artist = getInnerText(img.extmetadata.Artist.value);
+            } catch (error) {
+              imgBtn.dataset.artist = 'Kunde inte hämta skapare';
+            }
+            
+            try {
+              imgBtn.dataset.license = img.extmetadata.UsageTerms.value;
+            } catch (error) {
+              imgBtn.dataset.license = 'Kunde inte hämta licens';
+            }
+
+            imgBtn.classList.add(...['border-0', 'p-0']);
+
+            let imgElm = document.createElement('img');
+
+            // we set src during the actual rendering to avoid sending to many requests at once to Commons(429 errors)
+            imgElm.src = '';
+            imgBtn.dataset.imageSrc = img.thumburl;
+
+            imgElm.alt = 'Bild som avbildar kulturlämningen ' + ((fpOrKmr === 'kmr') ? imagesContainer.dataset.lid : imagesContainer.dataset.title) + '.';
+
+            imgBtn.appendChild(imgElm);
+
+            imgBtn.addEventListener('click', e => {
+              showImage(e.target.parentElement);
+            });
+            images.push(imgBtn);
+          });
+          imagesContainer.innerHTML = ''; // removes the loading spinner
+          renderImages(10);
+        });
+
+    }).catch(reason => {
+      imagesContainer.innerHTML = '<p class="alert alert-info" role="alert">Vi fann inga bilder men du kan hjälpa till att dokumentera denna lämning genom att ladda upp en.</p>';
+    });
+</script>
+<style>
+.img-grid img {
+  object-fit: cover;
+  width: 50vw;
+  height: 50vw;
+  box-sizing: border-box;
+  max-width: 150px;
+  max-height: 150px;
+}
+
+.img-grid a {
+  display: block;
+  float: left;
+}
+
+.image-modal-btn {
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 0;
+  height: 100%;
+  width: 10%;
+  position: absolute;
+  z-index: 10;
+  opacity: 0;
+}
+
+.image-modal-btn:hover, .image-modal-btn:focus, .image-modal-btn:active {
+  opacity: 1;
+}
+
+.image-modal-btn:first-child { left: 0; }
+.image-modal-btn:last-child { right: 0; }
+
+.image-modal-btn svg {
+  transform: scale(2);
+  color: #30734C;
+  background: #ffffffd6;
+  height: 20px;
+}
+</style>

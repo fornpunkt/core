@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{object.title}} - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container pb-5" itemprop="mainEntity" itemscope itemtype="https://schema.org/CreativeWork">
+  <div>
+    <div class="float-end d-print-none">
+      {% if user == object.user %}
+      <a class="btn btn-danger btn-sm mt-2" href="{% url 'delete_lamning' lamning.id %}">Radera</a>
+      <a class="btn btn-primary btn-sm mt-2" href="{% url 'update_lamning' lamning.id %}">Redigera</a>
+      {% endif %}
+      <button type="button" data-bs-toggle="modal" data-bs-target="#shareModal" class="btn btn-primary btn-sm mt-2 js">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16"><path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"></path></svg>
+        Dela
+      </button>
+    </div>
+    <h1 itemprop="name">{{ object.title }}</h1>
+
+    <div class="bg-light float-end rounded fp-infobox">
+      <div class="d-print-none clearfix js" id="map"></div>
+      <small class="d-print-none pe-1 ps-1">Öppna i <a href="https://www.google.com/maps/search/?api=1&query={{ lat }}%2C{{ lon }}" target="_blank" rel="noopener noreferrer">Google Maps</a>, <a href="https://www.openstreetmap.org/?zoom=17&mlat={{ lat }}&mlon={{ lon }}" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>.</small>
+
+      <div class="p-2">
+        <p class="m-0" itemprop="author" itemscope itemtype="https://schema.org/Person"><strong>Registrerad av:</strong> <span itemprop="name">{% include "core/_partials/rich-username.html" with user=object.user %}</span></p>
+
+        {% if object.observation_type %}
+          <p class="m-0 mt-1"><strong>Observationstyp</strong>: {{ object.get_observation_type_display }}</p>
+        {% endif %}
+    
+        {% if object.observation_type == 'RO' %}
+          <p class="m-0 mt-1"><strong>Registreringsdatum:</strong> {{ object.created_time|date:'d F Y' }} </p>
+        {% endif %}
+      </div>
+
+      <div class="text-center pb-2">
+        <a class="btn btn-primary btn-sm d-print-none js" id="maplink" itemprop="hasMap" href="{% url 'map' %}">Visa i kartvyn</a>
+      </div>
+    </div>
+
+    <div class="clearfix">
+      <div itemprop="text">{{ object.description|linebreaks }}</div>
+
+      {% if tags %}
+        <p><strong>Taggar</strong>: {% for tag in tags %}<a href="{% url 'tag' tag.slug %}" itemprop="keywords" class="badge rounded-pill bg-primary me-1">{{ tag }}</a>{% endfor %}</p>
+      {% endif %}
+    </div>
+
+    {% include "core/_partials/image-section.html" %}
+  </div>
+
+  {% include "core/_partials/comment.html" %}
+</div>
+<small class="bg-secondary text-white m-0 text-center p-2">
+  <a class="text-white" href="{% url 'lamning_jsonld' object.id %}" download="{{ object.hashid }}.jsonld">JSON-LD</a> &middot;
+  <a class="text-white" href="{% url 'lamning_geojson' object.id %}" download="{{ object.hashid }}.geojson">GeoJSON</a> &middot;
+  <a class="text-white" target="_blank" title="Kommentarsflöde" href="{% url 'lamning_comment_rss' object.id %}">RSS</a>
+</small>
+{% include "core/_partials/share-modal.html" %}
+{% include "core/_partials/image-modal.html" %}
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'ol-v7.2.2.css' %}">
+<link href="{% url 'lamning_jsonld' object.id %}" rel="alternate" type="application/ld+json" />
+<link href="{% url 'lamning_geojson' object.id %}" rel="alternate" type="application/geo+json" />
+<link rel="alternate" type="application/rss+xml" title="Kommentarsflöde" href="{% url 'lamning_comment_rss' object.id %}" />
+{% endblock %}
+
+{% block scripts %}
+<script id="features" type="application/json">{{ object.geojson|safe }}</script>
+<script src="{% static 'ol-v7.2.2.js' %}"></script>
+<script>
+const OSMLayer = new ol.layer.Tile({
+  source: new ol.source.OSM(),
+});
+
+let zoom = 17;
+let center = ol.proj.fromLonLat([parseFloat('{{ lon }}'), parseFloat('{{ lat }}')]);
+
+const geojson = JSON.parse(document.querySelector('#features').textContent);
+const vectorSource = new ol.source.Vector({
+  format: new ol.format.GeoJSON({
+    dataProjection: 'EPSG:4326',
+    featureProjection: 'EPSG:3857'
+  }),
+});
+const features = vectorSource.getFormat().readFeatures(geojson);
+vectorSource.addFeatures(features);
+
+const vectorLayer = new ol.layer.Vector({
+  source: vectorSource,
+});
+
+const view = new ol.View({
+  controls: ol.control.defaults.defaults(),
+  projection: 'EPSG:3857',
+  center: center,
+  zoom: zoom,
+});
+
+const map = new ol.Map({
+  layers: [
+    OSMLayer,
+    vectorLayer,
+  ],
+  target: 'map',
+  view: view,
+});
+
+view.fit(vectorSource.getExtent(), {padding: [10, 10, 10, 10], maxZoom: 17});
+
+document.querySelector('#maplink').href = document.querySelector('#maplink').href + '#map=17/' + view.getCenter().join('/');
+
+{% include "core/_partials/urlify.js" %}
+</script>
+{% include "core/_partials/image-deps.html" %}
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Exportera - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        {% include "core/_partials/sidebar.html" %}
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <h1>Exportera</h1>
+
+            <h2 class="mt-3">Lämningar</h2>
+            <p>Välj TSV om du vill använda informationen i ett kalkylarkprogram så som Excel. Välj GeoJSON om du vill använda informationen i ett GIS program så som QGIS. Använd JSON-LD om du vill använda informationen i ett graf-verktyg.</p>
+
+            <div class="d-grid gap-2 d-md-flex">
+                <a download="lamningar.geojson" href="{% url 'api_lamnings_export' %}?format=geojson" class="btn btn-primary">GeoJSON</a>
+                <a download="lamningar.tsv" href="{% url 'api_lamnings_export' %}?format=tsv" class="btn btn-primary">TSV</a>
+                <a download="lamningar.jsonld" href="{% url 'api_lamnings_export' %}?format=json-ld" class="btn btn-primary">JSON-LD</a>
+            </div>
+
+            <h2 class="mt-3">Kommentarer</h2>
+            <p>Kommentarer kan endast hämtas i formatet JSON-LD.</p>
+            <div class="d-grid gap-2 d-md-flex">
+                <a download="kommentarer.jsonld" href="{% url 'api_comments_export' %}" class="btn btn-primary">JSON-LD</a>
+            </div>
+
+            <h2 class="mt-3">Kontoinformation</h2>
+            <p>Kontoinformation kan endast hämtas i formatet JSON.</p>
+            <div class="d-grid gap-2 d-md-flex">
+                <a download="kontoinformation.jsonld" href="{% url 'api_accounts_export' %}" class="btn btn-primary">JSON-LD</a>
+            </div>
+
+            {% if request.user.is_superuser %}
+            <hr>
+            <h2 class="mt-3">Administratörsexport</h2>
+            <h3 class="mt-3">Exportera alla lämningar</h3>
+            <div class="d-grid gap-2 d-md-flex">
+                <a download="lamningar.geojson" href="{% url 'api_lamnings_export' %}?format=geojson&scope=all" class="btn btn-primary">GeoJSON</a>
+                <a download="lamningar.tsv" href="{% url 'api_lamnings_export' %}?format=tsv&scope=all" class="btn btn-primary">TSV</a>
+                <a download="lamningar.jsonld" href="{% url 'api_lamnings_export' %}?format=json-ld&scope=all" class="btn btn-primary">JSON-LD</a>
+            </div>
+
+            <h3 class="mt-3">Exportera alla taggar</h3>
+            <div class="d-grid gap-2 d-md-flex">
+                <a download="taggar.jsonld" href="{% url 'api_tags_export' %}?format=json-ld&scope=all" class="btn btn-primary">JSON-LD</a>
+            </div>
+
+            <h3 class="mt-3">Exportera alla kommentarer</h3>
+            <div class="d-grid gap-2 d-md-flex mb-2">
+                <a download="kommentarer.jsonld" href="{% url 'api_comments_export' %}?scope=all" class="btn btn-primary">JSON-LD</a>
+            </div>
+
+            <h3 class="mt-3">Exportera alla Wikipedia länkar (KMR)</h3>
+            <div class="d-grid gap-2 d-md-flex mb-2">
+                <a download="wikipedia.jsonld" href="{% url 'api_wikipedia_links_export' %}?scope=all" class="btn btn-primary">JSON-LD</a>
+            </div>
+
+            <h3 class="mt-3">Exportera alla annoterings länkar</h3>
+            <p>Se <a href="https://fornpunkt.se/data/fornpunkt-export-api/">Export tjänsten</a>.</p>
+            {% endif %}
+        </main>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Feedback - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    {% include "core/_partials/sidebar.html" %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <h1>Feedback</h1>
+      <small>Här kan du enkelt dela synpunkter, rapportera buggar eller fråga efter utökade användarrättigheter.</small>
+      <form method="post" action="{% url 'feedback_create' %}">
+        {% csrf_token %}
+        {% if form.errors %}
+            <div class="alert alert-info">
+                Nu så blev något fel!
+            </div>
+        {% endif %}
+
+        <div class="mb-3">
+            <label for="message" class="form-label">Meddelande:</label>
+            <textarea class="form-control" name="message" rows="7"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary float-end">Skicka</button>
+      </form>
+    </main>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Lämningar - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    {% include "core/_partials/sidebar.html" %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <h1>Lämningar</h1>
+      {% if page_obj %}
+      <ul class="list-group">
+        {% for lamning in page_obj %}
+        <li class="list-group-item">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ lamning.title }}</h5>
+            <small>{{ lamning.created_time|date:"D d M Y" }}</small>
+          </div>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="{% url 'lamning' lamning.id %}" class="btn btn-primary btn-sm">Visa</a>
+            <a href="{% url 'update_lamning' lamning.id %}" class="btn btn-primary btn-sm">Redigera</a>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="alert alert-info" role="alert">Vi fann ej några lämningar.</p>
+      {% endif %}
+      {% if page_obj %}
+        {% include "core/_partials/pagination-control.html" %}
+      {% endif %}
+    </main>
+  </div>
+</div>
+{% endblock %}

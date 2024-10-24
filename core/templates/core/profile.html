@@ -1,0 +1,291 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{% include "core/_partials/rich-username.html" with user=profile_user %} - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    {% include "core/_partials/sidebar.html" %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      {% if request.user == profile_user %}<div class="alert alert-info mt-2 d-flex justify-content-between"><span class="d-flex align-items-center"><span>Vem som kan se din profil: <i>{{ user_details.get_profile_privacy_display }}</i></span></span><a href="{% url 'settings' %}" class="btn btn-primary btn-sm">Inställningar</a></div>{% endif %}
+
+      <!--<div class="float-end d-print-none">
+        <button type="button" data-bs-toggle="modal" data-bs-target="#shareModal" class="btn btn-primary btn-sm mt-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16"><path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"></path></svg>
+          Dela
+        </button>
+      </div>-->
+
+      <div class="mt-2 mb-2 text-center">
+        <h1 class="m-0">{% if profile_user.first_name %}{{ profile_user.first_name }}{% else %}{{ profile_user.username }}{% endif %}</h1>
+        {% if user_details.user_description %}
+          <p style="max-width: 600px;" class="m-auto">{{ user_details.user_description }}</p>
+        {% endif %}
+      </div>
+      <div class="d-flex justify-content-center align-items-center mb-2">
+        <small class="me-2">Användarnamn: {{ profile_user.username }}</small>
+        {% if profile_user.is_superuser %}
+          <span class="badge bg-secondary me-1">superanvändare</span>
+        {% endif %}
+        {% if profile_user.is_staff %}
+          <span class="badge bg-secondary me-1">administratör</span>
+        {% endif %}
+        {# assume staff/superusers are also in another group #}
+        {% if profile_user.groups.all %}
+          {% for group in profile_user.groups.all %}
+            <span class="badge bg-secondary me-1">{{ group.name }}</span>
+          {% endfor %}
+          <a class="text-body-secondary d-flex" href="{% url 'user_rights' %}" title="Förklaring: användarrättigheter">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16" aria-hidden>
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+              <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="container my-3">
+        <div class="row justify-content-around text-center">
+          <div class="col-4">
+            <div class="p-3 text-bg-primary border rounded">
+              <h3 class="h4 mb-0">{{ number_of_observations }}</h3>
+              <p class="mb-0">Lämningar</p>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="p-3 text-bg-primary border rounded">
+              <h3 class="h4 mb-0">{{ number_of_comments }}</h3>
+              <p class="mb-0">Kommentarer</p>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="p-3 text-bg-primary border rounded">
+              <h3 class="h4 mb-0">0</h3>
+              <p class="mb-0">Listor</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ul class="nav nav-pills justify-content-evenly" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="aktivitet-tab" data-bs-toggle="tab" data-bs-target="#aktivitet" type="button" role="tab" aria-controls="Aktivitet" aria-selected="false">Aktivitet</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="karta-tab" data-bs-toggle="tab" data-bs-target="#karta" type="button" role="tab" aria-controls="Karta" aria-selected="false">Karta</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="statistik-tab" data-bs-toggle="tab" data-bs-target="#statistik" type="button" role="tab" aria-controls="Statistik" aria-selected="false">Statistik</button>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="aktivitet" role="tabpanel" aria-labelledby="aktivitet-tab">
+          <div class="container mt-2">
+            <h2>Senaste aktiviteten</h2>
+            <div class="list-group mb-2">
+            {% for activity in activities %}
+              {% if activity.title %}
+              <a href="{% url 'lamning' activity.id %}" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                  <small>{{ activity.created_time|date:"D d M Y" }}</small><span class="badge rounded-pill bg-primary ms-1">Observation</span>
+                </div>
+                <p class="mb-0"><strong>{{ activity.title }}</strong> &middot; {% if activity.description|length > 150 %}{{ activity.description|slice:":150" }}...{% else %}{{ activity.description }}{% endif %}</p>
+              </a>
+              {% else %}
+              <a href="{% if activity.lamning %}{% url 'lamning' activity.lamning.id %}{% else %}{% url 'raa_lamning' activity.raa_lamning %}{% endif %}#kommentarer-{{ activity.hashid }}" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                  <small>{{ activity.created_time|date:"D d M Y" }}</small><span class="badge rounded-pill bg-secondary ms-1">Kommentar</span>
+                </div>
+                <p class="mb-0">{% if activity.content|length > 150 %}{{ activity.content|slice:":150" }}...{% else %}{{ activity.content }}{% endif %}</p>
+              </a>
+              {% endif %}
+            {% empty %}
+            <p>Denna användaren har inte utfört några aktiviteter än.</p>
+            {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="karta" role="tabpanel" aria-labelledby="karta-tab">
+          <div class="container mt-2">
+            {% if has_geojson %}
+              <p>De 50 senast registrerade lämningarna:</p>
+              <div id="map" class="mb-4"></div>
+            {% else %}
+            <p>Den  här användaren har inte gjort några observationer än.</p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="tab-pane fade" id="statistik" role="tabpanel" aria-labelledby="statistik-tab">
+          <div class="container mt-2">
+            <h2 class="mb-0">Observationstyper</h2>
+            {% if number_of_observations > 0 %}
+            <div>
+              <div aria-hidden="true" class="donut" style="background: conic-gradient(#30638e 0deg {{ observation_type_count.degrees.RO }}deg,#30734c {{ observation_type_count.degrees.RO }}deg calc({{ observation_type_count.degrees.RO }}deg + {{ observation_type_count.degrees.FO }}deg),#561F37 calc({{ observation_type_count.degrees.RO }}deg + {{ observation_type_count.degrees.FO }}deg) {{ observation_type_count.degrees. }}deg)">
+                <div class="hole"></div>
+              </div> 
+              <div class="d-flex mt-3">
+                <div class="segment1"></div> <div>{{ observation_type_count.RO }} Fjärrobservationer</div>
+                <div class="segment2"></div> <div>{{ observation_type_count.FO }} Fältobservationer</div>
+                <div class="segment3"></div> <div>{{ observation_type_count. }} Uppgift saknas</div>
+              </div>
+            </div>
+            {% else %}
+            <p>Denna användaren har inte gjort några observationer än.</p>
+            {% endif %}
+
+            <h2 class="mb-0 mt-2">Taggar</h2>
+            {% firstof tag_cloud_data.0.num_lamnings as highest_value %}
+            {% firstof "2.5" as max_font_size %}
+            {% for tag in tag_cloud_data %}
+              <a href="{% url 'tag' tag.slug %}" class="text-decoration-none me-1" style="color: #30638e; font-size: max(calc({{ tag.num_lamnings }} / {{ highest_value }} * {{ max_font_size }}em), .7em);" title="{{ tag.num_lamnings }}">{{ tag.name }}</a>
+            {% empty %}
+              <p>Denna användaren har ännu inte använt några taggar.</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+{% include "core/_partials/share-modal.html" %}
+{% include "core/_partials/lamning-popup.html" %}
+{% endblock %}
+
+{% block css %}
+
+{% if user_details.profile_privacy == 'PU' %}
+<link href="{% url 'user_lamnings_rss' profile_user.username %}" rel="alternate" type="application/rss+xml" title="RSS" />
+{% endif %}
+
+{% if has_geojson %}
+<link rel="stylesheet" href="{% static 'ol-v7.2.2.css' %}">
+{% endif %}
+<style>
+#map {
+  height: 500px;
+}
+
+.donut {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hole {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.segment1 { background: #30638e; }
+.segment2 { background: #30734c; }
+.segment3 { background: #561F37; }
+.segment1, .segment2, .segment3 {
+  height: 10px;
+  width: 10px;
+  border-radius: 100%;
+  margin: 6px 5px 0px 5px;
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+{% if has_geojson %}
+<script id="features" type="application/json">{{ geojson|safe }}</script>
+<script src="{% static 'map-popup.js' %}"></script>
+<script src="{% static 'ol-v7.2.2.js' %}"></script>
+<script>
+const OSMLayer = new ol.layer.Tile({
+  source: new ol.source.OSM(),
+});
+
+let zoom = 17;
+let center = ol.proj.fromLonLat([parseFloat('{{ lon }}'), parseFloat('{{ lat }}')]);
+
+const geojson = JSON.parse(document.querySelector('#features').textContent);
+const vectorSource = new ol.source.Vector({
+  format: new ol.format.GeoJSON({
+    dataProjection: 'EPSG:4326',
+    featureProjection: 'EPSG:3857'
+  }),
+});
+const features = vectorSource.getFormat().readFeatures(geojson);
+vectorSource.addFeatures(features);
+
+const fpStyles = {
+  'Point': new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 7,
+      fill: new ol.style.Fill({
+        color: 'rgba(190, 37, 185, 0.5)',
+      }),
+      stroke: new ol.style.Stroke({
+        color: '#fff',
+        width: 2,
+      }),
+    }),
+  }),
+  'LineString': new ol.style.Style({
+    stroke: new ol.style.Stroke({
+      color: 'rgba(190, 37, 185, 0.5)',
+      width: 5,
+    }),
+  }),
+  'Polygon': new ol.style.Style({
+    stroke: new ol.style.Stroke({
+      color: '#fff',
+      width: 2,
+    }),
+    fill: new ol.style.Fill({
+      color: 'rgba(190, 37, 185, 0.5)',
+    }),
+  }),
+};
+
+const vectorLayer = new ol.layer.Vector({
+  source: vectorSource,
+  style: (f => fpStyles[f.getGeometry().getType()]),
+});
+
+const view = new ol.View({
+  controls: ol.control.defaults.defaults(),
+  projection: 'EPSG:3857',
+  center: center,
+  zoom: zoom,
+});
+
+const map = new ol.Map({
+  layers: [
+    OSMLayer,
+    vectorLayer,
+  ],
+  target: 'map',
+  view: view,
+});
+
+view.fit(vectorSource.getExtent(), {padding: [10, 10, 10, 10], maxZoom: 17});
+
+map.on('singleclick', function (evt) {
+  clearPopup();
+
+  map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
+    const featureProps = feature.getProperties();
+    renderPopup(
+      featureProps.title,
+      featureProps.description,
+      featureProps.lamning_id,
+      '/lamning/' + featureProps.lamning_id
+    );
+  });
+});
+</script>
+{% endif %}
+{% endblock %}

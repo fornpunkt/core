@@ -1,0 +1,48 @@
+
+
+
+{% if lamning %}
+{% firstof lamning.hashid as identifier %}
+{% else %}
+{% firstof object.lamning_id as identifier %}
+{% endif %}
+
+<h2 id="kommentarer" class="mt-2">Kommentarer</h2>
+
+<ul class="list-group">
+  {% for comment in comments %}
+  <li id="kommentarer-{{ comment.hashid }}" class="list-group-item visual-target">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">{% include "core/_partials/rich-username.html" with user=comment.user %}</h5>
+      <small>{{ comment.created_time|date:"D d M Y" }}</small>
+    </div>
+    <p class="mb-1">{{ comment.content|linebreaks|urlize }}</p>
+  </li>
+  {% endfor %}
+</ul>
+
+{% if user.is_authenticated %}
+<form method="post" action="{% url 'create_comment' identifier %}">
+  {% csrf_token %}
+  {% if messages %}
+  <div class="alert alert-info">
+    {% for message in messages %}
+      <span>{{ message }}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <label for="comment" class="form-label">Skriv en kommentar</label>
+  <textarea name="comment" class="form-control" rows="4" type="text"></textarea>
+  {% include "core/_partials/copyright-notice.html" %}
+
+  <div class="d-grid gap-2">
+    <button type="submit" class="btn btn-primary mt-2">Kommentera</button>
+  </div>
+</form>
+{% else %}
+  {% if lamning.user and lamning.observation_type == 'RO' %}
+    <p class="alert alert-info mt-2">Detta är en fjärrobservation, kan du bekräfta den i fält eller bidra med mer information? <a class="text-white" href="{% url 'login' %}?next={{ request.path }}">Logga in</a> för att lämna en kommentar.</p>
+  {% else %}
+    <p class="alert alert-info mt-2">Har du mer information om denna kulturlämning? <a class="text-white" href="{% url 'login' %}?next={{ request.path }}">Logga in</a> för att lämna en kommentar.</p>
+  {% endif %}
+{% endif %}

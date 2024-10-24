@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Observationstyper - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    {% include "core/_partials/sidebar.html" %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <h1>Observationstyper</h1>
+      <p>{{ description }}</p>
+
+      {% for type in types %}
+        <section id="{{ type.id|cut:"https://fornpunkt.se/observationstyper#" }}" itemscope itemtype="https://schema.org/DefinedTerm">
+            <h2 itemprop="name">{{ type.label }}</h2>
+            <p>{{ type.comment }}</p>
+        </section>
+      {% endfor %}
+    </main>
+  </div>
+</div>
+{% endblock %}
+
+{% block css %}
+<link href="{% url 'observationtypes_jsonld' %}" rel="alternate" type="application/ld+json" />
+{% endblock %}

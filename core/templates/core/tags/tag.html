@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}{{ object.name|capfirst }} - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="float-end mt-2">
+    {% for group in request.user.groups.all %}
+      {% if group.name == 'redigerare' %}
+        <a href="{% url 'tag_update' object.slug %}" class="btn btn-primary btn-sm">Redigera</a>
+      {% endif %}
+    {% endfor %}
+    <button type="button" data-bs-toggle="modal" data-bs-target="#shareModal" class="btn btn-primary btn-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16"><path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"></path></svg>
+      Dela
+    </button>
+  </div>
+  <div itemprop="mainEntity" itemscope itemtype="https://schema.org/DefinedTerm">
+    <h1 itemprop="name">{{ object.name|capfirst }}</h1>
+    {% if object.wikipedia %}
+      <small><a href="{{ object.wikipedia }}" target="_blank" rel="noopener noreferrer">Wikipedia</a></small>
+    {% endif %}
+    {% if object.description %}
+      <div itemprop="description">{{ object.description|linebreaks }}</div>
+    {% endif %}
+  </div>
+
+  <div class="list-group">
+    {% for lamning in page_obj %}
+      <a href="{% url 'lamning' lamning.id %}" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ lamning.title }}</h5>
+          <small>Registrerad av {% include "core/_partials/rich-username.html" with user=lamning.user %}</small>
+        </div>
+        <p>
+          {% if lamning.description|length > 150 %}
+            {{ lamning.description|slice:":150" }}...
+          {% else %}
+            {{ lamning.description }}
+          {% endif %}
+        </p>
+      </a>
+    {% endfor %}
+  </div>
+
+  {% if paginator.count > 0 %}
+    {% include "core/_partials/pagination-control.html" %}
+  {% else %}
+  <p>Det finns inga lämningar med denna tagg för tillfället.</p>
+  {% endif %}
+
+</div>
+{% include "core/_partials/share-modal.html" %}
+{% endblock %}
+
+{% block css %}
+<link href="{% url 'tag_rss' object.slug %}" rel="alternate" type="application/rss+xml" title="RSS" />
+<link href="{% url 'tag_jsonld' object.slug %}" rel="alternate" type="application/ld+json" />
+{% endblock %}

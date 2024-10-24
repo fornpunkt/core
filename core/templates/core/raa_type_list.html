@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Lämningstyper - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    {% include "core/_partials/sidebar.html" %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <h1>Lämningstyper</h1>
+      <p>{{ description }}</p>
+      <div class="list-group mb-3">
+        {% for type in types %}
+        <a class="list-group-item list-group-item-action" href="{% url 'raa_type' type.slug %}">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ type.name|capfirst }}</h5>
+          </div>
+          {% if type.description %}
+          <p class="mb-0">
+            {% if type.description|length > 150 %}
+            {{  type.description|slice:":150" }}...
+            {% else %}
+              {{ type.description }}
+            {% endif %}
+          </p>
+          {% endif %}
+        </a>
+        {% empty %}
+        <p>Vi fann ej några lämningstyper.</p>
+        {% endfor %}
+      </div>
+    </main>
+  </div>
+</div>
+{% endblock %}

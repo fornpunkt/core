@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Redigera {{ object.name|capfirst }} - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container-fluid pb-5">
+    <div class="row">
+      {% include "core/_partials/sidebar.html" %}
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <h1>Redigera {{ object.name|capfirst }}</h1>
+        <form method="post" action="{% url 'tag_update' object.slug %}">
+          {% csrf_token %}
+          {% if form.errors %}
+              <div class="alert alert-info">
+                  Nu så blev något fel!
+              </div>
+          {% endif %}
+
+          <div class="mb-3">
+            <label for="description" class="form-label">Beskrivning:</label>
+            <textarea class="form-control" name="description" rows="7">{{ object.description }}</textarea>
+            <div id="descriptionHelpBlock" class="form-text">
+              <p>
+                Beskrivningar bör i första hand beskriva vad en tagg representerar och eventuellt dess bruk. <br>Exempel:
+                <ul>
+                  <li><code>En kolbotten är en lämning efter en Kolmila. Kolmilor användes för att producera träkol och förekommer i två typer, liggmilor och resmilor.</code></li>
+                  <li><code>Häradskartan eller Häradsekonomiska kartan är ett kartverk producerat 1859-1934. Verket beskriver främst markanvändning, vegetation, bebyggelse, kommunikationer och gränser.</code></li>
+                </ul>
+              </p>
+              <p>
+                I andra hand bör beskrivningen ge historisk kontext eller om det rör sig om en lämningstyp beskriva kännetecken och egenskaper. <br>Exempel:
+                <ul>
+                    <li><code>Liggmilor förekommer sedan medeltiden och resmilor sedan början av 1600-talet, båda typerna användes tills mitten av 1940-talet.</code></li>
+                    <li><code>Häradskartan är baserad på laga skifteskartor och till följd av dess långa produktionstid så skiftar både kvalitén och innehållet. Kartverket täcker 13 län och är fördelat över cirka 1500 kartblad. För några län som Häradskartan inte inkluderar finns det utkast/koncept till kartblad.</code></li>
+                </ul>
+              </p>
+            </div>
+          </div>
+
+          {% include "core/_partials/copyright-notice.html" %}<br>
+          <button type="submit" class="btn btn-primary">Spara</button>
+        </form>
+      </main>
+    </div>
+  </div>
+{% endblock %}

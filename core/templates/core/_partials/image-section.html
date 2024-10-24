@@ -1,0 +1,34 @@
+<div class="float-end">
+  {% if object.lamning_id %}
+    <a title="Ladda upp bilder genom Wikimedia Commons." rel="noopener noreferrer" target="_blank" class="btn btn-primary btn-sm mt-2 d-print-none" href="https://commons.wikimedia.org/w/index.php?title=Special:UploadWizard&campaign=Kulturl%C3%A4mningar&id={{ object.lamning_id }}">Ladda upp</a>
+  {% else %}
+    <a title="Ladda upp bilder genom Wikimedia Commons." rel="noopener noreferrer" target="_blank" class="btn btn-primary btn-sm mt-2 d-print-none" href="https://commons.wikimedia.org/w/index.php?title=Special:UploadWizard&campaign=FornPunkt&id={{ object.hashid }}">Ladda upp</a>
+  {% endif %}
+</div>
+<h2 class="mt-2">Bilder</h2>
+<noscript>Du behöver JavaScript aktiverat för att kunna se bilder.</noscript>
+<div
+     class="img-grid clearfix"
+     id="images"
+     {% if object.lamningsnummer %}
+       data-lid="{{ object.lamningsnummer }}"
+     {% else %}
+       data-title="{{ object.title }}"
+     {% endif %}>
+
+  <div class="spinner-border text-success js" role="status">
+    <span class="visually-hidden">Laddar...</span>
+  </div>
+
+</div>
+<div class="d-grid gap-2">
+  <button style="display: none;" id="moreImagesBtn" onclick="renderImages(10)" type="button" class="btn btn-primary mt-2 d-print-none">Visa fler bilder</button>
+</div>
+
+{% now "n" as current_month %}
+{% now "Y" as current_year %}
+{% if current_month == "9" and object.lamning_id %}
+<div class="card card-body mt-2">
+  <p class="m-0">Just nu pågår den internationella fototävlingen <a href="https://commons.wikimedia.org/wiki/Commons:Wiki_Loves_Monuments_{{ current_year }}_in_Sweden/sv" target="_blank">Wiki Loves Monuments</a>. För att delta kan du ladda upp bilder med <a href="https://commons.wikimedia.org/w/index.php?title=Special:UploadWizard&campaign=wlm-se-fornmin&id={{ object.lamning_id }}" target="_blank">denna länk.</a></p>
+</div>
+{% endif %}

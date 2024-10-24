@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{% block message_title %}{% endblock %} - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="text-center text-white position-relative error-background">
+  <h1 class="pt-5">{% block message_header %}{% endblock %}</h1>
+  <p>{% block message %}{% endblock %}</p>
+</div>
+{% endblock %}
+
+{% block css %}
+<style>
+.error-background {
+  height: 80vh;
+  background-color: #375F48D6;
+}
+
+.error-background:after {
+  content: '';
+  background-image: url("{% static '404_karta.jpg' %}");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+</style>
+{% endblock %}

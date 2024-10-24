@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block description %}FornPunkt är en medborgarforskningsplattform för att samla kunskap om forn- och kultur-lämningar i landskapet.{% endblock %}
+
+{% block content %}
+<main>
+  <div class="bg-primary" style="background: 0/cover url({% static 'fp-contours.svg' %});">
+    <div class="container-lg position-relative">
+      <div class="row py-5">
+        <div class="col-md-6 text-white my-auto py-5">
+          <p class="h3 mb-4">Upptäck historien i landskapet, <br>dokumentera din omgivning och bidra till forskning.</p>
+          <a class="btn btn-secondary" href="{% url 'signup' %}">Skapa ett konto</a>
+          <a href="{% url 'map' %}" class="btn btn-secondary">Utforska kartan</a>
+        </div>
+
+        <div class="d-none col-md-6 d-md-block">
+          <img alt="Runsten Sö 179 vid Gripsholms slott." width="400" height="400" src="{% static 'so_179.jpg' %}" class="rounded-circle img-fluid mx-auto">
+        </div>
+      </div>
+      <small class="position-absolute text-white bottom-0 end-0 m-3 d-none d-md-block">
+        <a target="blank" class="text-reset text-decoration-none" href="https://commons.wikimedia.org/wiki/File:Runsten_S%C3%B6_179_vid_Gripsholms_slott.jpg">Sö 179 CC BY-SA Arkland</a>
+        </small>
+    </div>
+  </div>
+
+  <div class="container py-5">
+    <h2 class="h3 mb-3">Utforska taggar</h2>
+    <a href="{% url 'tag' 'stensattning' %}" class="btn btn-primary mb-1">
+      Stensättning
+    </a>
+
+    <a href="{% url 'tag' 'kolbotten' %}" class="btn btn-primary mb-1">
+      Kolbotten
+    </a>
+
+    <a href="{% url 'tag' 'jarnvag' %}" class="btn btn-primary mb-1">
+      Järnväg
+    </a>
+
+    <a href="{% url 'tag' 'stenstrang' %}" class="btn btn-primary mb-1">
+      Stensträng
+    </a>
+
+    <a href="{% url 'tag_list' %}" class="btn btn-secondary mb-1">
+      Alla taggar
+    </a>
+  </div>
+
+  <div class="bg-primary py-5">
+    <div class="container-md">
+      <div class="row justify-content-center">
+        <div class="col-md-7">
+          <p class="m-0 text-white">FornPunkt är en medborgarforskningsplattform som gör det möjligt för dig bidra till insamling av kunskap i och om kulturlandskap och kulturlämningar.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-lg">
+
+    <div class="row py-5">
+      <div class="col-md-4">
+        <div class="position-relative text-center">
+          <img alt="Mur och sten vid Sala silvergruva." width="250" height="250" class="rounded-circle img-fluid mx-auto" src="{% static 'sala_silvergruva.jpg' %}">
+          <small class="attribution"><a target="blank" href="https://commons.wikimedia.org/wiki/File:Mur_och_sten_vid_Sala_silvergruva.jpg">Sala silvergruva CC BY Tulipasylvestris</a></small>
+        </div>
+        <h2 class="h3 text-center mt-2">Bidra och dokumentera</h2>
+        <p class="mb-0">Registrera lämningar i landskapet som saknas i Fornsök/Kulturmiljöregistret. Eller varför inte dela en bild?</p>
+      </div>
+
+      <div class="col-md-4">
+        <div class="position-relative text-center">
+          <img alt="Runsten Sö 179 vid Gripsholms slott." width="250" height="250" class="rounded-circle img-fluid mx-auto" src="{% static 'eskilstorp_1-1,_stenkammargrav.jpg' %}">
+          <small class="attribution"><a target="blank" href="https://commons.wikimedia.org/wiki/File:Eskilstorp_1-1,_Stenkammargrav.jpg">Eskilstorp 1:1 CC BY-SA Jorchr</a></small>
+        </div>
+        <h2 class="h3 text-center  mt-2">Diskutera och berika</h2>
+        <p class="mb-0">Berika och kommentera lämningar ifrån andra FornPunkt användare eller ifrån Fornsök.</p>
+      </div>
+
+      <div class="col-md-4">
+        <div class="text-center">
+          <img alt="Historisk karta ifrån Riksarkivet." width="250" height="250" class="rounded-circle img-fluid mx-auto" src="{% static 'historisk-karta.png' %}">
+        </div>
+        <h2 class="h3 text-center mt-2">Kraftfulla verktyg</h2>
+        <p class="mb-0">Egna georefererade kartor? GPS data? Självklart! Det och mycket mer kan du ha som stöd när du registrerar.</p>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+{% endblock %}
+
+{% block css %}
+<style>
+.attribution {
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  background-color: #35353585;
+  padding: 0.2em;
+  border-radius: 5px;
+}
+
+.attribution a, .attribution a:hover, .attribution a:focus, .attribution a:active {
+  color: #fff;
+  text-decoration: none;
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

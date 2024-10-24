@@ -1,0 +1,158 @@
+raa_id,name,slug,description
+1001,Avrättningsplats,avrattningsplats,Plats där avrättningar verkställdes från medeltid fram till 1800-talets mitt. 
+1002,Ballastplats,ballastplats,Plats där ballast (barlast) lossats och ibland även lastats.
+1003,Begravningsplats,begravningsplats,Begravningsplats från historisk tid.
+1004,Begravningsplats enstaka,begravningsplats_enstaka,Begravningsplats från historisk tid avsedd för en eller ett fåtal begravning/-ar.
+1005,Bengömma,bengomma,"Bendeposition med oftast märgkluvna ben i skyddat utrymme, vanligen i skrevor eller mellan stenar."
+1006,Bergshistorisk lämning övrig,bergshistorisk_lamning_ovrig,"Lämningar knutna till bergshantering som inte kan inlemmas under andra lämningstyper, t.ex. försvar, gråbergsvarp/skrotstenshög, handskrädningshögar, platser för vaskning, bokningsverk (krossning av malmen till lämplig storlek), skrädhus och anrikningsverk. Avser även vissa lämningar (hjulgravar, kolupplag, malmupplag) i de fall dessa inte kan knytas till specifik verksamhet (t.ex. blästplats, gruvdrift, hammare, hytta, kvarn, träindustri)."
+1007,Bildristning,bildristning,"Ristade, huggna, knackade eller slipade bilder av järnålderskaraktär eller medeltida karaktär."
+1008,Björngrav,bjorngrav,Begravningsplats för björnben.
+1009,Blästbrukslämning,blastbrukslamning,Lämning efter blästbruk (lågteknisk järnframställning).
+101,Blästplats,blastplats,Område med minst två lämningar efter järnframställning.
+102,Boplats,boplats,"Plats där verksamhet under förhistorisk tid efterlämnat föremål, råämnen för bearbetning och/eller avfall."
+1010,Boplatsgrop,boplatsgrop,Nedgrävning i marken. Det uppgrävda materialet återfinns vanligen som en vall kring gropen.
+1011,Boplatslämning övrig,boplatslamning_ovrig,Avser enstaka förhistoriska boplatslämningar som inte kan föras till andra lämningstyper.
+1145,Boplatsområde,boplatsomrade,"Område med lämningar av boplatskaraktär från förhistorisk tid, dvs. anläggningar för boende, förvaring, matberedning eller dylikt samt föremål, råämnen för bearbetning, byggmaterial och/eller avfall som lämnats kvar på marken. "
+1012,Boplatsvall,boplatsvall,Vall som helt eller delvis omger eller avgränsar en oftast försänkt yta.
+1013,Borg,borg,"Område avgränsat av olika kombinationer av murar, jordvallar, vallgravar, och/eller palissader samt innanför eller i anslutning till avgränsningarna, torn- och/eller husgrunder m.m."
+1014,Bro,bro,"Byggnadsverk som leder väg, järnväg, kanal eller vattenledning etc. över ett hinder, såsom korsande väg, järnväg, vattendrag eller ravin."
+1015,Brott/täkt,brott-takt,Fyndighet av råvara som utnyttjats för utvinning eller insamling.
+1016,Brunn/kallkälla,brunn-kallkalla,Grävt hål i marken för åtkomst till färskvatten eller ställe där grundvatten naturligt tränger fram ur jorden.
+1017,Brytningsyta,brytningsyta,Spår efter ytlig brytning av bergart eller mineral för tillverkning av redskap m.m. under förhistorisk tid.
+1018,Bytomt/gårdstomt,bytomt-gardstomt,Lämningar efter skattlagd eller mantalssatt bebyggelseenhet.
+1019,Båtlänning,batlanning,"Stenröjd uppdragningsplats för båt, på långsidorna oftast begränsad av stenrader eller stenvallar."
+1020,Dammvall,dammvall,Vall uppförd i avsikt att kunna ansamla eller magasinera vatten i en grävd damm eller naturlig sänka.
+1021,Depåfynd,depafynd,Fyndplats för ett eller flera föremål som kan antas avsiktligt ha lagts ned på platsen.
+1022,Dike/ränna,dike-ranna,Grävd ränna eller dike.
+1023,Drag,drag,"Transportsträcka på land mellan två farbara vatten, över vilken båtar har dragits eller burits förbi forsar eller andra hinder."
+1024,Fartygs-/båtlämning,fartygs-batlamning,"Farkost som förolyckats, övergivits eller sänkts."
+103,Fiskeläge,fiskelage,"Plats som utgjort bas för fiske, med lämningar efter anläggningar för båtar, fiskberedning m.m., ofta även husgrunder efter bostadshus och förråd."
+1025,Flatmarksgrav,flatmarksgrav,Förhistorisk grav utan idag synlig markering ovan jord.
+1026,Flintgruva,flintgruva,Plats för brytning av flinta under förhistorisk tid.
+1027,Flottningsanläggning,flottningsanlaggning,Lämningar och spår efter timmerflottning i vattendrag och på land.
+1029,Fornborg,fornborg,Befäst anläggning från förhistorisk tid och tidig medeltid.
+1030,Fornlämningsliknande bildning,fornlamningsliknande_bildning,Naturbildning med fornlämningsliknande utseende.
+1031,Fornlämningsliknande lämning,fornlamningsliknande_lamning,Lämning med fornlämningsliknande utseende.
+1032,Fossil åker,fossil_aker,"Varaktigt övergiven åkermark, formad genom äldre tiders brukningsmetoder."
+1033,Fyndplats,fyndplats,"Fyndplats för enstaka eller fåtal föremål/artefakter från förhistorisk tid, medeltid eller äldre historisk tid."
+1034,Fyndsamling,fyndsamling,Samling av ett eller flera föremål/artefakter från förhistorisk eller historisk tid.
+1035,Fyr,fyr,Lämning efter anordning för att vägleda sjöfarten genom att markera t.ex. inlopp och skärgårdsleder med olika ljuskällor eller andra signaler.
+1036,Fångstanläggning övrig,fangstanlaggning_ovrig,Lämning efter anläggning för fångst av djur och insamling av ägg.
+1037,Fångstgrop,fangstgrop,"Grävd fallgrop för fångst av varg, älg och ren samt, i undantagsfall, för räv och björn."
+104,Fångstgropssystem,fangstgropssystem,Område med minst fem fångstgropar där det av terrängförhållanden framgår att groparna bildar en funktionell enhet.
+1038,Fångstgård,fangstgard,"Sluten anläggning, dvs. en inhägnad gård, för fångst av vilda djur."
+1039,Fäbod,fabod,Lämning efter utmarksbebyggelse till gård eller by avsedd för säsongsvis utnyttjande av sommarbete och ibland även för odling.
+1040,Färdväg,fardvag,"Äldre stig, väg eller järnväg."
+105,Färdvägssystem,fardvagssystem,Område med minst två färdvägar med ett inbördes avstånd av högst 20 meter eller en färdväg med minst en förgrening.
+1041,Fästning/skans,fastning-skans,"System av bastioner, murar, jordvallar, vallgravar, byggnader etc., både permanent och tillfälligt besatta."
+1043,Förtöjningsanordning,fortojningsanordning,"Markfast sten eller anordning, på land eller i vatten, vid vilken båtar har förtöjts."
+1044,Förvaringsanläggning,forvaringsanlaggning,Anordning från främst historisk tid med förvaringsfunktion.
+1045,Gistgård,gistgard,Lämningar efter anordning för torkning av fisknät.
+1046,Gjuteri,gjuteri,Plats där gjutning av metall förekommit.
+1047,Glasindustri,glasindustri,Lämning efter glashytta och/eller andra spår efter glastillverkning.
+106,Gravfält,gravfalt,Område med minst fem förhistoriska gravanläggningar med ett inbördes avstånd av högst 20 meter.
+1051,Gravhägnad,gravhagnad,Avgränsande konstruktion av jord eller sten kring förhistoriska gravar.
+1052,Gravklot,gravklot,Avsiktligt formad eller utvald naturformad sten som varit centralt placerad på förhistorisk grav.
+1048,Grav markerad av sten/block,grav_markerad_av_sten-block,Förhistorisk gravanläggning markerad av en sten eller ett block.
+107,Grav- och boplatsområde,grav_och_boplatsomrade,Område med minst fem lämningar med ett inbördes avstånd av högst 20 meter vilka utgörs av förhistoriska gravar och lämningar av boplatskaraktär.
+1049,Grav - uppgift om typ saknas,grav_uppgift_om_typ_saknas,Förhistorisk gravanläggning av okänd typ.
+1053,Gravvård,gravvard,Gravmarkering från historisk tid som flyttats från ursprunglig plats och därmed förlorat sin funktion.
+1050,Grav övrig,grav_ovrig,Gravanläggning eller gravplats från förhistorisk tid eller medeltid som inte kan registreras under andra gravtyper.
+1054,Gruvhål,gruvhal,"Öppning i markytan, vilken är ett resultat av malmbrytning."
+108,Gruvområde,gruvomrade,Område med minst två lämningar med anknytning till verksamhet kring gruva.
+1055,Gränsbestämt område,gransbestamt_omrade,"Till alla fornlämningar hör ett så stort område (fornlämningsområde) på marken, sjö- eller havsbotten som behövs för att bevara fornlämningen och ge den ett tillräckligt utrymme med hänsyn till dess art och betydelse. Begränsningen för vissa fornlämningsområden har fastställts av länsstyrelse, eller, i vissa fall, genom fastighetsbildningsbeslut. Alla fornlämningsområden skyddas enligt bestämmelserna i 2 kap. 2 § KML."
+1056,Gränsmärke,gransmarke,Markering som utmärker gräns.
+1057,Hammare/smedja,hammare-smedja,Lämning efter vattendriven anläggning (hammare) för bearbetning och utsmidning av metall (till t.ex. stångjärn) samt lämning efter storskalig smidesverksamhet.
+109,Hammarområde,hammaromrade,Område med minst två lämningar med anknytning till verksamhet kring hammare.
+1058,Hamnanläggning,hamnanlaggning,"Anläggning som använts i samband med ankring och förtöjning för att t.ex. lasta eller lossa fartyg, liksom konstruktion för att skydda de förtöjda fartygen."
+110,Hamnområde,hamnomrade,Skyddat område med olika konstruktioner där fartyg och båtar har ankrat och förtöjt för t.ex. lastning och lossning och för att invänta lämplig väderlek.
+1059,Hornsamling,hornsamling,Deposition av horn.
+1060,"Husgrund, förhistorisk/medeltida",husgrund_forhistorisk-medeltida,Lämning efter förhistoriskt eller medeltida hus.
+1061,"Husgrund, historisk tid",husgrund_historisk_tid,Lämning eller ruin efter enstaka byggnad från historisk tid.
+1062,Hyttlämning,hyttlamning,Lämning efter framställning av metaller.
+112,Hytt- och hammarområde,hytt_och_hammaromrade,Område med minst två lämningar med anknytning till verksamhet kring hammare och ugn för framställning av metall ur bergmalm.
+111,Hyttområde,hyttomrade,Område med minst två lämningar med anknytning till verksamhet kring ugn för framställning av metall ur bergmalm.
+1063,Hägnad,hagnad,Anordning för att hägna in och avskilja ett område eller för att binda samman det med andra.
+113,Hägnadssystem,hagnadssystem,Område med minst två hägnader med ett inbördes avstånd av mindre än 20 meter eller en hägnad med minst en förgrening.
+114,Hällmålning,hallmalning,"Yta, på fast berg eller block, med en eller flera målade figurer eller färgfält."
+115,Hällristning,hallristning,"Yta, på fast berg eller block, med en eller flera ristade, huggna, knackade eller slipade figurer eller obestämbara figurer och linjer."
+1065,Härd,hard,Avgränsad eldplats.
+1066,Hög,hog,Förhistorisk gravanläggning med markerat välvd profil och övertorvad yta som till större delen är uppbyggd av sand eller jord.
+1067,Industri övrig,industri_ovrig,Lämning efter mindre tillverknings- och produktionsanläggning.
+1068,Järnåldersdös,jarnaldersdos,"Förhistorisk gravanläggning av mindre storlek (jfr Stenkammargrav), bestående av resta hällar eller block som bildar ett rum."
+1069,Kalkugn,kalkugn,Ugnslämning efter kalkbränning.
+1070,Kanal,kanal,Lämning efter anlagd farled.
+1071,Kanalmärke,kanalmarke,Avståndsmarkering utmed anlagd farled.
+1072,Kemisk industri,kemisk_industri,Lämning efter anläggning som använts för framställning av kemiska produkter.
+1073,Kloster,kloster,"En eller flera lämningar eller ruiner efter bl.a. klosterkyrka, bostads- eller ekonomibyggnader, dammar m.m."
+1074,Kokgrop,kokgrop,Grop med tät stenpackning av företrädesvis skörbränd sten.
+1075,Kolningsanläggning,kolningsanlaggning,Lämning efter framställning av träkol.
+1076,Kompassros/väderstreckspil,kompassros-vaderstreckspil,"Ristad figur eller lagda stenrader, som anger väderstreck."
+1077,Kraftindustri,kraftindustri,Lämning efter anläggning för omvandling av primärenergi till elektricitet.
+1078,Kvarn,kvarn,Lämning efter anläggning för malning av (främst) säd.
+1079,Kyrka/kapell,kyrka-kapell,Ruin eller grund efter kyrka eller kapell.
+1080,Kyrkstad,kyrkstad,Lämningar efter bebyggelse som använts vid regelbundet återkommande gudstjänstbesök och för handel i samband med detta.
+1081,Kåta,kata,Lämning efter traditionell samisk byggnad eller avgränsad golvyta för sådan byggnad.
+1082,Källa med tradition,kalla_med_tradition,Källa med tradition om källkult eller källa till vilken sägen eller namn är knutet.
+1083,Labyrint,labyrint,Enskiktade stenrader lagda i system utgående från en oftast korsformig grundplan.
+1084,Livsmedelsindustri,livsmedelsindustri,Lämning efter anläggning för livsmedelsförädling.
+1085,Luftfarkost,luftfarkost,"Lämning efter flygplan eller annan luftburen farkost som används för transport av människor, varor och vapen (lämningstypen tidigare benämnd Flygplan)."
+1086,Lägenhetsbebyggelse,lagenhetsbebyggelse,"Lämningar efter mindre bebyggelseenhet (jordbruksenhet), som inte skattlagts."
+116,Metallindustri/järnbruk,metallindustri-jarnbruk,Område med lämningar efter industriell anläggning för metallframställning och/eller metallförädling.
+1087,Militär anläggning övrig,militar_anlaggning_ovrig,Sentida militär anläggning som inte kan föras till andra lämningstyper.
+1088,Militär mötesplats,militar_motesplats,"Plats där den indelta armén, beväringarna och de värvade förbanden regelbundet träffades för övningar."
+1089,Minnesmärke,minnesmarke,"Minnesmärke i trä, sten eller metall eller minnesinskrift efter historisk person eller särskild händelse."
+1090,"Naturföremål/-bildning med bruk, tradition eller namn",naturforemal-bildning_med_bruk_tradition_eller_namn,"Naturföremål eller naturbildning till vilket ålderdomligt bruk, sägen, tradition, namn eller märkligt historiskt minne är knutet."
+1091,Offerkast,offerkast,"Samling av sten eller ris och kvistar som tillkommit efter hand vid platsen för en särskild händelse, t.ex. platsen för ett påstått brott eller för en olycka."
+1092,Offerplats,offerplats,Plats för offer.
+117,Område med fartygslämningar,omrade_med_fartygslamningar,Område i vatten eller på land med minst två fartygslämningar.
+118,Område med flottningsanläggningar,omrade_med_flottningsanlaggningar,Område med lämningar och spår efter timmerflottning.
+119,Område med fossil åkermark,omrade_med_fossil_akermark,Område med olika typer av åkerbrukets lämningar.
+120,Område med militära anläggningar,omrade_med_militara_anlaggningar,Område med minst två lämningar efter militär verksamhet.
+121,Område med skogsbrukslämningar,omrade_med_skogsbrukslamningar,Område med minst två lämningar efter skogsbruk.
+1093,Pappersindustri,pappersindustri,Lämning efter anläggning som använts vid pappersframställning.
+1094,Park-/trädgårdsanläggning,park-tradgardsanlaggning,Medvetet utformat område avsett för promenader och rekreation eller enskilda anläggningar som ingår i ett sådant område.
+1095,Plats med tradition,plats_med_tradition,"Plats till vilken ålderdomligt bruk, sägen, tradition, namn eller märkligt historiskt minne är knutet."
+1096,Rengärda,rengarda,"Rund, eller närmast rund, inhägnad (hage), avsedd för skiljning, mjölkning, kalvmärkning och slakt inom renskötsel."
+1097,Renvall,renvall,Yta med tydlig påverkan av renskötsel.
+1098,"Ristning, medeltid/historisk tid",ristning_medeltid-historisk_tid,"Ristningar från historisk tid, bl.a. i träd, på hus, i berghällar och på stenar."
+1099,Runristning,runristning,Runristning i sten eller annat material.
+1100,Röjningsröse,rojningsrose,"Stensamling som uppkommit genom röjning, i regel för odling men ibland även för annan verksamhet."
+1101,Röse,rose,"Förhistorisk gravanläggning med markerat välvd profil, uppbyggd av stenar utan synlig inblandning av sand eller jord."
+1102,Rösning,rosning,En eller flera uppresta eller upplagda stenar som kan ha fungerat som riktmärke eller liknande.
+1103,Samlingsplats,samlingsplats,Plats där människor har samlats för gemensamma aktiviteter.
+1104,Sjömärke,sjomarke,"Anläggning eller markering för vägledning av sjöfart, riktmärken för fiske etc."
+1105,Skåre/jaktvärn,skare-jaktvarn,Skydd som använts för att gömma sig i vid jakt på främst fågel eller säl.
+1106,Skärvstenshög,skarvstenshog,"Anhopning av skärvig och skörbränd sten, sotig jord och avfall av olika slag (keramikfragment, ben, kol etc.)."
+1107,Slagfält,slagfalt,Plats där slag utkämpats.
+1108,Slott/herresäte,slott-herresate,Lämning efter större huvudbyggnad med kringanläggningar. Avser kungliga eller (mera vanligt) frälseägda byggnader men även större karaktärsbyggnader som inte ägts av kung eller frälse.
+1109,Smideslämning,smideslamning,Lämning efter småskalig smidesverksamhet. Jfr Hammare/smedja.
+122,Smidesområde,smidesomrade,Område med minst två lämningar efter smidesverksamhet.
+123,Småindustriområde,smaindustriomrade,Område med olika lämningar efter småskalig industriell verksamhet.
+1110,Spärranordning,sparranordning,Spärr uppförd under vatten.
+1111,Stadsbefästning,stadsbefastning,"System av bastioner, murar, jordvallar och vallgravar som omger ett stadsområde."
+1112,Stadslager,stadslager,"Kulturlager i miljöer av stadskaraktär (städer, köpingar, vissa handelsplatser)."
+1113,Stadsvall/stadsmur,stadsvall-stadsmur,"En sten- och/eller jordvall, stenmur eller ett dike/vallgrav som omger ett stadsområde, handelsplats eller annan miljö av stadskaraktär."
+1114,Stalotomt,stalotomt,Byggnadslämning oftast med försänkt golvyta och med omgivande uppbyggd vall.
+1115,Stenindustri,stenindustri,Lämning efter industriell framställning av stenprodukter.
+1116,Stenkammargrav,stenkammargrav,Förhistorisk gravanläggning (megalitgrav) bestående av en gravkammare med väggar och tak av hällar eller block.
+1117,Stenkistgrav,stenkistgrav,Förhistorisk gravanläggning av oftast kantställda stenar/hällar som bildar ett rektangulärt rum av mansstorlek eller mindre.
+1118,Stenkrets/stenrad,stenkrets-stenrad,Förhistorisk gravanläggning som utgörs av en krets eller en rad av med jämna mellanrum resta/lagda häll- eller klumpformade stenar.
+1119,Stenring,stenring,Rund eller oval ring av mer eller mindre tätt lagda stenar.
+1120,Stenröjd yta,stenrojd_yta,Markyta som omformats genom att stenar avlägsnats och ytan tilljämnats.
+1121,Stensättning,stensattning,Förhistorisk gravanläggning med flack eller svagt välvd profil.
+1122,Stenugn,stenugn,"Lämning efter kallmurad ugn, anlagd utomhus, avsedd för matlagning, brödbakning eller dylikt."
+1123,Stridsvärn,stridsvarn,En mindre befästning som skall skydda soldaterna vid eldgivning.
+1124,Tegelindustri,tegelindustri,Lämning efter anläggning som använts för eller i samband med tegelbränning.
+1125,Terrassering,terrassering,Anlagd avsats i sluttande eller ojämn terräng.
+1126,Textilindustri,textilindustri,Lämning efter anläggning för textilframställning eller -bearbetning.
+1127,Tomtning,tomtning,Lämning efter byggnad i form av vallar eller murar kring golvyta i marknivå eller med försänkt golvyta.
+1129,Träindustri,traindustri,Lämning efter anläggning för förädling av trävaror.
+1130,Uppfordringsanläggning,uppfordringsanlaggning,"Lämning efter anläggning för uppforsling av malm, bergart, vatten, gråberg och personal."
+1132,Vad,vad,Passage genom vattendrag.
+1133,Vallanläggning,vallanlaggning,"Förhistorisk sten- och/eller jordvall och/eller palissad, i vissa fall kombinerad med vallgrav, som helt eller delvis avgränsar ett område."
+1134,Varv/slip,varv-slip,Lämning efter anläggning där båtar och fartyg byggts eller reparerats.
+124,Viste,viste,Område med minst två lämningar vilka är ett resultat av bosättning. Avser lämningar i norra Sverige från främst medeltid och historisk tid.
+1135,Vårdkase,vardkase,"Uppstaplad hög av timmer, ved eller ris som kunde antändas för att t.ex. varna för annalkande fiender."
+1136,Vägmärke,vagmarke,"Stenar, skyltar eller stolpar uppsatta vid allmän väg som avståndsmarkeringar eller med skriftliga uppgifter om bl.a. avstånd till en viss plats t.ex. om avståndet till närmaste gästgiveri, stad etc."
+1137,Övrigt,ovrigt,Används endast för företeelser som inte går att placera in under någon av övriga lämningstyper.

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Karta - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="is-fullscreen-map-page">
+    <h1 class="visually-hidden">Karta</h1>
+    <div class="full-height flex-shrink-0 js" id="map"></div>
+    <noscript>Du behöver ha JavaScript aktiverat för att kartan ska kunna visas.</noscript>
+    <div id="zoom-in-alert" role="alert" class="alert alert-info alert-dismissible fade show js" style="max-width: 600px;position: fixed;z-index: 999999;bottom: 1rem;right: 1rem;display: none;margin-left: 1rem;">
+        <h2 class="alert-heading h4">Utforska</h2>
+        <p>Zooma in i kartan för att upptäcka platser i FornPunkt och Kulturmiljöregistret.</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Stäng"></button>
+    </div>
+    {% include "core/_partials/lamning-popup.html" %}
+</div>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'ol-v7.2.2.css' %}">
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'ol-v7.2.2.js' %}"></script>
+<script src="{% static 'map-popup.js' %}"></script>
+<script src="{% static 'exif.min.js' %}"></script>
+<script src="{% static 'openlayers-shared.js' %}"></script>
+<script>
+    const zoomInAlertElm = document.getElementById('zoom-in-alert');
+    const bsAlert = bootstrap.Alert.getOrCreateInstance(zoomInAlertElm);
+    let zoomAlertIsDisplayed = true;
+    if (view.getZoom() < 12 && !window.localStorage.getItem('has_seen_zoom_in_promt')) {
+        zoomInAlertElm.style.display = 'block';
+        map.on('moveend', function() {
+            if (view.getZoom() >= 12 && zoomAlertIsDisplayed) {
+                bsAlert.close();
+                zoomAlertIsDisplayed = false;
+                window.localStorage.setItem('has_seen_zoom_in_promt', true);
+            }
+        });
+    }
+
+    zoomInAlertElm.addEventListener('closed.bs.alert', function() {
+        window.localStorage.setItem('has_seen_zoom_in_promt', true);
+    });
+</script>
+{% endblock %}

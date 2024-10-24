@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container pb-5" itemprop="mainEntity" itemscope itemtype="https://schema.org/CreativeWork">
+    <div>
+        <div class="float-end d-print-none">
+          <button type="button" data-bs-toggle="modal" data-bs-target="#shareModal" class="btn btn-primary btn-sm mt-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16"><path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"></path></svg>
+            Dela
+          </button>
+        </div>
+        <h1>{{ object.lamningstyp_namn }} (<span itemprop="name">{{ object.lamningsnummer }}</span>)</h1>
+
+        <div class="bg-light float-end rounded fp-infobox">
+          <div class="d-print-none clearfix" id="map"></div>
+          <small class="d-print-none pe-1 ps-1">Öppna i: <a href="https://app.raa.se/open/fornsok/lamning/{{ object.lamning_id }}" target="_blank" rel="noopener noreferrer">Fornsök</a>, <a href="https://app.raa.se/open/arkivsok/results?lamningsnummer={{ object.lamningsnummer }}&searchtype=filter&page=0&pagesize=25" target="_blank" rel="noopener noreferrer">Arkivsök</a><span id="google-maps"></span><span id="openstreetmap"></span>{% if wikipedia %}, <a href="{{ wikipedia }}" target="_blank" rel="noopener noreferrer">Wikipedia</a>{% endif %}.</small>
+          <div class="p-2">
+            <p class="m-0"><strong>Publicerad av</strong>: {{ author }}</p>
+            {% if object.legacy and object.legacy.raa_nummer %}
+              <p class="m-0 mt-1"><strong>RAÄ nummer</strong>: {{ object.legacy.raa_nummer }}</p>
+            {% endif %}
+            {% if object.alternativnamn %}
+              <p class="m-0 mt-1"><strong>Alternativnamn</strong>: {% for namn in object.alternativnamn %}<span itemprop="alternateName">{{ namn }}</span>{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+            {% endif %}
+            {% if object.nuvarande_lage.geografisk_indelning.socken %}
+              <p class="m-0 mt-1"><strong>Geografisk plats</strong>: {{ object.nuvarande_lage.geografisk_indelning.socken.0.socken_namn }} socken, {{ object.nuvarande_lage.geografisk_indelning.landskap.0.landskap_namn }}</p>
+            {% endif %}
+          </div>
+
+          <div class="text-center pb-2">
+            <a class="btn btn-primary btn-sm d-print-none" id="maplink" itemprop="hasMap" href="{% url 'map' %}">Visa i kartvyn</a>
+          </div>
+        </div>
+
+        <div class="clearfix">
+          <div itemprop="text">{{ object.beskrivning|linebreaks }}</div>
+          <p id="invetering"></p>
+
+          {% if object.tradition %}
+          <p><strong>Tradition</strong>: {{ object.tradition }}</p>
+          {% endif %}
+          {% if object.terrang %}
+          <p><strong>Terräng</strong>: {{ object.terrang }}</p>
+          {% endif %}
+          {% if object.orientering %}
+          <p><strong>Orientering</strong>: {{ object.orientering }}</p>
+          {% endif %}
+          {% if object.antikvarisk_kommentar %}
+          <p><strong>Antikvarisk kommentar</strong>: {{ object.antikvarisk_kommentar }}</p>
+          {% endif %}
+        </div>
+
+        {% include "core/_partials/image-section.html" %}
+
+        {% if annotations %}
+        <h2 class="mt-2 mb-0">Läs mer</h2>
+        <div class="list-group list-group-flush">
+            {% for annotation in annotations %}
+            <a href="{{ annotation.target }}" id="annoteringar-{{ annotation.hashid }}" target="_blank" rel="noopener noreferrer" class="visual-target list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">{{ annotation.title }}</div>
+                {{ annotation.author_name_string }}{% if annotation.author_name_string and annotation.publisher %} &middot; {% endif %}{{ annotation.publisher }}
+              </div>
+              <span class="badge bg-primary rounded-pill">{{ annotation.target_type }}</span>
+            </a>
+            {% endfor %}
+          </div>
+        {% endif %}
+    </div>
+
+    {% include "core/_partials/comment.html" %}
+</div>
+<small class="bg-secondary text-white m-0 text-center p-2">
+  {% if wikipedia or annotations %}<a class="text-white" href="{% url 'raa_lamning_jsonld' uuid %}" download="{{ uuid }}.jsonld">JSON-LD</a> &middot;{% endif %}
+  <a class="text-white" target="_blank" title="Kommentarsflöde" href="{% url 'raa_lamning_comment_rss' uuid %}">RSS</a>
+</small>
+
+{% include "core/_partials/share-modal.html" %}
+{% include "core/_partials/image-modal.html" %}
+
+{% endblock %}
+
+{% block scripts %}
+<script id="features" type="application/json">{{ geojson|safe }}</script>
+<script src="{% static 'proj4.js' %}"></script>
+<script src="{% static 'ol-v7.2.2.js' %}"></script>
+<script>
+const sweref_geojson = JSON.parse(document.querySelector('#features').textContent);
+proj4.defs('EPSG:3006','+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs');
+ol.proj.proj4.register(proj4);
+
+const OSMLayer = new ol.layer.Tile({
+  source: new ol.source.OSM(),
+});
+
+let zoom = 17;
+const vectorSource = new ol.source.Vector({
+  format: new ol.format.GeoJSON({
+    dataProjection: 'EPSG:3006',
+    featureProjection: 'EPSG:3857'
+  }),
+});
+const features = vectorSource.getFormat().readFeatures(sweref_geojson);
+vectorSource.addFeatures(features);
+
+const vectorLayer = new ol.layer.Vector({
+  source: vectorSource,
+});
+
+const view = new ol.View({
+  controls: ol.control.defaults.defaults(),
+  projection: 'EPSG:3857',
+  zoom: zoom,
+});
+
+const map = new ol.Map({
+  layers: [
+    OSMLayer,
+    vectorLayer,
+  ],
+  target: 'map',
+  view: view,
+});
+
+view.fit(vectorSource.getExtent(), {padding: [10, 10, 10, 10], maxZoom: 17});
+
+document.querySelector('#maplink').href = document.querySelector('#maplink').href + '#map=17/' + view.getCenter().join('/');
+
+const latLon = ol.proj.transform(view.getCenter(), 'EPSG:3857', 'EPSG:4326');
+document.querySelector('#google-maps').innerHTML = `, <a href="https://www.google.com/maps/search/?api=1&query=${latLon[1]}%2C${latLon[0]}" target="_blank" rel="noopener noreferrer">Google Maps</a>`;
+document.querySelector('#openstreetmap').innerHTML = `, <a href="https://www.openstreetmap.org/?zoom=17&mlat=${latLon[1]}&mlon=${latLon[0]}" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>`;
+
+const currentId = window.location.pathname.split('/').pop();
+
+const docContainer = document.querySelector('#invetering');
+const fileEndpoint = 'https://app.raa.se/open/fornsok/api/lamning/dokument/fil/';
+fetch('https://fornpunkt.se/apis/inventeringsbok/' + currentId)
+  .then(data => data.json())
+  .then(data => {
+    docContainer.innerHTML = '';
+    if (!data.length) {
+        docContainer.innerText = 'Inga inventeringsböcker hittades.';
+        return;
+    }
+    data.forEach(book => {
+        let a = document.createElement('a');
+        a.href = fileEndpoint + book.fil.id + '/' + book.fil.namn;
+        a.innerText = book.titel;
+        a.target = '_blank';
+        a.classList.add('me-1');
+        docContainer.appendChild(a);
+    });
+  });
+
+{% include "core/_partials/urlify.js" %}
+</script>
+{% include "core/_partials/image-deps.html" %}
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'ol-v7.2.2.css' %}">
+<link rel="alternate" type="application/rss+xml" title="Kommentarsflöde" href="{% url 'raa_lamning_comment_rss' uuid %}" />
+{% endblock %}

@@ -1,0 +1,27 @@
+<div class="modal" id="imageModal" tabindex="-1">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Laddar...</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Stäng"></button>
+      </div>
+      <div class="modal-body d-flex align-items-center">
+        <button class="image-modal-btn" id="image-modal-navigation-left" title="Föregående bild" style="display: none;">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left rounded-1" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+          </svg>
+        </button>
+        <img class="mw-100 mh-100 m-auto" src="">
+        <button class="image-modal-btn" id="image-modal-navigation-right" title="Nästa bild" style="display: none;">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right rounded-1" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <span>Bild av <span id="imageAuthor"></span> (<span lang="en" id="imageLicense"></span>)</span>
+        <a class="btn btn-primary" target="_blank" href="#">Källa</a>
+      </div>
+    </div>
+  </div>
+</div>

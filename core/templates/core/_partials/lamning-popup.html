@@ -1,0 +1,178 @@
+<div class="callout" id="popup">
+  <button type="button" class="btn-close float-end" aria-label="Stäng"></button>
+  <ul class="nav nav-pills mb-3" id="popup-tab-buttons" role="tablist"></ul>
+  <div class="tab-content" id="popup-tab-content"></div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="mapContentsSidebar" data-bs-scroll="true" data-bs-backdrop="false" aria-labelledby="mapContentsSidebarLabel">
+  <div class="offcanvas-header m-3">
+    <h5 class="offcanvas-title" id="mapContentsSidebarLabel">Kartans innehåll</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Stäng"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="accordion accordion-flush" id="mapContentsAccordion">
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="header-active-layers">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#body-active-layers" aria-expanded="true" aria-controls="body-active-layers">
+            Aktiva kartlager
+          </button>
+        </h2>
+        <div id="body-active-layers" class="accordion-collapse collapse show" aria-labelledby="header-active-layers" data-bs-parent="#mapContentsAccordion">
+          <div class="accordion-body">
+            <form>
+              <ul id="supportedLayerSelector" class="list-group list-group-flush"></ul>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="header-map-services">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#body-map-services" aria-expanded="false" aria-controls="body-map-services">
+            Karttjänster (WMS, TMS, etc.)
+          </button>
+        </h2>
+        <div id="body-map-services" class="accordion-collapse collapse" aria-labelledby="header-map-services" data-bs-parent="#mapContentsAccordion">
+          <div class="accordion-body">
+            <ul class="nav nav-pills" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="wms-tab" data-bs-toggle="tab" data-bs-target="#wms" type="button" role="tab" aria-controls="WMS" aria-selected="false">WMS</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="xyz-tab" data-bs-toggle="tab" data-bs-target="#xyz" type="button" role="tab" aria-controls="XYZ" aria-selected="false">XYZ</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="wmts-tab" data-bs-toggle="tab" data-bs-target="#wmts" type="button" role="tab" aria-controls="WMTS" aria-selected="false">WMTS</button>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="wms" role="tabpanel" aria-labelledby="wms-tab">
+                <form>
+                  <div class="mb-3">
+                    <label for="wms-url" class="col-form-label">GetCapabilities URL:</label>
+                    <input type="url" placeholder="https://example.com/wms?request=GetCapabilities" class="form-control" id="wms-url">
+                  </div>
+                  <div class="mb-3">
+                    <label for="wms-layer-name" class="col-form-label">Lager</label>
+                    <input type="text" id="wms-layer-name" placeholder="namn-på-lager" class="form-control">
+                  </div>
+                  <div class="mb-3">
+                    <label for="wms-version" class="col-form-label">WMS version</label>
+                    <select class="form-select" id="wms-version">
+                      <option value="1.1.1">1.1.1</option>
+                      <option value="1.3.0">1.3.0</option>
+                    </select>
+                  </div>
+                  <div class="modal-footer">
+                    <button id="wms-use" type="button" class="btn btn-primary">Använd</button>
+                  </div>
+                </form>
+              </div>
+              <div class="tab-pane fade" id="xyz" role="tabpanel" aria-labelledby="xyz-tab">
+                <form>
+                  <div class="mb-3">
+                    <label for="xyz-name" class="col-form-label">Namn:</label>
+                    <input type="text" placeholder="Namn (Valfritt för visning)" class="form-control" id="xyz-name">
+                  </div>
+                  <div class="mb-3">
+                    <label for="xyz-url" class="col-form-label">XYZ URL-mönster:</label>
+                    <input type="url" placeholder="https://example.com/{z}/{x}/{y}.png" class="form-control" id="xyz-url">
+                  </div>
+                  <div class="alert alert-info" role="alert">
+                    För TMS-stöd kan du ersätta <code>{y}</code> med <code>{-y}</code>.
+                  </div>
+                  <div class="modal-footer">
+                    <button id="xyz-use" type="button" class="btn btn-primary">Använd</button>
+                  </div>
+                </form>
+              </div>
+              <div class="tab-content">
+                <div class="tab-pane fade" id="wmts" role="tabpanel" aria-labelledby="wmts-tab">
+                  <form>
+                    <div class="mb-3">
+                      <label for="wmts-url" class="col-form-label">GetCapabilities URL:</label>
+                      <input type="url" placeholder="https://example.com/wmts?request=GetCapabilities" class="form-control" id="wmts-url">
+                    </div>
+                    <div class="mb-3">
+                      <label for="wmts-layer-name" class="col-form-label">Lager</label>
+                      <input type="text" id="wmts-layer-name" placeholder="namn-på-lager" class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                      <button id="wmts-use" type="button" class="btn btn-primary">Använd</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="header-interactive-layers">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#body-interactive-layers" aria-expanded="true" aria-controls="body-interactive-layers">
+            Interaktiva kartlager
+          </button>
+        </h2>
+        <div id="body-interactive-layers" class="accordion-collapse collapse" aria-labelledby="header-interactive-layers" data-bs-parent="#mapContentsAccordion">
+          <div class="accordion-body">
+            <form>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="dataLayerFP" checked onchange="toggleDataLayer(event)">
+                <label class="form-check-label" for="dataLayerFP">FornPunkt</label>
+              </div>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="dataLayerKMRPoints" checked onchange="toggleDataLayer(event)">
+                <label class="form-check-label" for="dataLayerKMRPoints">Kulturmiljöregistret (punkter)</label>
+              </div>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="dataLayerKMRGeo" checked onchange="toggleDataLayer(event)">
+                <label class="form-check-label" for="dataLayerKMRGeo">Kulturmiljöregistret (geometrier)</label>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {% if user.is_authenticated %}
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="header-search-layers">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#body-search-layers" aria-expanded="false" aria-controls="body-search-layers">
+              Sök kartlager <span class="badge rounded-pill bg-danger ms-1">Beta</span>
+            </button>
+          </h2>
+          <div id="body-search-layers" class="accordion-search collapse" aria-labelledby="header-search-layers" data-bs-parent="#mapContentsAccordion">
+            <div class="accordion-body">
+              <p class="alert alert-info">
+                Denna funktion är under utveckling. <br><a href="{% url 'feedback_create' %}" class="text-light">Dela gärna dina synpunkter med oss!</a>
+              </p>
+              <div class="mb-3">
+                <label for="layerSearchInput" class="form-label">Sökfråga</label>
+                <input type="text" class="form-control" id="layerSearchInput" placeholder="Arkeologiska uppdrag, Avverkning, etc">
+              </div>
+              <ul class="list-group list-group-flush" id="layerSearchResultContainer"></ul>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="header-file-layers">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#body-file-layers" aria-expanded="false" aria-controls="body-file-layers">
+            Kartlager ifrån fil
+          </button>
+        </h2>
+        <div id="body-file-layers" class="accordion-file collapse" aria-labelledby="header-file-layers" data-bs-parent="#mapContentsAccordion">
+          <div class="accordion-body">
+            <div class="drop-zone p-2">
+              <label for="file-layer-input">Släpp en GPX, JPG, JEPG eller GEOJSON fil här, eller klicka för att välja en fil</label>
+              <input type="file" id="file-layer-input" accept=".gpx,.geojson,.jpg,.jpeg" multiple />
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

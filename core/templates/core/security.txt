@@ -1,0 +1,4 @@
+Contact: mailto:hej@fornpunkt.se
+Expires: 2025-06-01T11:00:00.000Z
+Preferred-Languages: sv,en
+Canonical: https://fornpunkt.se/.well-known/security.txt

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Inställningar - FornPunkt{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid pb-5">
+    <div class="row">
+      {% include "core/_partials/sidebar.html" %}
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <h1>Inställningar</h1>
+
+            <h2 class="mt-2">Visningsnamn</h2>
+            <p>Ditt visningsnamn visas, i tillägg till ditt användarnamn på till exempel kommentarer och lämningar du registrerat.</p>
+            <form action="" method="post" class="mb-3">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Visningsnamn" aria-label="Visningsnamn" value="{{ user.first_name }}" name="display_name">
+                    <button class="btn btn-secondary" type="submit" name="display_name_submit">Spara</button>
+                </div>
+            </form>
+
+            <h2>Användarbeskrivning</h2>
+            <p>Din användarbeskrivning visas i din profil, använd den för att berätta om dig själv.</p>
+            <form action="" method="post" class="mb-3">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input class="form-control" placeholder="Användarbeskrivning" aria-label="Användarbeskrivning" required name="user_description" maxlength="200" value="{{ user_details.user_description }}"/>
+                    <button class="btn btn-secondary" type="submit" name="user_description_submit">Spara</button>
+                </div>
+            </form>
+
+            <h2 class="mt-2">Profilsynlighet</h2>
+
+            <form action="" method="post" class="mb-3">
+                {% csrf_token %}
+                <label for="profile_privacy" class="form-label">Ändra vem som kan se din FornPunkt profil:</label>
+                <div class="input-group">
+                    <select class="form-select" name="profile_privacy">
+                        <option {% if 'PR' == user_details.profile_privacy %}selected{% endif %} value="PR">Bara du</option>
+                        <option {% if 'ME' == user_details.profile_privacy %}selected{% endif %} value="ME">Inloggade FornPunkt användare</option>
+                        <option {% if 'PU' == user_details.profile_privacy %}selected{% endif %} value="PU">Alla</option>
+                    </select>
+
+                    <button class="btn btn-secondary" name="profile_privacy_submit" type="submit">Spara</button>
+                </div>
+            </form>
+
+            <h2 class="mt-2">Lösenord</h2>
+
+            <p><a href="{% url 'password_change' %}">Ändra ditt lösenord.</a></p>
+
+            <h2 class="mt-2">Åtkomstnycklar</h2>
+            <p>Med åtkomstnycklar kan du hämta konto-relaterad informtion genom FornPunkts tekniskagränssnitt. Du kan också skriva information till FornPunkt med hjälp av åtkomstnycklar. <strong>Dela aldrig dina åtkomstnycklar med någon annan.</strong></p>
+            {% if access_tokens %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Nyckel</th>
+                        <th scope="col">Skapad</th>
+                        <th scope="col">Rättigheter</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for access_key in access_tokens %}
+                    <tr class="align-middle">
+                        <td>
+                            <div class="input-group">
+                                <input class="form-control" type="password" value="{{ access_key.token }}" readonly />
+                                <button class="btn btn-secondary clipboardButton" type="button">Kopiera</button>
+                            </div>
+                        </td>
+                        <td>{{ access_key.created_time }}</td>
+                        <td>
+                            {% if access_key.rights == 'r' %}
+                            <span class="badge rounded-pill bg-success">Läs</span>
+                            {% elif access_key.rights == 'w' %}
+                            <span class="badge rounded-pill bg-danger">Skriv</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>Du har inga åtkomstnycklar.</p>
+            {% endif %}
+        </main>
+    </div>
+  </div>
+
+{% endblock %}

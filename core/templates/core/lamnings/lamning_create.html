@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Registrera lämning - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container pb-5">
+    <form method="post" action="{% url 'create_lamning' %}">
+        {% csrf_token %}
+        <h1>Registrera lämning</h1>
+        {% if form.errors %}
+        <div class="alert alert-info" role="alert">
+                <ul class="m-0">
+                    {% for error in form.errors %}
+                        {% if error == 'description' %}
+                            <li>Fältet "beskrivning" är obligatoriskt.</li>
+                        {% elif error == 'geojson' %}
+                            <li>Lämningen måste ha en angiven geometri.</li>
+                        {% elif error == 'title' %}
+                            <li>Fältet "titel" är obligatoriskt.</li>
+                        {% else %}
+                            <li>Ett okänt fel inträffade! Testa igen om en stund.</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <div class="mb-3">
+            <label for="title" class="form-label">Titel:</label>
+            <input type="text" maxlength="150" class="form-control" name="title" required {% if form.title.value %}value="{{ form.title.value }}"{% endif %} />
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Beskrivning:</label>
+            <textarea aria-describedby="descriptionHelpBlock" class="form-control" name="description" rows="7" required>{% if form.description.value %}{{ form.description.value }}{% endif %}</textarea>
+            <div id="descriptionHelpBlock" class="form-text">
+                Tips: Du kan skapa länkar till andra lämningar genom att använda <abbr title="Riksantikvarieämbetet">RAÄ</abbr>s lämningsnummer eller FornPunkts lämningsidentifierare i din beskrivning. Exempel: <code>L1984:6664</code>, <code>FP-Ypn7ona</code>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="tags" class="form-label">Taggar:</label>
+            <input  aria-describedby="tagsHelpBlock" type="text" maxlength="300" class="form-control" name="tags" {% if form.tags.value %}value="{{ form.tags.value }}"{% endif %} />
+            <div id="tagsHelpBlock" class="form-text">
+                Lista med kommaseparerade taggar. Taggar får gärna användas för att indikera typ och källor. Exempel: <code>soldattorp, häradskartan</code>.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="observation_type" class="form-label">Observationstyp:</label>
+            <select  class="form-select" name="observation_type">
+                <option selected value>---</option>
+                <option value="FO">Fältobservation</option>
+                <option value="RO">Fjärrobservation</option>
+            </select>
+        </div>
+
+        {% include "core/_partials/map-edit-tools.html" %}
+
+        <textarea hidden="true" name="geojson" {% if form.geojson.value %}value="{{ form.geojson.value }}"{% endif %}></textarea>
+        <div id="map"></div>
+
+        <p class="alert alert-info" role="alert">Du kan <strong>ladda upp bilder</strong> när lämningen är registrerad. Har du bara en lämning att registrera görs det lättast genom att använda knappen "Registrera och visa".</p>
+
+        {% include "core/_partials/copyright-notice.html" %}
+        <div class="d-grid gap-2">
+            <button name="_addanother" type="submit" class="btn btn-primary">Registrera och fortsätt</button>
+            <button type="submit" class="btn btn-primary">Registrera och visa</button>
+        </div>
+    </form>
+</div>
+{% include "core/_partials/lamning-popup.html" %}
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'ol-v7.2.2.css' %}">
+<style>
+#map {
+    height: 600px;
+    margin-bottom: 15px;
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'ol-v7.2.2.js' %}"></script>
+<script src="{% static 'map-popup.js' %}"></script>
+<script src="{% static 'exif.min.js' %}"></script>
+<script src="{% static 'openlayers-shared.js' %}"></script>
+<script src="{% static 'coordinate-parser.js' %}"></script>
+<script src="{% static 'ol-editing.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,19 @@
+<nav class="mt-3">
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?sida={{ page_obj.previous_page_number }}{% if filter_string %}&filter={{ filter_string }}{% endif %}" aria-label="Tidigare">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% endif %}
+    <li class="page-item"><span class="page-link active" href="#">{{ page_obj.number }} av {{ page_obj.paginator.num_pages }}</span></li>
+    {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?sida={{ page_obj.next_page_number }}{% if filter_string %}&filter={{ filter_string }}{% endif %}" aria-label="Nästa">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>

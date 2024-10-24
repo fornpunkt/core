@@ -1,0 +1,68 @@
+{% extends "admin/index.html" %}
+
+
+{% block nav-sidebar %}
+{% load i18n %}
+<button class="sticky toggle-nav-sidebar" id="toggle-nav-sidebar" aria-label="{% translate 'Toggle navigation' %}"></button>
+<nav class="sticky" id="nav-sidebar">
+    <input type="search" id="nav-filter"
+         placeholder="{% translate 'Start typing to filter…' %}"
+         aria-label="{% translate 'Filter navigation items' %}">
+    <div class="module">
+        <table>
+          <caption>
+            Support
+          </caption>
+            <tr>
+                <th scope="row"><a href="https://privateemail.com/appsuite/">Email</a></th>
+            </tr>
+            <tr>
+                <th scope="row"><a href="https://github.com/Abbe98/fornpunkt/issues/new">Ny Rapport</a></th>
+            </tr>
+            <tr>
+                <th scope="row"><a href="https://www.youtube.com/channel/UC8xwAilU1c9MA_Jcr_y6W5g">YouTube</a></th>
+            </tr>
+            <tr>
+                <th scope="row"><a href="https://github.com/fornpunkt/">Github</a></th>
+            </tr>
+        </table>
+    </div>
+    <div class="module">
+        <table>
+          <caption>
+            Utveckling
+          </caption>
+            <tr>
+                <th scope="row"><a href="https://github.com/Abbe98/fornpunkt">Github</a></th>
+            </tr>
+            <tr>
+                <th scope="row"><a href="https://github.com/users/Abbe98/projects/3">Att göra</a></th>
+            </tr>
+            <tr>
+                <th scope="row"><a href="https://dash.cloudflare.com/9fb87dd5a27a9e183ea3701123de285d/fornpunkt.se">Cloudflare</a></th>
+            </tr>
+            <tr>
+                <th scope="row"><a href="https://github.com/Abbe98/fornpunkt/compare/do-deployment...main">Deploy</a></th>
+            </tr>
+            <tr>
+                <th scope="row"><a href="https://sentry.io/organizations/albin-larsson/projects/">Sentry</a></th>
+            </tr>
+            <tr>
+                <th scope="row"><a href="https://account.postmarkapp.com/servers">Postmark</a></th>
+            </tr>
+            <tr>
+                <th scope="row"><a href="https://cloud.digitalocean.com/apps/55119270-61ba-4dba-93bf-37b37f3b6c0f/logs/fornpunkt">Digitalocean (logs)</a></th>
+            </tr>
+            <tr>
+                <th scope="row"><a href="https://cloud.digitalocean.com/databases/app-0256e609-1c41-4bc9-8997-39bf3d586019">Digitalocean (database)</a></th>
+            </tr>
+            <tr>
+                <th scope="row"><a href="https://search.google.com/search-console/performance/search-analytics?resource_id=sc-domain%3Afornpunkt.se">Google Search Console</a></th>
+            </tr>
+            <tr>
+                <th scope="row"><a href="https://www.bing.com/webmasters/siteexplorer?siteUrl=https://fornpunkt.se/">Bing Webmaster Tools</a></th>
+            </tr>
+        </table>
+    </div>
+</nav>
+{% endblock %}

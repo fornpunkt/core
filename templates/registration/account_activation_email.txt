@@ -1,0 +1,11 @@
+Hej {{ user.get_username }}!
+
+Bekräfta din e-postadress hos FornPunkt.se genom att gå till länken nedan:
+
+https://{{ domain }}{% url 'activate_account' uidb64=uid token=token %}
+
+Har du inte registrerat dig hos FornPunkt.se? Då kan du ignorera denna e-post.
+
+Med vänliga hälsningar,
+
+FornPunkt-teamet

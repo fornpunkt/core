@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Taggar - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    {% include "core/_partials/sidebar.html" %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <h1>Taggar</h1>
+      <div class="list-group">
+        {% for tag in tags %}
+        <a class="list-group-item list-group-item-action" href="{% url 'tag' tag.slug %}">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ tag.name|capfirst }}</h5>
+          </div>
+          {% if tag.description %}
+          <p>
+            {% if tag.description|length > 150 %}
+            {{  tag.description|slice:":150" }}...
+            {% else %}
+              {{ tag.description }}
+            {% endif %}
+          </p>
+          {% endif %}
+        </a>
+        {% empty %}
+        <p>Vi fann ej några taggar.</p>
+        {% endfor %}
+      </div>
+      {% if page_obj %}
+        {% include "core/_partials/pagination-control.html" %}
+      {% endif %}
+    </main>
+  </div>
+</div>
+{% endblock %}

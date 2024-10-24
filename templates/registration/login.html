@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Logga in - FornPunkt{% endblock %}
+
+{% block content %}
+<main class="container pb-5">
+    <div class="m-auto">
+        {% if messages %}
+        <div class="alert alert-info mt-3">
+            {% for message in messages %}
+            <span>{{ message }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <form method="post" action="{% url 'login' %}" class="m-auto">
+            {% if form.errors %}
+                <div class="alert alert-info mt-3">
+                    <strong>Whoops!</strong> - Inloggningen misslyckades!
+                </div>
+            {% endif %}
+            {% csrf_token %}
+            <h1 class="text-center">Logga in</h1>
+            <div class="mb-3">
+                <label class="form-label" for="id_username">Användarnamn:</label>
+                <input class="form-control" type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="id_password">Lösenord:</label>
+                <input class="form-control" type="password" name="password" autocomplete="current-password" required id="id_password">
+            </div>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">Logga in</button>
+            <input type="hidden" name="next" value="{{ next }}">
+            <p class="mt-3"><a href="{% url 'signup' %}">Skapa ett nytt konto</a> <br> <a href="{% url 'password_reset' %}">Har du glömt ditt lösenord?</a></p>
+        </form>
+    </div>
+</main>
+{% endblock %}
+
+{% block css %}
+<style>
+form {
+  max-width: 330px;
+}
+
+main {
+  display: flex;
+  align-items: center;
+  height: 90vh;
+}
+</style>
+{% endblock %}
