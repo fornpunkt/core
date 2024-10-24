@@ -4,3 +4,7 @@ User-agent: SemrushBot-SA
 Disallow: /
 User-agent: Bytespider
 Disallow: /
+User-agent: dotbot
+Disallow: /
+User-agent: rogerbot
+Disallow: /
