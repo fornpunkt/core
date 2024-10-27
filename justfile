@@ -17,6 +17,6 @@ test:
   ./.venv/bin/python -Wa manage.py test
 
 # virtual environment wrapper for manage.py
-manage *COMMAND:
-  ./.venv/bin/python manage.py 
+manage *ARGS:
+  ./.venv/bin/python -Wa manage.py {{ ARGS }}
 
