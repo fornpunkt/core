@@ -20,3 +20,7 @@ test:
 manage *ARGS:
   ./.venv/bin/python -Wa manage.py {{ ARGS }}
 
+# wrapper for virtual environment pip
+pip *ARGS:
+  ./.venv/bin/pip {{ ARGS }}
+
