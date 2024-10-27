@@ -12,5 +12,5 @@ class SecurityTxtViewTest(TestCase):
         self.assertEqual(response['Content-Type'], 'text/plain')
         self.assertContains(response, 'Contact: mailto:hej@fornpunkt.se')
 
-        expires = response.content.decode('utf-8').splitlines()[1].replace('Expires: ', '')
+        expires = response.content.decode('utf-8').splitlines()[2].replace('Expires: ', '')
         self.assertGreater(datetime.datetime.strptime(expires, '%Y-%m-%dT%H:%M:%S.%fZ'), datetime.datetime.now())
