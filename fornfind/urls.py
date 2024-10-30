@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.contrib.flatpages import views
-from django.urls import include, path
+from django.urls import include, path, reverse_lazy
 from django.views.generic.base import RedirectView
 
 from fornfind.settings import ADMIN_PATH
@@ -27,6 +27,7 @@ admin.site.site_title = 'FornPunkt administration'
 urlpatterns = [
     path(ADMIN_PATH + '/', admin.site.urls),
     path('auth/', include('django.contrib.auth.urls')),
+    path('.well-known/password-change', RedirectView.as_view(url=reverse_lazy('password_change'))),
     path('', include('core.urls')),
 
     path('dok/om-fornpunkt/', views.flatpage, {'url': '/dok/om-fornpunkt/'}, name='about'),
