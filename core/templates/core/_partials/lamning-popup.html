@@ -45,6 +45,9 @@
               <li class="nav-item" role="presentation">
                 <button class="nav-link" id="wmts-tab" data-bs-toggle="tab" data-bs-target="#wmts" type="button" role="tab" aria-controls="WMTS" aria-selected="false">WMTS</button>
               </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="iiif-tab" data-bs-toggle="tab" data-bs-target="#iiif" type="button" role="tab" aria-controls="IIIF" aria-selected="false">IIIF</button>
+              </li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane fade show active" id="wms" role="tabpanel" aria-labelledby="wms-tab">
@@ -103,6 +106,24 @@
                     </div>
                   </form>
                 </div>
+              </div>
+              <div class="tab-pane fade" id="iiif" role="tabpanel" aria-labelledby="iiif-tab">
+                <form>
+                  <div class="mb-3">
+                    <label for="iiif-name" class="col-form-label">Namn:</label>
+                    <input type="text" placeholder="Namn (Valfritt för visning)" class="form-control" id="iiif-name">
+                  </div>
+                  <div class="mb-3">
+                    <label for="iiif-url" class="col-form-label">IIIF Annoterings URL:</label>
+                    <input type="url" placeholder="https://example.com/iiif/annotaitions/annotation-1.json" class="form-control" id="iiif-url">
+                  </div>
+                  <div class="alert alert-info" role="alert">
+                    Notera att det inte är URL till själva bilden eller till IIIF manifestet som behövs, utan en som pekar på en annotering.
+                  </div>
+                  <div class="modal-footer">
+                    <button id="iiif-use" type="button" class="btn btn-primary">Använd</button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
