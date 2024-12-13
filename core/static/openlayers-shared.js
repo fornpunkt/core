@@ -2,7 +2,7 @@ const layerStateChange = new CustomEvent('layerStateChange');
 
 const Layer = class {
   constructor(serviceType, serviceOptions, name, dataString) {
-    this.serviceType = serviceType; // WMS XYZ WMTS GEOJSON GPX
+    this.serviceType = serviceType; // WMS XYZ WMTS GEOJSON GPX IIIF
     this.serviceOptions = serviceOptions;
     this.name = name;
     this.canBeActivated = true;
@@ -22,6 +22,11 @@ const Layer = class {
     } else if (serviceType === 'XYZ') {
       this.source = new ol.source.XYZ(serviceOptions);
       this.layer = new ol.layer.Tile({ source: this.source });
+    } else if (serviceType === 'IIIF') {
+      const warpedMapLayer = new ol.WarpedMapLayer();
+      warpedMapLayer.addGeoreferenceAnnotationByUrl(serviceOptions.url);
+      this.source = undefined;
+      this.layer = warpedMapLayer;
     } else if (serviceType === 'WMTS') {
       this.canBeActivated = false;
       this.source = undefined;
@@ -808,10 +813,31 @@ document.querySelector('#wms-use').addEventListener('click', () => {
 });
 
 document.querySelector('#xyz-use').addEventListener('click', e => {
-  const xyzURLInput = document.querySelector('#xyz-url'); // this split appears to be needed but breaks some links
+  const xyzURLInput = document.querySelector('#xyz-url'); // this split appears to be needed but breaks some links TODO: there is no split here?
   const xyzNameInput = document.querySelector('#xyz-name');
   const layer = new Layer(
     'XYZ',
+    {
+      url: xyzURLInput.value.split('?')[0],
+    },
+    xyzNameInput.value,
+  );
+
+  builtInBaseLayers.unshift(layer);
+  layer.addToMap(map);
+
+  xyzURLInput.value = '';
+  xyzNameInput.value = '';
+
+  refreshBaseLayerSelector();
+  showToast('Lager tillagt under "Aktiva lager".', 'secondary');
+});
+
+document.querySelector('#iiif-use').addEventListener('click', e => {
+  const xyzURLInput = document.querySelector('#iiif-url');
+  const xyzNameInput = document.querySelector('#iiif-name');
+  const layer = new Layer(
+    'IIIF',
     {
       url: xyzURLInput.value.split('?')[0],
     },
