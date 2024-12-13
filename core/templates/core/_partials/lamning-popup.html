@@ -156,15 +156,15 @@
         </div>
       </div>
 
-      {% if user.is_authenticated %}
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="header-search-layers">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#body-search-layers" aria-expanded="false" aria-controls="body-search-layers">
-              Sök kartlager <span class="badge rounded-pill bg-danger ms-1">Beta</span>
-            </button>
-          </h2>
-          <div id="body-search-layers" class="accordion-search collapse" aria-labelledby="header-search-layers" data-bs-parent="#mapContentsAccordion">
-            <div class="accordion-body">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="header-search-layers">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#body-search-layers" aria-expanded="false" aria-controls="body-search-layers">
+            Sök kartlager <span class="badge rounded-pill bg-danger ms-1">Beta</span>
+          </button>
+        </h2>
+        <div id="body-search-layers" class="accordion-search collapse" aria-labelledby="header-search-layers" data-bs-parent="#mapContentsAccordion">
+          <div class="accordion-body">
+            {% if user.is_authenticated %}
               <p class="alert alert-info">
                 Denna funktion är under utveckling. <br><a href="{% url 'feedback_create' %}" class="text-light">Dela gärna dina synpunkter med oss!</a>
               </p>
@@ -173,10 +173,14 @@
                 <input type="text" class="form-control" id="layerSearchInput" placeholder="Arkeologiska uppdrag, Avverkning, etc">
               </div>
               <ul class="list-group list-group-flush" id="layerSearchResultContainer"></ul>
-            </div>
+            {% else %}
+              <p class="alert alert-info">
+                Logga in för att söka bland hundratals kartlager.
+              </p>
+            {% endif %}
           </div>
         </div>
-      {% endif %}
+      </div>
 
       <div class="accordion-item">
         <h2 class="accordion-header" id="header-file-layers">
