@@ -8,9 +8,7 @@
       }
     },
     "display_name": "Socknar (ATA)",
-    "publisher": "Riksantikvarieämbetet",
-    "docs": null,
-    "tags": []
+    "publisher": "Riksantikvarieämbetet"
   },
   {
     "type": "wms",
@@ -21,9 +19,7 @@
       }
     },
     "display_name": "Avverkningsanmälan",
-    "publisher": "Skogsstyrelsen",
-    "docs": null,
-    "tags": []
+    "publisher": "Skogsstyrelsen"
   },
   {
     "type": "wms",
@@ -34,9 +30,7 @@
       }
     },
     "display_name": "Biotopskydd",
-    "publisher": "Skogsstyrelsen",
-    "docs": null,
-    "tags": []
+    "publisher": "Skogsstyrelsen"
   },
   {
     "type": "wms",
@@ -48,8 +42,7 @@
     },
     "display_name": "Världsarv",
     "publisher": "Riksantikvarieämbetet",
-    "docs": "https://pub.raa.se/",
-    "tags": []
+    "docs": "https://pub.raa.se/"
   },
   {
     "type": "wms",
@@ -61,8 +54,7 @@
     },
     "display_name": "Arkeologiska uppdrag: undersokningsomrade",
     "publisher": "Riksantikvarieämbetet",
-    "docs": "https://pub.raa.se/",
-    "tags": []
+    "docs": "https://pub.raa.se/"
   },
   {
     "type": "wms",
@@ -74,8 +66,7 @@
     },
     "display_name": "Arkeologiska uppdrag: grävdyta",
     "publisher": "Riksantikvarieämbetet",
-    "docs": "https://pub.raa.se/",
-    "tags": []
+    "docs": "https://pub.raa.se/"
   },
   {
     "type": "wms",
@@ -87,8 +78,7 @@
     },
     "display_name": "Byggnader (ruiner)",
     "publisher": "Riksantikvarieämbetet",
-    "docs": "https://pub.raa.se/",
-    "tags": []
+    "docs": "https://pub.raa.se/"
   },
   {
     "type": "wms",
@@ -100,8 +90,7 @@
     },
     "display_name": "Byggnader",
     "publisher": "Riksantikvarieämbetet",
-    "docs": "https://pub.raa.se/",
-    "tags": []
+    "docs": "https://pub.raa.se/"
   },
   {
     "type": "wms",
@@ -112,9 +101,7 @@
       }
     },
     "display_name": "Landskap",
-    "publisher": "Riksantikvarieämbetet",
-    "docs": null,
-    "tags": []
+    "publisher": "Riksantikvarieämbetet"
   },
   {
     "type": "wms",
@@ -125,9 +112,7 @@
       }
     },
     "display_name": "Utförd avverkning",
-    "publisher": "Skogsstyrelsen",
-    "docs": null,
-    "tags": []
+    "publisher": "Skogsstyrelsen"
   },
   {
     "type": "wms",
@@ -139,9 +124,7 @@
       }
     },
     "display_name": "Topografiskt register på Riksarkivet",
-    "publisher": "Riksarkivet",
-    "docs": null,
-    "tags": []
+    "publisher": "Riksarkivet"
   },
   {
     "type": "wms",
@@ -2609,9 +2592,7 @@
       }
     },
     "display_name": "Skog och historia: Linjer",
-    "publisher": "Skogsstyrelsen",
-    "docs": null,
-    "tags": []
+    "publisher": "Skogsstyrelsen"
   },
   {
     "type": "wms",
@@ -2622,9 +2603,7 @@
       }
     },
     "display_name": "Skog och historia: Punkter",
-    "publisher": "Skogsstyrelsen",
-    "docs": null,
-    "tags": []
+    "publisher": "Skogsstyrelsen"
   },
   {
     "type": "wms",
@@ -2635,8 +2614,6 @@
       }
     },
     "display_name": "Skog och historia: Ytor",
-    "publisher": "Skogsstyrelsen",
-    "docs": null,
-    "tags": []
+    "publisher": "Skogsstyrelsen"
   }
 ]
