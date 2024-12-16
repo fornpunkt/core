@@ -42,7 +42,7 @@
     },
     "display_name": "Världsarv",
     "publisher": "Riksantikvarieämbetet",
-    "docs": "https://pub.raa.se/"
+    "docs": "https://www.raa.se/hitta-information/oppna-data/oppna-data-portal/"
   },
   {
     "type": "wms",
@@ -54,7 +54,7 @@
     },
     "display_name": "Arkeologiska uppdrag: undersokningsomrade",
     "publisher": "Riksantikvarieämbetet",
-    "docs": "https://pub.raa.se/"
+    "docs": "https://www.raa.se/hitta-information/oppna-data/oppna-data-portal/"
   },
   {
     "type": "wms",
@@ -66,7 +66,7 @@
     },
     "display_name": "Arkeologiska uppdrag: grävdyta",
     "publisher": "Riksantikvarieämbetet",
-    "docs": "https://pub.raa.se/"
+    "docs": "https://www.raa.se/hitta-information/oppna-data/oppna-data-portal/"
   },
   {
     "type": "wms",
@@ -78,7 +78,7 @@
     },
     "display_name": "Byggnader (ruiner)",
     "publisher": "Riksantikvarieämbetet",
-    "docs": "https://pub.raa.se/"
+    "docs": "https://www.raa.se/hitta-information/oppna-data/oppna-data-portal/"
   },
   {
     "type": "wms",
@@ -90,7 +90,7 @@
     },
     "display_name": "Byggnader",
     "publisher": "Riksantikvarieämbetet",
-    "docs": "https://pub.raa.se/"
+    "docs": "https://www.raa.se/hitta-information/oppna-data/oppna-data-portal/"
   },
   {
     "type": "wms",
@@ -130,8 +130,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 10 000 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -143,8 +142,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 1000 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -156,8 +154,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 100 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -169,8 +166,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 10 100 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -182,8 +178,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 10 200 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -195,8 +190,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 10 300 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -208,8 +202,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 10 400 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -221,8 +214,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 10 500 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -234,8 +226,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 10 600 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -247,8 +238,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 10 700 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -260,8 +250,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 10 800 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -273,8 +262,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 10 900 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -286,8 +274,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 11 000 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -299,8 +286,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 11 100 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -312,8 +298,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 11 200 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -325,8 +310,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 11 300 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -338,8 +322,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 11 400 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -351,8 +334,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 11 500 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -364,8 +346,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 11 600 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -377,8 +358,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 11 700 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -390,8 +370,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 11 800 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -403,8 +382,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 11 900 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -416,8 +394,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 12 000 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -429,8 +406,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 1200 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -442,8 +418,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 12 100 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -455,8 +430,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 12 200 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -468,8 +442,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 12 300 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -481,8 +454,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 12 400 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -494,8 +466,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 12 500 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -507,8 +478,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 12 600 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -520,8 +490,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 12 700 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -533,8 +502,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 12 800 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -546,8 +514,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 12 900 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -559,8 +526,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 13 000 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -572,8 +538,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 1300 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -585,8 +550,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 13 100 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -598,8 +562,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 13 200 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -611,8 +574,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 13 300 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -624,8 +586,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 13 400 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -637,8 +598,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 13 500 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -650,8 +610,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 13 600 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -663,8 +622,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 13 700 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -676,8 +634,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 13 800 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -689,8 +646,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 13 900 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -702,8 +658,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 14 000 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -715,8 +670,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 1400 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -728,8 +682,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 14 100 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -741,8 +694,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 14 200 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -754,8 +706,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 14 300 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -767,8 +718,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 14 400 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -780,8 +730,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 14 500 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -793,8 +742,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 14 600 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -806,8 +754,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 14 700 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -819,8 +766,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 14 800 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -832,8 +778,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 14 900 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -845,8 +790,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 15 000 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -858,8 +802,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 1500 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -871,8 +814,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 15 100 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -884,8 +826,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 15 200 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -897,8 +838,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 15 300 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -910,8 +850,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 15 400 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -923,8 +862,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 15 500 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -936,8 +874,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 15 600 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -949,8 +886,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 15 700 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -962,8 +898,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 15 800 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -975,8 +910,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 15 900 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -988,8 +922,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 16 000 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1001,8 +934,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 1600 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1014,8 +946,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 16 100 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1027,8 +958,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 16 200 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1040,8 +970,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 16 300 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1053,8 +982,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 16 400 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1066,8 +994,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 16 500 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1079,8 +1006,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 16 600 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1092,8 +1018,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 16 700 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1105,8 +1030,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 16 800 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1118,8 +1042,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 16 900 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1131,8 +1054,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 17 000 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1144,8 +1066,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 1700 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1157,8 +1078,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 17 100 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1170,8 +1090,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 17 200 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1183,8 +1102,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 17 300 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1196,8 +1114,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 17 400 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1209,8 +1126,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 17 500 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1222,8 +1138,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 17 600 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1235,8 +1150,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 17 700 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1248,8 +1162,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 17 800 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1261,8 +1174,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 17 900 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1274,8 +1186,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 18 000 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1287,8 +1198,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 1800 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1300,8 +1210,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 18 100 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1313,8 +1222,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 18 200 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1326,8 +1234,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 18 300 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1339,8 +1246,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 18 400 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1352,8 +1258,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 18 500 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1365,8 +1270,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 18 600 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1378,8 +1282,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 18 700 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1391,8 +1294,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 18 800 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1404,8 +1306,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 18 900 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1417,8 +1318,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 19 000 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1430,8 +1330,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 1900 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1443,8 +1342,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 2000 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1456,8 +1354,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 200 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1469,8 +1366,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 2100 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1482,8 +1378,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 2200 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1495,8 +1390,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 2300 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1508,8 +1402,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 2400 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1521,8 +1414,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 2500 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1534,8 +1426,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 2600 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1547,8 +1438,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 2700 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1560,8 +1450,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 2800 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1573,8 +1462,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 2900 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1586,8 +1474,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 3000 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1599,8 +1486,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 300 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1612,8 +1498,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 3100 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1625,8 +1510,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 3200 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1638,8 +1522,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 3300 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1651,8 +1534,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 3400 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1664,8 +1546,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 3500 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1677,8 +1558,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 3600 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1690,8 +1570,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 3700 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1703,8 +1582,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 3800 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1716,8 +1594,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 3900 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1729,8 +1606,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 4000 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1742,8 +1618,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 400 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1755,8 +1630,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 4100 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1768,8 +1642,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 4200 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1781,8 +1654,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 4300 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1794,8 +1666,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 4400 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1807,8 +1678,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 4500 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1820,8 +1690,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 4600 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1833,8 +1702,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 4700 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1846,8 +1714,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 4800 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1859,8 +1726,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 4900 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1872,8 +1738,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 5000 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1885,8 +1750,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 500 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1898,8 +1762,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 5100 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1911,8 +1774,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 5200 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1924,8 +1786,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 5300 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1937,8 +1798,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 5400 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1950,8 +1810,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 5500 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1963,8 +1822,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 5600 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1976,8 +1834,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 5700 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -1989,8 +1846,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 5800 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2002,8 +1858,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 5900 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2015,8 +1870,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 6000 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2028,8 +1882,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 600 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2041,8 +1894,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 6100 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2054,8 +1906,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 6200 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2067,8 +1918,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 6300 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2080,8 +1930,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 6400 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2093,8 +1942,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 6500 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2106,8 +1954,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 6600 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2119,8 +1966,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 6700 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2132,8 +1978,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 6800 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2145,8 +1990,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 6900 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2158,8 +2002,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 7000 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2171,8 +2014,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 700 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2184,8 +2026,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 7100 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2197,8 +2038,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 7200 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2210,8 +2050,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 7300 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2223,8 +2062,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 7400 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2236,8 +2074,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 7500 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2249,8 +2086,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 7600 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2262,8 +2098,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 7700 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2275,8 +2110,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 7800 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2288,8 +2122,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 7900 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2301,8 +2134,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 8000 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2314,8 +2146,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 800 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2327,8 +2158,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 8100 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2340,8 +2170,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 8200 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2353,8 +2182,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 8300 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2366,8 +2194,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 8400 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2379,8 +2206,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 8500 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2392,8 +2218,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 8600 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2405,8 +2230,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 8700 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2418,8 +2242,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 8800 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2431,8 +2254,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 8900 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2444,8 +2266,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 9000 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2457,8 +2278,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 900 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2470,8 +2290,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 9100 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2483,8 +2302,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 9200 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2496,8 +2314,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 9300 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2509,8 +2326,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 9400 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2522,8 +2338,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 9500 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2535,8 +2350,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 9600 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2548,8 +2362,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 9700 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2561,8 +2374,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 9800 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
@@ -2574,8 +2386,7 @@
     "type": "wms",
     "display_name": "Strandförskjutning 9900 BP",
     "publisher": "Sveriges geologiska undersökning",
-    "docs": "https://www.sgu.se/produkter/geologiska-data/oppna-data/jordarter-oppna-data/strandforskjutningsmodell/",
-    "tags": "",
+    "docs": "https://www.sgu.se/produkter-och-tjanster/geologiska-data/jordarter--geologisk-data/strandlinjer/",
     "serviceOptions": {
       "url": "https://maps3.sgu.se/geoserver/wms?",
       "params": {
