@@ -10,3 +10,5 @@ User-agent: rogerbot
 Disallow: /
 User-agent: GoogleOther
 Disallow: /
+User-agent: AmazonBot
+Disallow: /
