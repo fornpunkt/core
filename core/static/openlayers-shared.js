@@ -207,7 +207,7 @@ function searchLayerIndex(queryString) {
 
     li.classList.add('list-group-item', 'bg-light');
     li.innerHTML = `<div>
-                      <label class="form-check-label" for="switch-layer-${layerHash}">${result.display_name}</label>
+                      <label class="form-check-label switch-control-label" for="switch-layer-${layerHash}">${result.display_name}</label>
                       <div class="form-check form-switch float-end">
                         <input class="form-check-input" type="checkbox" role="switch" id="switch-layer-${layerHash}">
                       </div>
@@ -777,7 +777,7 @@ function refreshBaseLayerSelector() {
     const active = layer.active ? 'checked' : '';
   
     const innerHTML = `<div>
-      <label class="form-check-label" for="baseLayerSwitch-${ layer.safeName }">${ layer.name }</label>
+      <label class="form-check-label switch-control-label" for="baseLayerSwitch-${ layer.safeName }">${ layer.name }</label>
       <div class="form-check form-switch float-end">
         <input data-layer-name="${ layer.name }" class="form-check-input" ${ active } type="checkbox" role="switch" id="baseLayerSwitch-${ layer.safeName }">
       </div>

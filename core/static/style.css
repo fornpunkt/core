@@ -48,6 +48,10 @@
   text-transform: uppercase;
 }
 
+.switch-control-label {
+  inline-size: 85%;
+}
+
 .btn-outline-primary {
   --bs-btn-color: var(--bs-primary);
   --bs-btn-border-color: var(--bs-primary);
