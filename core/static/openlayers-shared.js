@@ -9,11 +9,11 @@ const Layer = class {
     this.active = false;
     this.dataString = dataString;
     if (this.serviceOptions && this.serviceOptions.url) {
-      this.safeName = hashExternalLayer(this.serviceOptions.url + this.name);
+      this.safeName = hashString(this.serviceOptions.url + this.name);
     } else {
       // this is for geojson and gpx layers, we do give an error toast if the name
       // of the file which the user is trying to display is already in use
-      this.safeName = hashExternalLayer(this.name);
+      this.safeName = hashString(this.name);
     }
 
     if (serviceType === 'WMS') {
@@ -178,13 +178,22 @@ function removeLayerByName(name) {
   builtInBaseLayers.splice(index, 1);
 }
 
-function hashExternalLayer(layerString) {
+function hashString(string) {
   const safe = unsafeString => unsafeString.replace(/:|\/|\/|\.|\?|\=|\&|%|<|>|\s|\(|\)/g, '');
-  return safe(layerString);
+  return safe(string);
 }
+
+function hashLayer(layer) {
+  // some services like WMTS and WMS might have the same url but different layers
+  if (layer.serviceOptions && layer.serviceOptions.params && layer.serviceOptions.params.LAYERS) {
+    return hashString(layer.serviceOptions.url + layer.serviceOptions.params.LAYERS);
+  }
+  return hashString(layer.serviceOptions.url);
+}
+
 let layerIndexLayers = [];
 function findExternalLayer(hash) {
-  return layerIndexLayers.find(layer => hashExternalLayer(layer.serviceOptions.url + layer.serviceOptions.params.LAYERS) === hash);
+  return layerIndexLayers.find(layer => hashLayer(layer) === hash);
 }
 
 function searchLayerIndex(queryString) {
@@ -194,7 +203,7 @@ function searchLayerIndex(queryString) {
   layerSearchResultContainer.innerHTML = '';
   results.forEach(result => {
     const li = document.createElement('li');
-    const layerHash = hashExternalLayer(result.serviceOptions.url + result.serviceOptions.params.LAYERS);
+    const layerHash = hashLayer(result);
 
     li.classList.add('list-group-item', 'bg-light');
     li.innerHTML = `<div>

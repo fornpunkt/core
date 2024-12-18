@@ -2426,5 +2426,13 @@
     },
     "display_name": "Skog och historia: Ytor",
     "publisher": "Skogsstyrelsen"
+  },
+  {
+    "type": "iiif",
+    "serviceOptions": {
+      "url": "https://annotations.allmaps.org/images/2cf2d71bc517ccb0"
+    },
+    "display_name": "[Visby] - Wiblingen, Fredik Adolfs samling",
+    "publisher": "Riksarkivet"
   }
 ]
