@@ -66,7 +66,7 @@ class TaggedLamningsFeed(Feed):
         return extra_kwargs
 
     def items(self, obj):
-        return Lamning.objects.filter(tags__slug=obj.slug).filter(hidden=False).order_by('-created_time')[:30]
+        return Lamning.objects.filter(tags__slug=obj.slug).filter(hidden=False).order_by('-created_time').select_related(('user'))[:30]
 
 class UserLamningsFeed(Feed):
     '''Feed for lamnings by a given user'''

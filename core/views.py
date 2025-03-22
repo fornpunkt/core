@@ -422,7 +422,7 @@ def bbox(request):
             & Q(center_lon__gte=request.GET["west"])
             & Q(center_lat__gte=request.GET["south"])
             & Q(center_lat__lte=request.GET["north"])
-        )
+        ).select_related("user").prefetch_related("tags")
     except MultiValueDictKeyError:
         return JsonApiResponse({"error": "Minst en parameter saknas."}, status=400)
     except ValueError:
@@ -764,7 +764,7 @@ class TagView(generic.DetailView, generic.list.MultipleObjectMixin):
     allow_empty = True
 
     def get_context_data(self, **kwargs):
-        object_list = Lamning.objects.filter(hidden=False).filter(tags__slug=self.kwargs["slug"])
+        object_list = Lamning.objects.filter(hidden=False).filter(tags__slug=self.kwargs["slug"]).select_related("user")
         context = super(TagView, self).get_context_data(object_list=object_list, **kwargs)
         context["description"] = create_meta_description(self.object.description)
         context["title"] = self.object.name
