@@ -64,7 +64,7 @@ class JsonApiResponse(JsonResponse):
 
 def validate_observation_type(observation_type: str) -> bool:
     """Validates an observation type."""
-    if observation_type in ["FO", "RO"]:
+    if observation_type in ["FO", "RO", "MO"]:
         return True
 
     raise ValidationError("Otillåten observationstyp. Tillåtna värden är FO och RO.")

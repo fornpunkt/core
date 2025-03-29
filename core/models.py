@@ -121,7 +121,7 @@ class Lamning(models.Model):
 
     observation_type = models.CharField(
         max_length=2,
-        choices=[("FO", "Fältobservation"), ("RO", "Fjärrobservation")],
+        choices=[("FO", "Fältobservation"), ("RO", "Fjärrobservation"), ("MO", "Maskinobservation")],
         blank=True,
         validators=[validate_observation_type],
     )

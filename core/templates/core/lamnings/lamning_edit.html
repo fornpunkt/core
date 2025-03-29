@@ -52,6 +52,10 @@
                 <option {% if not lamning.observation_type %}selected{% endif %} value>---</option>
                 <option {% if 'FO' == lamning.observation_type %}selected{% endif %} value="FO">Fältobservation</option>
                 <option {% if 'RO' == lamning.observation_type %}selected{% endif %} value="RO">Fjärrobservation</option>
+                {# only show the machine observation alternative if the user is either an admin or the type is already machine observation #}
+                {% if user.is_staff or 'MO' == lamning.observation_type %}
+                <option {% if 'MO' == lamning.observation_type %}selected{% endif %} value="MO">Maskinobservation</option>
+                {% endif %}
             </select>
         </div>
 
