@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from geojson import Feature, Point
 from taggit.managers import TaggableManager
 from taggit.models import GenericTaggedItemBase, TagBase
 
