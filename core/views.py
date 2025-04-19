@@ -526,6 +526,9 @@ def api_accounts_export(request):
     # no scopes are supported, you can only export your own account
     account = User.objects.filter(id=request.user.id)
 
+    if not account.exists():
+        return HttpResponseForbidden("Du måste vara inloggad för att exportera ditt konto.")
+
     graph = {
         "@type": "schema:Person",
         "@id": f"#{account[0].username}",
