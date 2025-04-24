@@ -85,7 +85,10 @@ class AnnotationLinkCreateViewTestCase(TestCase):
 
         response = self.client.post(self.url, data=self.sample_annotation_data, HTTP_AUTHORIZATION='Token ' + self.superuser_access_token_write)
         self.assertEqual(response.status_code, 201)
-        json.loads(response.content)
+        content = json.loads(response.content)
+        self.assertEqual(content['motivation'], 'linking')
+        self.assertEqual(content['body']['schema:subjectOf']['@id'], self.sample_annotation_data['target'])
+        self.assertEqual(content['target']['@id'], 'http://kulturarvsdata.se/raa/lamning/' + self.sample_annotation_data['subject'])
 
     def test_superuser_with_write_token_and_missing_data(self):
         '''Tests that a superuser with a write token cannot create an annotation link if some requried data is missing'''
