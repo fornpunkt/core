@@ -672,9 +672,15 @@ def create_comment(request, lamning):  # TODO split this into two endpoints
         return HttpResponseRedirect(reverse("raa_lamning", args=(lamning,)))
 
 
-@login_required  # TODO: swap this so that one can authenticate with an access token
 def api_lamning_create(request):
-    """API-vew for creating a lamning from a GeoJSON string."""
+    access_token = get_access_token_from_request(request)
+    if access_token:
+        request.user = access_token.user
+
+    if not access_token or not request.user.is_authenticated:
+        return HttpResponseForbidden("Du måste vara inloggad för att skapa en lämning.")
+
+    """API-view for creating a lamning from a GeoJSON string."""
     json_data = json.loads(request.body)
 
     # the model will validate the geojson so we just need to extract the properties
@@ -687,14 +693,26 @@ def api_lamning_create(request):
     if not title:
         return HttpResponseBadRequest("Du måste ange en titel.")
 
+    if not isinstance(title, str):
+        return HttpResponseBadRequest("Titeln måste vara en sträng.")
+
     if not description:
         return HttpResponseBadRequest("Du måste ange en beskrivning.")
+
+    if not isinstance(description, str):
+        return HttpResponseBadRequest("Beskrivningen måste vara en sträng.")
 
     if not tags_string and not tags_string.strip():
         return HttpResponseBadRequest("Du måste ange en eller flera taggar.")
 
+    if not isinstance(tags_string, str):
+        return HttpResponseBadRequest("Taggarna måste vara en angivna som en komma-separerad sträng.")
+
     if not observation_type:
-        return HttpResponseBadRequest('Du måste ange en observationstyp, antigen "FO" eller "RO".')
+        return HttpResponseBadRequest('Du måste ange en observationstyp, antigen "FO", "MO" eller "RO".')
+
+    if observation_type not in ["FO", "MO", "RO"]:
+        return HttpResponseBadRequest('Ogiltig observationstyp. Tillåtna värden är "FO", "MO" eller "RO".')
 
     # remove properties from the geojson
     json_data["features"][0]["properties"] = {}
