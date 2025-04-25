@@ -598,6 +598,7 @@ def api_lamning_annotation_link_export(request):
 
 
 @csrf_exempt
+@require_POST
 def api_lamning_annotation_link_create(request):
     """Method for creating annotation links."""
     access_token = get_access_token_from_request(request)
@@ -641,6 +642,7 @@ def api_lamning_annotation_link_create(request):
 
 
 @login_required
+@require_POST
 def create_comment(request, lamning):  # TODO split this into two endpoints
     """API-view which currently manages comments from both KMR sites and FP ones"""
     raa_lamning = False
@@ -678,10 +680,9 @@ def create_comment(request, lamning):  # TODO split this into two endpoints
 
 
 @csrf_exempt
+@require_POST
 def api_lamning_create(request):
     """API-view for creating a lamning from a GeoJSON string."""
-
-    # TODO: For all API views, allow only the intended HTTP methods
 
     access_token = get_access_token_from_request(request)
     if access_token:
