@@ -1,6 +1,7 @@
 import csv
 import json
 import re
+from functools import wraps
 from itertools import chain
 from operator import attrgetter
 
@@ -60,6 +61,24 @@ def get_access_token_from_request(request):
         except AccessToken.DoesNotExist:
             return False
     return False
+
+
+def write_access_token_or_csrf(function):
+    """Decorator for views that require either a valid access token or CSRF token."""
+    @wraps(function)
+    def _wrapped_view(request, *args, **kwargs):
+        csrf_middleware = CsrfViewMiddleware(lambda r: r)
+        csrf_result = csrf_middleware.process_view(request, None, (), {})
+        if csrf_result is not None:
+            access_token = get_access_token_from_request(request)
+            if access_token:
+                if not access_token.rights == "w":
+                    return HttpResponseForbidden("Du måste ha skrivrättigheter för att skapa lämningar.")
+                request.user = access_token.user
+            else:
+                return HttpResponseForbidden("Du måste vara authentiserad för att skapa lämningar.")
+        return function(request, *args, **kwargs)
+    return _wrapped_view
 
 
 class LandingView(generic.TemplateView):
@@ -678,25 +697,9 @@ def create_comment(request, lamning):  # TODO split this into two endpoints
 
 @csrf_exempt
 @require_POST
+@write_access_token_or_csrf
 def api_lamning_create(request):
     """API-view for creating a lamning from a GeoJSON string."""
-
-    access_token = get_access_token_from_request(request)
-    if access_token:
-        request.user = access_token.user
-
-        if not access_token.rights == "w":
-            return HttpResponseForbidden("Du måste ha skrivrättigheter för att skapa lämningar.")
-    else:
-        # if there is no access token, check if the user is logged in
-        if request.user.is_anonymous:
-            return HttpResponseForbidden("Du måste vara inloggad för att skapa lämningar.")
-
-        csrf_middleware = CsrfViewMiddleware(lambda r: r)
-        csrf_result = csrf_middleware.process_view(request, None, (), {})
-        # if csrf_result is not None, the CSRF check failed
-        if csrf_result is not None:
-            return HttpResponseForbidden()
 
     json_data = json.loads(request.body)
 
