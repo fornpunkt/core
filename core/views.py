@@ -645,12 +645,9 @@ def api_lamning_annotation_link_create(request):
 @require_POST
 def create_comment(request, lamning):  # TODO split this into two endpoints
     """API-view which currently manages comments from both KMR sites and FP ones"""
-    raa_lamning = False
     fornpunkt_lamning = False
 
-    if is_possible_raa_id(lamning):
-        raa_lamning = True
-    else:
+    if not is_possible_raa_id(lamning):
         lamning = get_object_or_404(Lamning, pk=Lamning.resolve_hashid(lamning))
         fornpunkt_lamning = True
 
