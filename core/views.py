@@ -23,6 +23,7 @@ from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
                          JsonResponse)
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
+from django.middleware.csrf import get_token, CsrfViewMiddleware
 from django.urls import reverse, reverse_lazy
 from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.decorators import method_decorator
@@ -672,18 +673,34 @@ def create_comment(request, lamning):  # TODO split this into two endpoints
         return HttpResponseRedirect(reverse("raa_lamning", args=(lamning,)))
 
 
+@csrf_exempt
 def api_lamning_create(request):
+    """API-view for creating a lamning from a GeoJSON string."""
+
+    # TODO: For all API views, allow only the intended HTTP methods
+
     access_token = get_access_token_from_request(request)
     if access_token:
         request.user = access_token.user
 
-    if not access_token or not request.user.is_authenticated:
-        return HttpResponseForbidden("Du måste vara inloggad för att skapa en lämning.")
+        if not access_token.rights == "w":
+            return HttpResponseForbidden("Du måste ha skrivrättigheter för att skapa lämningar.")
+    else:
+        # if there is no access token, check if the user is logged in
+        if request.user.is_anonymous:
+            return HttpResponseForbidden("Du måste vara inloggad för att skapa lämningar.")
 
-    """API-view for creating a lamning from a GeoJSON string."""
+        csrf_middleware = CsrfViewMiddleware(lambda r: r)
+        csrf_result = csrf_middleware.process_view(request, None, (), {})
+        # if csrf_result is not None, the CSRF check failed
+        if csrf_result is not None:
+            return HttpResponseForbidden()
+
     json_data = json.loads(request.body)
 
-    # the model will validate the geojson so we just need to extract the properties
+    if not isinstance(json_data, dict) or "features" not in json_data or len(json_data["features"]) != 1:
+        return HttpResponseBadRequest("GeoJSON objektet måste innehålla en feature.")
+
     properties = json_data["features"][0]["properties"]
     title = properties.get("title", None)
     description = properties.get("description", None)
@@ -702,7 +719,7 @@ def api_lamning_create(request):
     if not isinstance(description, str):
         return HttpResponseBadRequest("Beskrivningen måste vara en sträng.")
 
-    if not tags_string and not tags_string.strip():
+    if not tags_string or not tags_string.strip():
         return HttpResponseBadRequest("Du måste ange en eller flera taggar.")
 
     if not isinstance(tags_string, str):
