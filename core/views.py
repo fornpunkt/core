@@ -33,6 +33,8 @@ from django.utils.safestring import mark_safe
 from django.views import generic
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+
 from geojson import FeatureCollection
 from taggit.utils import edit_string_for_tags
 
@@ -1110,9 +1112,14 @@ class RaaTypeView(generic.DetailView):
         return super(RaaTypeView, self).get_queryset()
 
 
+@require_POST
 def report_client_error_to_sentry(request):
     """View for reporting client errors to Sentry."""
-    payload = json.loads(request.body)
+    try:
+        payload = json.loads(request.body)
+    except json.JSONDecodeError:
+        return HttpResponseBadRequest("Invalid JSON")
+
     error = payload["error"]
     line = payload["line"]
     url = payload["url"]
