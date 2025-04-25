@@ -630,6 +630,7 @@ def api_lamning_annotation_link_create(request):
             annotation.author_name_string = request.POST["author_name_string"]
         annotation.save()
     except Exception as e:
+        sentry_sdk.capture_exception(e)
         return HttpResponseBadRequest("Något gick fel.")
 
     response = JsonApiResponse(annotation.json_ld, content_type="application/ld+json")
@@ -660,7 +661,8 @@ def create_comment(request, lamning):  # TODO split this into two endpoints
         comment = request.POST["comment"]
         if comment == "":
             return error("Något gick fel.")
-    except:  # TODO: do not use bare except
+    except Exception as e:  # TODO: do not use bare except
+        sentry_sdk.capture_exception(e)
         return error("Något gick fel.")
 
     if fornpunkt_lamning:
@@ -748,6 +750,7 @@ def api_lamning_create(request):
         tags = tag_parser(tags_string)
         lamning.tags.add(*tags)
     except Exception as e: # TODO: do not use bare except
+        sentry_sdk.capture_exception(e)
         return HttpResponseBadRequest("Något gick fel.")
 
     response = JsonApiResponse(lamning.geojson, content_type="application/geo+json")

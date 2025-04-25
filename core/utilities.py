@@ -4,6 +4,7 @@ from urllib.parse import ParseResult, parse_qs, urlencode, urlparse
 from uuid import UUID
 
 import geojson
+import sentry_sdk as sentry
 import requests
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -224,6 +225,7 @@ def fetch_raa_lamning(uuid):
     try:
         raa_data["beskrivning"] = fix_raa_record_description(raa_data["beskrivning"])
     except KeyError as e:
+        sentry.capture_exception(e)
         raise Exception("Failed to find mandatory key.") from e
 
     item = dict()
