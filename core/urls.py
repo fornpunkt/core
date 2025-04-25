@@ -108,16 +108,16 @@ urlpatterns = [
     path('tagg/<str:slug>/redigera', views.TagUpdateView.as_view(), name='tag_update'),
 
     path('api/lamnings/bbox', views.bbox, name='bbox'),
-    path('api/annotation-links/create', views.api_lamning_annotation_link_create, name='api_annotation_links_create'),
     path('api/create-comment/<lamning>', views.create_comment, name='create_comment'),
-
+    path('api/annotation-links/create', views.api_lamning_annotation_link_create, name='api_annotation_links_create'), # NOTE: deprecated
     # l-number redirection API v1 deprecated
     path('api/l-number-redirection/<l_number>', views.l_number_redirection, name='l_number_redirection'),
 
     # l-number redirection API v2
     path('apis/kmr-identification-resolver/v1/<identifier>', views.identification_resolver, name='identification_resolver'),
 
-    # export API v1 deprecated
+    # NOTE: deprecated
+    # export API v1
     path('api/annotation-links/export', views.api_lamning_annotation_link_export, name='api_annotation_links_export'),
     path('api/lamnings/export', views.api_lamnings_export, name='api_lamnings_export'),
     path('api/tags/export', views.api_tags_export, name='api_tags_export'),
@@ -135,6 +135,7 @@ urlpatterns = [
 
     # create API v1
     path('apis/create/v1/lamning', views.api_lamning_create, name='api_lamning_create'),
+    path('apis/create/v1/annotation', views.api_lamning_annotation_link_create, name='api_annotation_create'),
 
     # skaderapporter API
     path('apis/skaderapporter/v1/rss', feeds.SkaderapporterFeed(), name='api_skaderapporter'),
