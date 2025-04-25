@@ -750,7 +750,9 @@ def api_lamning_create(request):
     except Exception as e: # TODO: do not use bare except
         return HttpResponseBadRequest("Något gick fel.")
 
-    return HttpResponseRedirect(reverse("lamning_geojson", args=(lamning.id,)))
+    response = JsonApiResponse(lamning.geojson, content_type="application/geo+json")
+    response.status_code = 201
+    return response
 
 
 class TagListView(generic.list.ListView):
