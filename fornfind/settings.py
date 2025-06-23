@@ -32,6 +32,9 @@ if 'FP_ENVIRONMENT' in os.environ and os.environ['FP_ENVIRONMENT'] == 'productio
     CSRF_COOKIE_SECURE = True
     SECURE_HSTS_SECONDS = True
 
+    LANTMATERIET_USERNAME = os.environ.get('LANTMATERIET_USERNAME')
+    LANTMATERIET_PASSWORD = os.environ.get('LANTMATERIET_PASSWORD')
+
     if os.getenv('DATABASE_URL', None) is None:
         raise Exception('DATABASE_URL environment variable not defined')
     DATABASES = {
@@ -60,6 +63,9 @@ else:
     SECRET_KEY = '&i%4-cwm(_&yiiq-qkte(u*vwwc#s%0=p$moq^$ud^)nl^&i=8'
     ADMIN_PATH = 'admin'
     HASHIDS_SALT = 'fornpunkt'
+
+    LANTMATERIET_USERNAME = os.environ.get('LANTMATERIET_USERNAME')
+    LANTMATERIET_PASSWORD = os.environ.get('LANTMATERIET_PASSWORD')
 
     DATABASES = {
         'default': {

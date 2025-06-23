@@ -149,6 +149,8 @@ urlpatterns = [
 
     path('raa/wms-proxy', views.get_feature_info, name='proxy'),
 
+    path('lm/proxy/<path:route>', views.lantmateriet_proxy, name='lantmateriet_proxy'),
+
     path('datasets', views.dataset_rdf_proxy, name='datasets'),
     path('.well-known/void', RedirectView.as_view(permanent=False, pattern_name='datasets'), name='void'),
 

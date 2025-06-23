@@ -115,7 +115,7 @@ builtInBaseLayers.push(new Layer(
 builtInBaseLayers.push(new Layer(
   'WMS',
   {
-    url: 'https://api.lantmateriet.se/historiska-ortofoton/wms/v1/token/19075f4e-1929-323d-a7d1-5c1753904db2/?',
+    url: 'lm/proxy/historiska-ortofoton/wms/v1?',
     crossOrigin: '',
     params: {'LAYERS': 'OI.Histortho_60'},
     serverType: 'geoserver',
@@ -127,7 +127,7 @@ builtInBaseLayers.push(new Layer(
 builtInBaseLayers.push(new Layer(
   'WMS',
   {
-    url: 'https://api.lantmateriet.se/historiska-ortofoton/wms/v1/token/19075f4e-1929-323d-a7d1-5c1753904db2/?',
+    url: 'lm/proxy/historiska-ortofoton/wms/v1?',
     crossOrigin: '',
     params: {'LAYERS': 'OI.Histortho_75'},
     serverType: 'geoserver',
@@ -156,16 +156,6 @@ builtInBaseLayers.push(new Layer(
     projection: 'EPSG:3857',
   },
   'Jordarter (SGU)',
-));
-
-builtInBaseLayers.push(new Layer(
-  'WMTS',
-  {
-    url: 'https://api.lantmateriet.se/open/topowebb-ccby/v1/wmts/token/9b342b7d9f12d4ddb92277be9869d860/?SERVICE=WMTS&request=GetCapabilities',
-    layer: 'topowebb',
-    projection: 'EPSG:3857',
-  },
-  'LM Topografiska',
 ));
 
 function findLayerByName(name) {

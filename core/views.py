@@ -1,3 +1,4 @@
+import base64
 import csv
 import json
 import re
@@ -7,6 +8,7 @@ from operator import attrgetter
 
 import requests
 import sentry_sdk
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -1141,3 +1143,39 @@ def dataset_rdf_proxy(request):
     """Proxies Turtle RDF for our DCAT/VoID definations."""
     r = requests.get("https://fornpunkt.se/data/data.ttl")
     return HttpResponse(r.text, content_type="text/turtle")
+
+def lantmateriet_proxy(request, route):
+    """
+    Proxies WMS/MWTS requests to Lantmäteriet while adding Basic Auth headers.
+    This can be used with multiple layers:
+    /<view>/<lm-path>
+    """
+
+    remote_path = route.strip("/")
+    url = f"https://maps.lantmateriet.se/{remote_path}"
+
+    headers = {
+        "Authorization": "Basic " + base64.b64encode(f"{settings.LANTMATERIET_USERNAME}:{settings.LANTMATERIET_PASSWORD}".encode()).decode(),
+    }
+
+    try:
+        r = requests.get(url, headers=headers, params=request.GET, timeout=10)
+        print(f"Requesting Lantmäteriet WMS/MWTS: {url} with params: {request.GET}")
+        r.raise_for_status()
+        response = HttpResponse(r.content, content_type=r.headers.get("Content-Type", "application/octet-stream"))
+
+        headers_to_copy = [
+            'Content-Length', 'Content-Encoding', 'Cache-Control',
+            'Expires', 'Last-Modified', 'ETag', 'Access-Control-Allow-Origin'
+        ]
+
+        for header in headers_to_copy:
+            if header in r.headers:
+                response[header] = r.headers[header]
+
+        return response
+
+    except requests.RequestException as e:
+        sentry_sdk.capture_exception(e)
+        return HttpResponse(status=504, content="Kunde inte hämta data från Lantmäteriet.")
+
