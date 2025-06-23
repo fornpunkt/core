@@ -1,6 +1,6 @@
 Contact: mailto:hej@fornpunkt.se
 Contact: https://github.com/fornpunkt/core/security/advisories/new
-Expires: 2025-06-01T11:00:00.000Z
+Expires: 2026-06-01T11:00:00.000Z
 Preferred-Languages: sv,en
 Policy: https://github.com/fornpunkt/core/blob/main/SECURITY.md
 Canonical: https://fornpunkt.se/.well-known/security.txt
