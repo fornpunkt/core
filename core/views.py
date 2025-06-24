@@ -6,7 +6,7 @@ from functools import wraps
 from itertools import chain
 from operator import attrgetter
 
-import requests
+import httpx
 import sentry_sdk
 from django.conf import settings
 from django.contrib import messages
@@ -1144,7 +1144,7 @@ def dataset_rdf_proxy(request):
     r = requests.get("https://fornpunkt.se/data/data.ttl")
     return HttpResponse(r.text, content_type="text/turtle")
 
-def lantmateriet_proxy(request, route):
+async def lantmateriet_proxy(request, route):
     """
     Proxies WMS/MWTS requests to Lantmäteriet while adding Basic Auth headers.
     This can be used with multiple layers:
@@ -1154,28 +1154,32 @@ def lantmateriet_proxy(request, route):
     remote_path = route.strip("/")
     url = f"https://maps.lantmateriet.se/{remote_path}"
 
+    auth_header = base64.b64encode(f"{settings.LANTMATERIET_USERNAME}:{settings.LANTMATERIET_PASSWORD}".encode()).decode()
     headers = {
-        "Authorization": "Basic " + base64.b64encode(f"{settings.LANTMATERIET_USERNAME}:{settings.LANTMATERIET_PASSWORD}".encode()).decode(),
+        "Authorization": f"Basic {auth_header}",
     }
 
-    try:
-        r = requests.get(url, headers=headers, params=request.GET, timeout=10)
-        print(f"Requesting Lantmäteriet WMS/MWTS: {url} with params: {request.GET}")
-        r.raise_for_status()
-        response = HttpResponse(r.content, content_type=r.headers.get("Content-Type", "application/octet-stream"))
+    async with httpx.AsyncClient() as client:
+        try:
+            print(f"Requesting Lantmäteriet WMS/MWTS: {url} with params: {request.GET.urlencode()}")
+            r = await client.get(url, headers=headers, params=request.GET.dict(), timeout=10)
+            r.raise_for_status()
 
-        headers_to_copy = [
-            'Content-Length', 'Content-Encoding', 'Cache-Control',
-            'Expires', 'Last-Modified', 'ETag', 'Access-Control-Allow-Origin'
-        ]
+            content_type = r.headers.get("Content-Type", "application/octet-stream")
+            response = HttpResponse(r.content, content_type=content_type)
 
-        for header in headers_to_copy:
-            if header in r.headers:
-                response[header] = r.headers[header]
+            headers_to_copy = [
+                'Content-Length', 'Content-Encoding', 'Cache-Control',
+                'Expires', 'Last-Modified', 'ETag', 'Access-Control-Allow-Origin'
+            ]
 
-        return response
+            for header_name in headers_to_copy:
+                if header_name in r.headers:
+                    response[header_name] = r.headers[header_name]
 
-    except requests.RequestException as e:
-        sentry_sdk.capture_exception(e)
-        return HttpResponse(status=504, content="Kunde inte hämta data från Lantmäteriet.")
+            return response
+
+        except httpx.RequestError as e:
+            sentry_sdk.capture_exception(e)
+            return HttpResponse(status=504, content="Kunde inte hämta data från Lantmäteriet.")
 
