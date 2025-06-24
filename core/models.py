@@ -14,6 +14,7 @@ from .utilities import (
     h_decode,
     h_encode,
     ld_make_identifier,
+    sanitize_geojson_object,
     validate_geojson,
     validate_observation_type,
 )
@@ -131,9 +132,29 @@ class Lamning(models.Model):
         ordering = ["-created_time"]
 
     def save(self, *args, **kwargs):
-        center = centroid_from_feature(str(self.geojson))
-        self.center_lat = center[1]
-        self.center_lon = center[0]
+        # GeoJSON is stored as a string, parse it first
+        if self.geojson:
+            try:
+                geojson_data = json.loads(self.geojson)
+                # Sanitize the GeoJSON data
+                sanitized_geojson_data = sanitize_geojson_object(geojson_data)
+                # Update self.geojson with the sanitized string version
+                self.geojson = json.dumps(sanitized_geojson_data)
+
+                # Recalculate centroid from the (potentially modified) sanitized GeoJSON
+                center = centroid_from_feature(self.geojson)
+                self.center_lat = center[1]
+                self.center_lon = center[0]
+            except json.JSONDecodeError:
+                # Handle cases where self.geojson is not valid JSON,
+                # though validate_geojson validator should catch this earlier.
+                # For safety, we might log this or raise an error.
+                # For now, proceed without changing geojson or centroid if parse fails.
+                pass # Or log an error
+        else:
+            # Handle cases where geojson might be None or empty
+            self.center_lat = None
+            self.center_lon = None
 
         super(Lamning, self).save(*args, **kwargs)
 

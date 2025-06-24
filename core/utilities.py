@@ -15,6 +15,80 @@ from taggit.utils import _parse_tags
 
 hashids = Hashids(settings.HASHIDS_SALT, min_length=7)
 
+# --- GeoJSON Sanitization Constants ---
+# Based on RFC 7946: https://www.rfc-editor.org/rfc/rfc7946
+# These sets define the ALLOWED top-level members for each GeoJSON object type.
+# The 'type' member is implicitly required for all. 'bbox' is optional for all.
+
+GEOJSON_ALLOWED_MEMBERS_COMMON = {"type", "bbox"}
+
+GEOJSON_ALLOWED_MEMBERS = {
+    "Point": GEOJSON_ALLOWED_MEMBERS_COMMON | {"coordinates"},
+    "MultiPoint": GEOJSON_ALLOWED_MEMBERS_COMMON | {"coordinates"},
+    "LineString": GEOJSON_ALLOWED_MEMBERS_COMMON | {"coordinates"},
+    "MultiLineString": GEOJSON_ALLOWED_MEMBERS_COMMON | {"coordinates"},
+    "Polygon": GEOJSON_ALLOWED_MEMBERS_COMMON | {"coordinates"},
+    "MultiPolygon": GEOJSON_ALLOWED_MEMBERS_COMMON | {"coordinates"},
+    "GeometryCollection": GEOJSON_ALLOWED_MEMBERS_COMMON | {"geometries"},
+    "Feature": GEOJSON_ALLOWED_MEMBERS_COMMON | {"geometry", "properties", "id"},
+    "FeatureCollection": GEOJSON_ALLOWED_MEMBERS_COMMON | {"features"},
+}
+# --- End GeoJSON Sanitization Constants ---
+
+
+def sanitize_geojson_object(data: dict) -> dict:
+    """
+    Sanitizes a GeoJSON object (Python dictionary) by removing any non-standard
+    top-level members, based on RFC 7946.
+
+    It recursively sanitizes nested GeoJSON objects like those in
+    Feature.geometry, FeatureCollection.features, and
+    GeometryCollection.geometries.
+
+    The 'properties' member of a Feature object is preserved as-is, without
+    sanitizing its internal structure, as it's intended for user-defined data.
+
+    If the input is not a dictionary or lacks a 'type' key, it's returned
+    as-is.
+    """
+    if not isinstance(data, dict) or "type" not in data:
+        return data  # Not a GeoJSON object we can sanitize by type
+
+    obj_type = data.get("type")
+    allowed_members = GEOJSON_ALLOWED_MEMBERS.get(obj_type)
+
+    if not allowed_members:
+        # Unknown GeoJSON type, or 'type' is not a string (though caught by .get earlier)
+        # To be safe, return only common members if type is unknown but present
+        # or consider raising an error / returning original based on strictness.
+        # For now, let's be conservative and only keep common if type is present but unknown.
+        if obj_type: # it has a "type" field, but not one we know
+             allowed_members = GEOJSON_ALLOWED_MEMBERS_COMMON
+        else: # Should not happen due to initial check, but as a safeguard
+            return data
+
+
+    sanitized_obj = {}
+    for key, value in data.items():
+        if key in allowed_members:
+            if key == "geometry" and value and isinstance(value, dict) and "type" in value:
+                sanitized_obj[key] = sanitize_geojson_object(value)
+            elif key == "features" and isinstance(value, list):
+                sanitized_obj[key] = [
+                    sanitize_geojson_object(feat) if isinstance(feat, dict) else feat for feat in value
+                ]
+            elif key == "geometries" and isinstance(value, list):
+                sanitized_obj[key] = [
+                    sanitize_geojson_object(geom) if isinstance(geom, dict) else geom for geom in value
+                ]
+            elif key == "properties":
+                # IMPORTANT: Preserve properties as-is.
+                # RFC 7946: "The value of the properties member is an object (any JSON object or a JSON null value)."
+                sanitized_obj[key] = value
+            else:
+                sanitized_obj[key] = value
+    return sanitized_obj
+
 
 def h_encode(identifier):
     return hashids.encode(identifier)
