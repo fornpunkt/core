@@ -18,76 +18,143 @@ hashids = Hashids(settings.HASHIDS_SALT, min_length=7)
 # --- GeoJSON Sanitization Constants ---
 # Based on RFC 7946: https://www.rfc-editor.org/rfc/rfc7946
 # These sets define the ALLOWED top-level members for each GeoJSON object type.
-# The 'type' member is implicitly required for all. 'bbox' is optional for all.
+# The 'type' member is implicitly required for all.
 
-GEOJSON_ALLOWED_MEMBERS_COMMON = {"type", "bbox"}
-
+# Defines allowed members for the specific GeoJSON types we support for Lamning.
+# `bbox` is disallowed. `id` is disallowed on Features.
+# `properties` on Features will be emptied, but the key itself is allowed.
 GEOJSON_ALLOWED_MEMBERS = {
-    "Point": GEOJSON_ALLOWED_MEMBERS_COMMON | {"coordinates"},
-    "MultiPoint": GEOJSON_ALLOWED_MEMBERS_COMMON | {"coordinates"},
-    "LineString": GEOJSON_ALLOWED_MEMBERS_COMMON | {"coordinates"},
-    "MultiLineString": GEOJSON_ALLOWED_MEMBERS_COMMON | {"coordinates"},
-    "Polygon": GEOJSON_ALLOWED_MEMBERS_COMMON | {"coordinates"},
-    "MultiPolygon": GEOJSON_ALLOWED_MEMBERS_COMMON | {"coordinates"},
-    "GeometryCollection": GEOJSON_ALLOWED_MEMBERS_COMMON | {"geometries"},
-    "Feature": GEOJSON_ALLOWED_MEMBERS_COMMON | {"geometry", "properties", "id"},
-    "FeatureCollection": GEOJSON_ALLOWED_MEMBERS_COMMON | {"features"},
+    "Feature": {"type", "geometry", "properties"},
+    "Point": {"type", "coordinates"},
+    "LineString": {"type", "coordinates"},
+    "Polygon": {"type", "coordinates"},
 }
 # --- End GeoJSON Sanitization Constants ---
 
 
+def _is_valid_coordinate_list(coords, min_depth=1, max_depth=1, item_type=float, min_len=2, max_len=3):
+    """Helper to check if a list is a valid coordinate or list of coordinates."""
+    if not isinstance(coords, list):
+        return False
+    if not coords and min_depth > 0 : # allow empty list if min_depth is 0 (e.g. empty list of rings for polygon)
+        return False
+
+    if min_depth == 0 and not coords: # Specific case for Polygon coordinates: list of rings, can be empty if no holes
+        return True
+
+
+    current_depth = 0
+    q = [coords]
+
+    # Determine actual depth and structure
+    temp_coords = coords
+    while isinstance(temp_coords, list) and temp_coords:
+        current_depth += 1
+        if not temp_coords: # Empty list at current depth
+            break
+        temp_coords = temp_coords[0]
+
+    if not (min_depth <= current_depth <= max_depth):
+        return False
+
+    # Validate items at the deepest level
+    if current_depth == 1: # e.g. Point coordinates [1.0, 2.0]
+        if not (min_len <= len(coords) <= max_len): return False
+        return all(isinstance(c, (int, float)) for c in coords)
+    if current_depth == 2: # e.g. LineString coordinates [[1.0,2.0], [3.0,4.0]]
+        return all(
+            isinstance(pos, list) and
+            (min_len <= len(pos) <= max_len) and
+            all(isinstance(c, (int, float)) for c in pos)
+            for pos in coords
+        )
+    if current_depth == 3: # e.g. Polygon coordinates [[[1.0,2.0], ...]]
+         return all(
+            isinstance(ring, list) and all(
+                isinstance(pos, list) and
+                (min_len <= len(pos) <= max_len) and
+                all(isinstance(c, (int, float)) for c in pos)
+                for pos in ring
+            )
+            for ring in coords
+        )
+    return False
+
+
 def sanitize_geojson_object(data: dict) -> dict:
     """
-    Sanitizes a GeoJSON object (Python dictionary) by removing any non-standard
-    top-level members, based on RFC 7946.
+    Sanitizes and validates a GeoJSON Feature object dictionary.
+    It ensures the Feature contains a supported geometry (Point, LineString, Polygon),
+    empties the 'properties' field, and removes any non-standard members or 'bbox'/'id'.
 
-    It recursively sanitizes nested GeoJSON objects like those in
-    Feature.geometry, FeatureCollection.features, and
-    GeometryCollection.geometries.
-
-    The 'properties' member of a Feature object is preserved as-is, without
-    sanitizing its internal structure, as it's intended for user-defined data.
-
-    If the input is not a dictionary or lacks a 'type' key, it's returned
-    as-is.
+    Raises ValidationError if the input is not a valid Feature object according
+    to the specified strict rules.
     """
-    if not isinstance(data, dict) or "type" not in data:
-        return data  # Not a GeoJSON object we can sanitize by type
+    if not isinstance(data, dict):
+        raise ValidationError("Input must be a dictionary.")
 
-    obj_type = data.get("type")
-    allowed_members = GEOJSON_ALLOWED_MEMBERS.get(obj_type)
+    if data.get("type") != "Feature":
+        raise ValidationError("Input GeoJSON must be of type 'Feature'.")
 
-    if not allowed_members:
-        # Unknown GeoJSON type, or 'type' is not a string (though caught by .get earlier)
-        # To be safe, return only common members if type is unknown but present
-        # or consider raising an error / returning original based on strictness.
-        # For now, let's be conservative and only keep common if type is present but unknown.
-        if obj_type: # it has a "type" field, but not one we know
-             allowed_members = GEOJSON_ALLOWED_MEMBERS_COMMON
-        else: # Should not happen due to initial check, but as a safeguard
-            return data
+    sanitized_feature = {"type": "Feature"}
+
+    # Properties must be an empty dictionary
+    sanitized_feature["properties"] = {}
+
+    # Validate and sanitize geometry
+    original_geometry = data.get("geometry")
+    if not isinstance(original_geometry, dict):
+        raise ValidationError("Feature 'geometry' must be a dictionary.")
+
+    geom_type = original_geometry.get("type")
+    allowed_geom_types = ["Point", "LineString", "Polygon"]
+    if geom_type not in allowed_geom_types:
+        raise ValidationError(f"Geometry type must be one of {allowed_geom_types}. Got '{geom_type}'.")
+
+    sanitized_geometry = {"type": geom_type}
+
+    original_coordinates = original_geometry.get("coordinates")
+    if original_coordinates is None: # Explicit None check, as empty list might be valid for some scenarios (not Point)
+         raise ValidationError(f"'coordinates' member is required for geometry type '{geom_type}'.")
 
 
-    sanitized_obj = {}
-    for key, value in data.items():
-        if key in allowed_members:
-            if key == "geometry" and value and isinstance(value, dict) and "type" in value:
-                sanitized_obj[key] = sanitize_geojson_object(value)
-            elif key == "features" and isinstance(value, list):
-                sanitized_obj[key] = [
-                    sanitize_geojson_object(feat) if isinstance(feat, dict) else feat for feat in value
-                ]
-            elif key == "geometries" and isinstance(value, list):
-                sanitized_obj[key] = [
-                    sanitize_geojson_object(geom) if isinstance(geom, dict) else geom for geom in value
-                ]
-            elif key == "properties":
-                # IMPORTANT: Preserve properties as-is.
-                # RFC 7946: "The value of the properties member is an object (any JSON object or a JSON null value)."
-                sanitized_obj[key] = value
-            else:
-                sanitized_obj[key] = value
-    return sanitized_obj
+    # Basic coordinate structure validation
+    if geom_type == "Point":
+        if not _is_valid_coordinate_list(original_coordinates, min_depth=1, max_depth=1, item_type=(int, float), min_len=2, max_len=3):
+            raise ValidationError("Point 'coordinates' must be a list of 2 or 3 numbers.")
+    elif geom_type == "LineString":
+        if not _is_valid_coordinate_list(original_coordinates, min_depth=2, max_depth=2, item_type=(int,float), min_len=2, max_len=3) or len(original_coordinates) < 2:
+            raise ValidationError("LineString 'coordinates' must be a list of 2 or more positions (each a list of 2-3 numbers).")
+    elif geom_type == "Polygon":
+        # Each ring must have at least 4 positions, first and last same.
+        # _is_valid_coordinate_list checks structure, then we add specific Polygon rules.
+        if not _is_valid_coordinate_list(original_coordinates, min_depth=3, max_depth=3, item_type=(int,float), min_len=2, max_len=3) or not original_coordinates:
+            raise ValidationError("Polygon 'coordinates' must be a list of linear rings (each a list of positions).")
+        for ring in original_coordinates:
+            if not isinstance(ring, list) or len(ring) < 4:
+                raise ValidationError("Each ring in a Polygon must have at least 4 positions.")
+            if ring[0] != ring[-1]:
+                raise ValidationError("The first and last positions in a Polygon ring must be identical.")
+
+    sanitized_geometry["coordinates"] = original_coordinates # Already validated
+
+    # Remove any other foreign properties from the geometry object
+    final_sanitized_geometry = {}
+    allowed_geom_keys = GEOJSON_ALLOWED_MEMBERS.get(geom_type, set())
+    for k, v in sanitized_geometry.items():
+        if k in allowed_geom_keys:
+            final_sanitized_geometry[k] = v
+
+    sanitized_feature["geometry"] = final_sanitized_geometry
+
+    # Only keep allowed top-level keys for the Feature itself
+    final_sanitized_feature = {}
+    allowed_feature_keys = GEOJSON_ALLOWED_MEMBERS.get("Feature", set())
+    for k,v in sanitized_feature.items():
+        if k in allowed_feature_keys:
+            final_sanitized_feature[k] = v
+
+    return final_sanitized_feature
 
 
 def h_encode(identifier):

@@ -15,9 +15,10 @@ from .utilities import (
     h_encode,
     ld_make_identifier,
     sanitize_geojson_object,
-    validate_geojson,
+    # validate_geojson, # No longer used as a field validator here
     validate_observation_type,
 )
+from django.core.exceptions import ValidationError # For save method
 
 
 class Feedback(models.Model):
@@ -112,7 +113,7 @@ class Lamning(models.Model):
     title = models.TextField(max_length=150)
     tags = TaggableManager(blank=True, through=TaggedThing)
 
-    geojson = models.TextField(validators=[validate_geojson])
+    geojson = models.TextField() # Removed validate_geojson validator
     center_lat = models.FloatField()
     center_lon = models.FloatField()
 
@@ -132,29 +133,42 @@ class Lamning(models.Model):
         ordering = ["-created_time"]
 
     def save(self, *args, **kwargs):
-        # GeoJSON is stored as a string, parse it first
-        if self.geojson:
-            try:
-                geojson_data = json.loads(self.geojson)
-                # Sanitize the GeoJSON data
-                sanitized_geojson_data = sanitize_geojson_object(geojson_data)
-                # Update self.geojson with the sanitized string version
-                self.geojson = json.dumps(sanitized_geojson_data)
+        if not self.geojson:
+            # This case should ideally be caught by model validation if field is not blank.
+            # Raising ValidationError here ensures save() fails if geojson is empty/None.
+            raise ValidationError({'geojson': _("GeoJSON content is required.")})
 
-                # Recalculate centroid from the (potentially modified) sanitized GeoJSON
-                center = centroid_from_feature(self.geojson)
-                self.center_lat = center[1]
-                self.center_lon = center[0]
-            except json.JSONDecodeError:
-                # Handle cases where self.geojson is not valid JSON,
-                # though validate_geojson validator should catch this earlier.
-                # For safety, we might log this or raise an error.
-                # For now, proceed without changing geojson or centroid if parse fails.
-                pass # Or log an error
-        else:
-            # Handle cases where geojson might be None or empty
-            self.center_lat = None
-            self.center_lon = None
+        try:
+            geojson_data_dict = json.loads(self.geojson)
+        except json.JSONDecodeError as e:
+            # Re-raise as ValidationError so it can be handled by forms/admin
+            raise ValidationError({'geojson': _(f"Invalid JSON: {e.msg}")}) from e
+
+        try:
+            # Sanitize_geojson_object now also validates the content strictly
+            sanitized_geojson_dict = sanitize_geojson_object(geojson_data_dict)
+            self.geojson = json.dumps(sanitized_geojson_dict)
+        except ValidationError as e: # Catch ValidationError from sanitize_geojson_object
+             # Propagate the validation error, possibly enriching it or logging
+            raise ValidationError({'geojson': e.messages}) from e
+
+        # Calculate centroid from the sanitized GeoJSON string
+        # centroid_from_feature also uses geojson.loads(), which is a bit redundant
+        # but okay for now. It might fail if sanitized_geojson is not a Feature
+        # or has no coordinates, which sanitize_geojson_object should prevent.
+        try:
+            center = centroid_from_feature(self.geojson)
+            self.center_lat = center[1]
+            self.center_lon = center[0]
+        except Exception as e:
+            # Handle cases where centroid calculation might fail even after sanitization
+            # (e.g., if sanitize_geojson_object allowed an empty coordinate array that centroid_from_feature can't handle)
+            # This indicates a potential issue or an edge case not fully covered.
+            # For now, let's make sure lat/lon are not set or raise an error.
+            # Given the strictness of sanitize_geojson_object, this should be rare.
+            # Consider logging this error.
+            raise ValidationError({'geojson': _(f"Could not calculate centroid from sanitized GeoJSON: {str(e)}")})
+
 
         super(Lamning, self).save(*args, **kwargs)
 
