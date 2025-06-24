@@ -7,6 +7,7 @@ from itertools import chain
 from operator import attrgetter
 
 import httpx
+import requests
 import sentry_sdk
 from django.conf import settings
 from django.contrib import messages
