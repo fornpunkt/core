@@ -1,17 +1,18 @@
 import copy
+import json # For constructing test inputs that might not be loadable by geojson library
 from django.test import TestCase
 from django.core.exceptions import ValidationError
+import geojson # To create valid geojson objects for testing sanitize_geojson_object
 
 from ...utilities import (
-    # GEOJSON_ALLOWED_MEMBERS, # No longer needed directly in tests for sanitize_geojson_object
-    centroid_from_feature, # Keep if other tests use it
-    convert_geojson_to_schema_org, # Keep if other tests use it
+    centroid_from_feature,
+    convert_geojson_to_schema_org,
     sanitize_geojson_object,
-    validate_geojson, # Keep if other tests use it
+    validate_geojson,
 )
 
 
-class GeoJSONUtilTests(TestCase): # Renamed from GeoJSONTest to avoid conflict if old class name was used by test runner
+class GeoJSONUtilTests(TestCase):
     """Tests various original GeoJSON utils, excluding the old sanitize_geojson_object tests."""
 
     def test_invalid_geojson(self):
@@ -72,17 +73,32 @@ class GeoJSONUtilTests(TestCase): # Renamed from GeoJSONTest to avoid conflict i
 # This is the new test class for the current sanitize_geojson_object function.
 # The old GeoJSONSanitizationTest class has been removed.
 class SanitizeGeoJSONObjectTest(TestCase):
-    """Tests the updated sanitize_geojson_object utility."""
+    """Tests the updated sanitize_geojson_object utility, assuming input has passed geojson.loads() and is_valid."""
 
-    def test_valid_feature_point(self):
-        data = {
-            "type": "Feature",
-            "geometry": {"type": "Point", "coordinates": [10, 20], "bbox": [9,19,11,21]},
-            "properties": {"name": "Test Point", "value": 123},
-            "id": "feat1",
-            "bbox": [9,19,11,21],
-            "custom_prop": "remove"
-        }
+    def _create_valid_input_feature_dict(self, geom_type, coordinates, feature_props=None, geom_props=None):
+        """Helper to create a dict that would be the result of geojson.loads() for a valid Feature."""
+        # geojson.loads() would produce dict-like objects. We simulate this with dicts.
+        # The `is_valid` check would have passed.
+        geom = {"type": geom_type, "coordinates": coordinates}
+        if geom_props:
+            geom.update(geom_props)
+
+        feat = {"type": "Feature", "geometry": geom, "properties": feature_props if feature_props else {"name": "Test"}}
+        # Add other foreign members to test their removal
+        feat["id"] = "feat_id_1"
+        feat["bbox"] = [-10, -10, 10, 10]
+        feat["foreign_feature_prop"] = "should_be_removed"
+        geom["foreign_geom_prop"] = "should_be_removed_from_geom"
+        if geom_type != "Point": # bbox on geometry for non-points
+             geom["bbox"] = [0,0,1,1]
+
+        return feat
+
+
+    def test_valid_feature_point_sanitized(self):
+        # Input is a dictionary that mimics a valid Feature object parsed by geojson.loads()
+        data = self._create_valid_input_feature_dict("Point", [10,20])
+
         expected = {
             "type": "Feature",
             "geometry": {"type": "Point", "coordinates": [10, 20]},
@@ -90,13 +106,8 @@ class SanitizeGeoJSONObjectTest(TestCase):
         }
         self.assertEqual(sanitize_geojson_object(data), expected)
 
-    def test_valid_feature_linestring(self):
-        data = {
-            "type": "Feature",
-            "geometry": {"type": "LineString", "coordinates": [[10,20],[30,40]]},
-            "properties": {"name": "Test Line"},
-            "id": "ls1"
-        }
+    def test_valid_feature_linestring_sanitized(self):
+        data = self._create_valid_input_feature_dict("LineString", [[10,20],[30,40]])
         expected = {
             "type": "Feature",
             "geometry": {"type": "LineString", "coordinates": [[10,20],[30,40]]},
@@ -104,127 +115,116 @@ class SanitizeGeoJSONObjectTest(TestCase):
         }
         self.assertEqual(sanitize_geojson_object(data), expected)
 
-    def test_valid_feature_polygon(self):
-        data = {
-            "type": "Feature",
-            "geometry": {"type": "Polygon", "coordinates": [[[0,0],[1,0],[1,1],[0,1],[0,0]]]},
-            "properties": {"name": "Test Polygon"}
-        }
+    def test_valid_feature_polygon_sanitized(self):
+        poly_coords = [[[0,0],[1,0],[1,1],[0,1],[0,0]]]
+        data = self._create_valid_input_feature_dict("Polygon", poly_coords)
         expected = {
             "type": "Feature",
-            "geometry": {"type": "Polygon", "coordinates": [[[0,0],[1,0],[1,1],[0,1],[0,0]]]},
+            "geometry": {"type": "Polygon", "coordinates": poly_coords},
             "properties": {}
         }
         self.assertEqual(sanitize_geojson_object(data), expected)
 
-    def test_geometry_has_foreign_members_stripped(self):
-        data = {
-            "type": "Feature",
-            "geometry": {"type": "Point", "coordinates": [10, 20], "custom_geom_prop": "remove_me"},
-            "properties": {"name": "Test"}
-        }
+    def test_polygon_with_hole_sanitized(self):
+        poly_coords_with_hole = [
+            [[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]],
+            [[100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2]]
+        ]
+        data = self._create_valid_input_feature_dict("Polygon", poly_coords_with_hole)
         expected = {
             "type": "Feature",
-            "geometry": {"type": "Point", "coordinates": [10, 20]},
+            "geometry": {"type": "Polygon", "coordinates": poly_coords_with_hole},
             "properties": {}
         }
         self.assertEqual(sanitize_geojson_object(data), expected)
 
-    # --- Validation Error Tests ---
+    # --- Validation Error Tests for sanitize_geojson_object ---
+    # These tests assume the input dictionary `data` has passed initial `geojson.loads().is_valid`
+    # So, coordinate structures are assumed to be generally correct per GeoJSON spec,
+    # but our function applies stricter rules (e.g. specific types, no FeatureCollections).
 
-    def test_input_not_a_dictionary(self):
+    def test_input_not_a_dictionary_still_raises_error(self):
+        # Though Lamning.save() should pass a dict, this is a safeguard in the utility.
         with self.assertRaisesMessage(ValidationError, "Input must be a dictionary."):
-            sanitize_geojson_object("not_a_dict") # type: ignore
+            sanitize_geojson_object("not_a_dict_for_sure") # type: ignore
 
-    def test_input_not_a_feature(self):
-        data = {"type": "Point", "coordinates": [10, 20]} # A geometry, not a feature
+    def test_input_not_a_feature_raises_error(self):
+        # Simulate a valid GeoJSON Point geometry object (not a Feature)
+        data = geojson.Point((10,20)) # This is a geojson library object
+        # Convert to dict for the function, as geojson.loads() might yield dicts
+        # or custom objects that are dict-like. Our sanitize_geojson_object expects dict.
+        data_dict = dict(data)
         with self.assertRaisesMessage(ValidationError, "Input GeoJSON must be of type 'Feature'."):
-            sanitize_geojson_object(data)
+            sanitize_geojson_object(data_dict)
 
-    def test_feature_missing_geometry(self):
-        data = {"type": "Feature", "properties": {}}
+    def test_feature_missing_geometry_member_raises_error(self):
+        data = {"type": "Feature", "properties": {}} # Missing 'geometry'
         with self.assertRaisesMessage(ValidationError, "Feature 'geometry' must be a dictionary."):
             sanitize_geojson_object(data)
 
-    def test_feature_geometry_not_a_dict(self):
-        data = {"type": "Feature", "geometry": "not_a_dict", "properties": {}}
+    def test_feature_geometry_not_a_dict_raises_error(self):
+        data = {"type": "Feature", "geometry": "not_a_dictionary", "properties": {}}
         with self.assertRaisesMessage(ValidationError, "Feature 'geometry' must be a dictionary."):
             sanitize_geojson_object(data)
 
-    def test_unsupported_geometry_type(self):
-        data = {
-            "type": "Feature",
-            "geometry": {"type": "MultiPoint", "coordinates": [[10, 20]]},
-            "properties": {}
-        }
+    def test_unsupported_geometry_type_in_feature_raises_error(self):
+        # Simulate a Feature with a MultiPoint geometry
+        geom = geojson.MultiPoint([(10,20), (30,40)])
+        data = geojson.Feature(geometry=geom, properties={"name":"test"})
+        data_dict = dict(data) # Convert to dict
+        # Manually ensure geometry is also a dict if needed by sanitize_geojson_object
+        data_dict['geometry'] = dict(data_dict['geometry'])
+
         with self.assertRaisesMessage(ValidationError, "Geometry type must be one of ['Point', 'LineString', 'Polygon']. Got 'MultiPoint'."):
-            sanitize_geojson_object(data)
+            sanitize_geojson_object(data_dict)
 
-    def test_geometry_missing_coordinates(self):
+    def test_geometry_missing_coordinates_member_raises_error(self):
+        # A dict that looks like a geometry but is missing coordinates
+        # geojson.loads() + is_valid should catch this, but our function also double checks.
         data = {
             "type": "Feature",
-            "geometry": {"type": "Point"}, # Missing coordinates
+            "geometry": {"type": "Point"}, # No 'coordinates' key
             "properties": {}
         }
         with self.assertRaisesMessage(ValidationError, "'coordinates' member is required for geometry type 'Point'."):
             sanitize_geojson_object(data)
 
-    def test_point_invalid_coordinates_string(self):
-        data = {"type":"Feature", "geometry": {"type":"Point", "coordinates": "10,20"}, "properties":{}}
-        with self.assertRaisesMessage(ValidationError, "Point 'coordinates' must be a list of 2 or 3 numbers."):
-            sanitize_geojson_object(data)
+    # Low-level coordinate validation tests (like wrong type in list, too few elements)
+    # are now largely the responsibility of `geojson.loads().is_valid`.
+    # sanitize_geojson_object assumes coordinates are structurally valid if they exist.
+    # So, tests like test_point_invalid_coordinates_string, test_point_invalid_coordinates_too_few_elements, etc.
+    # from the previous version of SanitizeGeoJSONObjectTest are removed as they would be caught by geojson.loads().
 
-    def test_point_invalid_coordinates_too_few_elements(self):
-        data = {"type":"Feature", "geometry": {"type":"Point", "coordinates": [10]}, "properties":{}}
-        with self.assertRaisesMessage(ValidationError, "Point 'coordinates' must be a list of 2 or 3 numbers."):
-            sanitize_geojson_object(data)
+    def test_foreign_members_on_feature_are_stripped(self):
+        data = self._create_valid_input_feature_dict("Point", [10,20])
+        data["foreign_top_level"] = "should_be_gone"
+        data["id"] = "test_id_feat" # Should be stripped
+        data["bbox"] = [-1,-1,1,1] # Should be stripped
 
-    def test_point_invalid_coordinates_too_many_elements(self):
-        data = {"type":"Feature", "geometry": {"type":"Point", "coordinates": [10,20,30,40]}, "properties":{}}
-        with self.assertRaisesMessage(ValidationError, "Point 'coordinates' must be a list of 2 or 3 numbers."):
-            sanitize_geojson_object(data)
+        expected = {
+            "type": "Feature",
+            "geometry": {"type": "Point", "coordinates": [10, 20]},
+            "properties": {}
+        }
+        self.assertEqual(sanitize_geojson_object(data), expected)
 
-    def test_point_invalid_coordinates_wrong_type(self):
-        data = {"type":"Feature", "geometry": {"type":"Point", "coordinates": [10,"20"]}, "properties":{}}
-        with self.assertRaisesMessage(ValidationError, "Point 'coordinates' must be a list of 2 or 3 numbers."):
-            sanitize_geojson_object(data)
+    def test_foreign_members_on_geometry_are_stripped(self):
+        data = self._create_valid_input_feature_dict("Point", [10,20])
+        # data['geometry'] is a dict after _create_valid_input_feature_dict
+        data['geometry']['foreign_geom_prop'] = "also_gone"
+        data['geometry']['bbox'] = [0,0,0,0] # Should be stripped
 
-    def test_linestring_invalid_coordinates_not_list_of_lists(self):
-        data = {"type":"Feature", "geometry": {"type":"LineString", "coordinates": [10,20,30,40]}, "properties":{}}
-        with self.assertRaisesMessage(ValidationError, "LineString 'coordinates' must be a list of 2 or more positions (each a list of 2-3 numbers)."):
-            sanitize_geojson_object(data)
+        expected = {
+            "type": "Feature",
+            "geometry": {"type": "Point", "coordinates": [10, 20]}, # No foreign_geom_prop, no bbox
+            "properties": {}
+        }
+        result = sanitize_geojson_object(data)
+        self.assertEqual(result, expected)
+        self.assertNotIn("foreign_geom_prop", result["geometry"])
+        self.assertNotIn("bbox", result["geometry"])
 
-    def test_linestring_invalid_coordinates_too_few_points(self):
-        data = {"type":"Feature", "geometry": {"type":"LineString", "coordinates": [[10,20]]}, "properties":{}} # Needs >= 2 points
-        with self.assertRaisesMessage(ValidationError, "LineString 'coordinates' must be a list of 2 or more positions (each a list of 2-3 numbers)."):
-            sanitize_geojson_object(data)
-
-    def test_linestring_invalid_coordinates_point_wrong_type(self):
-        data = {"type":"Feature", "geometry": {"type":"LineString", "coordinates": [[10,20], [30,"40"]]}, "properties":{}}
-        with self.assertRaisesMessage(ValidationError, "LineString 'coordinates' must be a list of 2 or more positions (each a list of 2-3 numbers)."):
-            sanitize_geojson_object(data)
-
-    def test_polygon_invalid_coordinates_not_list_of_lists_of_lists(self):
-        data = {"type":"Feature", "geometry": {"type":"Polygon", "coordinates": [[10,20],[30,40]]}, "properties":{}}
-        with self.assertRaisesMessage(ValidationError, "Polygon 'coordinates' must be a list of linear rings (each a list of positions)."):
-            sanitize_geojson_object(data)
-
-    def test_polygon_empty_coordinates_list(self): # An empty list of rings
-        data = {"type":"Feature", "geometry": {"type":"Polygon", "coordinates": []}, "properties":{}}
-        with self.assertRaisesMessage(ValidationError, "Polygon 'coordinates' must be a list of linear rings (each a list of positions)."): # Fails because _is_valid_coordinate_list expects non-empty for depth 3 unless min_depth=0
-            sanitize_geojson_object(data)
-
-    def test_polygon_ring_too_few_points(self):
-        data = {"type":"Feature", "geometry": {"type":"Polygon", "coordinates": [[[0,0],[1,0],[0,0]]]}, "properties":{}} # Ring needs >= 4 points
-        with self.assertRaisesMessage(ValidationError, "Each ring in a Polygon must have at least 4 positions."):
-            sanitize_geojson_object(data)
-
-    def test_polygon_ring_not_closed(self):
-        data = {"type":"Feature", "geometry": {"type":"Polygon", "coordinates": [[[0,0],[1,0],[1,1],[0,1]]]}, "properties":{}} # Not closed
-        with self.assertRaisesMessage(ValidationError, "The first and last positions in a Polygon ring must be identical."):
-            sanitize_geojson_object(data)
-
-    def test_polygon_valid_with_hole(self): # Ensure complex but valid polygon is fine
+    def test_valid_polygon_with_hole(self): # Renamed from previous test_polygon_valid_with_hole
         data = {
             "type": "Feature",
             "geometry": {

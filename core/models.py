@@ -19,6 +19,7 @@ from .utilities import (
     validate_observation_type,
 )
 from django.core.exceptions import ValidationError # For save method
+import geojson # For parsing in Lamning.save()
 
 
 class Feedback(models.Model):
@@ -138,21 +139,36 @@ class Lamning(models.Model):
             # Raising ValidationError here ensures save() fails if geojson is empty/None.
             raise ValidationError({'geojson': _("GeoJSON content is required.")})
 
+        parsed_geojson_obj = None
         try:
-            geojson_data_dict = json.loads(self.geojson)
-        except json.JSONDecodeError as e:
-            # Re-raise as ValidationError so it can be handled by forms/admin
-            raise ValidationError({'geojson': _(f"Invalid JSON: {e.msg}")}) from e
+            # Use geojson.loads for initial parsing and structural validation
+            parsed_geojson_obj = geojson.loads(self.geojson)
+        except (json.JSONDecodeError, ValueError, TypeError) as e:
+            # Catches errors from json.loads if it's not valid JSON,
+            # or ValueError from geojson library if structure is bad (e.g. invalid coordinate types)
+            raise ValidationError({'geojson': _(f"Invalid GeoJSON string: {str(e)}")}) from e
+
+        # The geojson library returns its own classes, not raw dicts directly for top level,
+        # but they are dict-like. sanitize_geojson_object expects a dict.
+        # We can convert it to a dict, or rely on its dict-like nature if sanitize_geojson_object handles it.
+        # For safety, let's ensure it's a plain dict if sanitize_geojson_object strictly expects one.
+        # However, geojson objects are often instances of geojson.feature.Feature etc.
+        # which are dict-like. Let's assume sanitize_geojson_object can handle these dict-like objects.
+        # The `is_valid` check is crucial.
+        if not hasattr(parsed_geojson_obj, 'is_valid') or not parsed_geojson_obj.is_valid:
+             raise ValidationError({'geojson': _("Invalid GeoJSON structure provided.")})
 
         try:
-            # Sanitize_geojson_object now also validates the content strictly
-            sanitized_geojson_dict = sanitize_geojson_object(geojson_data_dict)
+            # Pass the parsed object (which is dict-like) to sanitize_geojson_object
+            # sanitize_geojson_object will perform our specific business rule validations
+            # (e.g., must be Feature, specific geometry types, empty properties)
+            sanitized_geojson_dict = sanitize_geojson_object(parsed_geojson_obj) # type: ignore
             self.geojson = json.dumps(sanitized_geojson_dict)
-        except ValidationError as e: # Catch ValidationError from sanitize_geojson_object
-             # Propagate the validation error, possibly enriching it or logging
+        except ValidationError as e: # Catch ValidationError from our sanitize_geojson_object
+            # Propagate the validation error
             raise ValidationError({'geojson': e.messages}) from e
 
-        # Calculate centroid from the sanitized GeoJSON string
+        # Calculate centroid from the newly sanitized GeoJSON string
         # centroid_from_feature also uses geojson.loads(), which is a bit redundant
         # but okay for now. It might fail if sanitized_geojson is not a Feature
         # or has no coordinates, which sanitize_geojson_object should prevent.
@@ -167,7 +183,7 @@ class Lamning(models.Model):
             # For now, let's make sure lat/lon are not set or raise an error.
             # Given the strictness of sanitize_geojson_object, this should be rare.
             # Consider logging this error.
-            raise ValidationError({'geojson': _(f"Could not calculate centroid from sanitized GeoJSON: {str(e)}")})
+            raise ValidationError({'geojson': _(f"Could not calculate centroid from sanitized GeoJSON: {str(e)}")}) from e
 
 
         super(Lamning, self).save(*args, **kwargs)

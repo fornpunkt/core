@@ -50,11 +50,13 @@ class LamningModelTest(TestCase):
 
     # The following three tests are older versions and will be replaced by the
     # "Existing tests adapted for new sanitization rules" section below.
-    # def test_geojson_sanitization_extra_top_level_properties(self): ...
-    # def test_geojson_sanitization_extra_nested_properties_in_geometry(self): ...
-    # def test_geojson_valid_geojson_unchanged(self): ...
+    # The tests like test_geojson_sanitization_extra_top_level_properties,
+    # test_geojson_sanitization_extra_nested_properties_in_geometry, and
+    # test_geojson_valid_geojson_unchanged_except_properties_and_allowed_keys
+    # are effectively replaced by the more specific `test_save_valid_feature_..._sanitized` tests.
+    # I will remove the "Existing tests adapted..." section to avoid redundancy and use the clearer named tests.
 
-    def test_geojson_empty_string_fails_validation(self):
+    def test_geojson_empty_string_is_invalid_on_full_clean(self): # Renamed for clarity
         """Test that an empty GeoJSON string fails model validation via full_clean()."""
         lamning_empty_str = Lamning(
             title='Empty String GeoJSON',
@@ -64,12 +66,12 @@ class LamningModelTest(TestCase):
             user=self.user
         )
         with self.assertRaises(ValidationError) as cm:
-            lamning_empty_str.full_clean()
-
-        # Check that the error is related to the geojson field
+            lamning_empty_str.full_clean() # full_clean calls model's clean_fields, then clean, then validators
         self.assertIn('geojson', cm.exception.error_dict)
+        # The error can come from TextField(blank=False) or the save method's initial check if save is forced.
+        # For full_clean, it's likely from clean_fields due to blank=False.
 
-    def test_geojson_none_value_fails_validation(self):
+    def test_geojson_none_value_is_invalid_on_full_clean(self): # Renamed for clarity
         """Test that None for GeoJSON fails model validation via full_clean() as field is not nullable/blankable."""
         lamning_none_geojson = Lamning(
             title='None GeoJSON Validation',
@@ -80,153 +82,55 @@ class LamningModelTest(TestCase):
         )
         with self.assertRaises(ValidationError) as cm:
             lamning_none_geojson.full_clean()
-        # Django's Model.clean_fields() raises ValidationError if a non-nullable/non-blankable field is None/empty.
         self.assertIn('geojson', cm.exception.error_dict)
 
-    # test_geojson_feature_properties_preserved is no longer relevant as properties are emptied.
 
-    # --- Existing tests adapted for new sanitization rules ---
+    # --- Tests for Lamning.save() focusing on the new sanitization and validation flow ---
 
-    def test_geojson_sanitization_extra_top_level_properties(self): # Was an old test, adapted
-        """Test that extra top-level properties are removed and properties emptied."""
-        geojson_with_extra = {
-            "type": "Feature",
-            "id": "f1", # should be removed
-            "bbox": [-1,-1,1,1], # should be removed
-            "geometry": {"type": "Point", "coordinates": [15.0, 65.0]},
-            "properties": {"name": "Sanitize Test", "value": 1}, # should be emptied
-            "extra_top_prop": "should_be_removed",
-        }
-        lamning = Lamning.objects.create(
-            title='Sanitization Test Top Level',
-            description='Testing sanitization',
-            geojson=json.dumps(geojson_with_extra),
-            observation_type='RO',
-            user=self.user
-        )
-        lamning.save()
-
-        retrieved_lamning = Lamning.objects.get(id=lamning.id)
-        saved_geojson_dict = json.loads(retrieved_lamning.geojson)
-
-        expected_geojson_dict = {
-            "type": "Feature",
-            "geometry": {"type": "Point", "coordinates": [15.0, 65.0]},
-            "properties": {} # Properties are emptied
-        }
-
-        self.assertEqual(saved_geojson_dict, expected_geojson_dict)
-        self.assertEqual(retrieved_lamning.center_lon, 15.0)
-        self.assertEqual(retrieved_lamning.center_lat, 65.0)
-
-    def test_geojson_sanitization_extra_nested_properties_in_geometry(self): # Was an old test, adapted
-        """Test that extra properties in nested geometry are removed and properties emptied."""
-        geojson_with_nested_extra = {
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [16.0, 66.0],
-                "extra_geom_prop": "remove_this", # Should be removed from geometry
-                "bbox": [0,0,1,1] # Should be removed from geometry
-            },
-            "properties": {"name": "Nested Sanitize Test"} # Should be emptied
-        }
-        lamning = Lamning.objects.create(
-            title='Sanitization Test Nested',
-            description='Testing nested sanitization',
-            geojson=json.dumps(geojson_with_nested_extra),
-            observation_type='FO',
-            user=self.user
-        )
-        lamning.save()
-
-        retrieved_lamning = Lamning.objects.get(id=lamning.id)
-        saved_geojson_dict = json.loads(retrieved_lamning.geojson)
-
-        expected_geometry = {"type": "Point", "coordinates": [16.0, 66.0]}
-        self.assertEqual(saved_geojson_dict["geometry"], expected_geometry)
-        self.assertEqual(saved_geojson_dict["properties"], {}) # Properties are emptied
-
-    def test_geojson_valid_geojson_unchanged_except_properties_and_allowed_keys(self): # Was test_geojson_valid_geojson_unchanged
-        """Test that valid GeoJSON has properties emptied and only allowed keys remain."""
-        valid_geojson_dict_original = {
-            "type":"Feature",
-            "id": "featValid", # Will be removed
-            "geometry":{"type":"Point","coordinates":[13.5,60.5]},
-            "properties":{"name":"Valid", "value":10} # Will be emptied
-        }
-
-        lamning = Lamning.objects.create(
-            title='Valid GeoJSON Properties Test',
-            description='Testing valid GeoJSON properties handling',
-            geojson=json.dumps(valid_geojson_dict_original),
-            observation_type='FO',
-            user=self.user
-        )
-        lamning.save()
-
-        retrieved_lamning = Lamning.objects.get(id=lamning.id)
-        saved_geojson_dict = json.loads(retrieved_lamning.geojson)
-
-        expected_saved_geojson_dict = {
-            "type":"Feature",
-            "geometry":{"type":"Point","coordinates":[13.5,60.5]},
-            "properties":{}
-        }
-        self.assertEqual(saved_geojson_dict, expected_saved_geojson_dict)
-        self.assertEqual(retrieved_lamning.center_lon, 13.5)
-        self.assertEqual(retrieved_lamning.center_lat, 60.5)
-
-    # --- New tests for Lamning.save() with stricter sanitization ---
-    # The ones below are mostly from the previous iteration and should be correct.
-    # I'll rename the one that was miscopied.
-
-    def test_save_valid_feature_point_sanitized(self):
-        """Test saving Lamning with a valid Point Feature gets sanitized as expected."""
+    def test_save_valid_feature_point_is_correctly_sanitized(self): # Renamed for clarity
+        """Test saving Lamning with a valid Point Feature gets correctly sanitized."""
         raw_geojson_dict = {
             "type": "Feature",
             "id": "should_be_removed",
-            "bbox": [-10,-10,10,10],
+            "bbox": [-10,-10,10,10], # Feature bbox
             "geometry": {
                 "type": "Point",
                 "coordinates": [13.0, 60.0],
-                "bbox": [-1, -1, 1, 1] # nested bbox also removed
+                "bbox": [-1, -1, 1, 1] # Geometry bbox
             },
-            "properties": {"name": "Original Name", "value": 123} # Should be emptied
+            "properties": {"name": "Original Name", "value": 123}, # Should be emptied
+            "foreign_prop": "remove_me"
         }
-        lamning = Lamning.objects.create(
+        lamning = Lamning.objects.create( # .create() calls .save()
             title='Sanitized Point Lamning',
             description='Test save sanitization',
             geojson=json.dumps(raw_geojson_dict),
             observation_type='FO',
             user=self.user
         )
-        # lamning.save() is called by create()
-
         retrieved = Lamning.objects.get(id=lamning.id)
         sanitized_geojson_stored = json.loads(retrieved.geojson)
 
         expected_geojson_dict = {
             "type": "Feature",
-            "geometry": {"type": "Point", "coordinates": [13.0, 60.0]},
-            "properties": {} # Properties are emptied
+            "geometry": {"type": "Point", "coordinates": [13.0, 60.0]}, # geometry bbox removed
+            "properties": {} # Properties emptied, id/bbox/foreign_prop from Feature removed
         }
         self.assertEqual(sanitized_geojson_stored, expected_geojson_dict)
         self.assertEqual(retrieved.center_lon, 13.0)
         self.assertEqual(retrieved.center_lat, 60.0)
 
-    def test_save_valid_feature_linestring_sanitized(self):
+    def test_save_valid_feature_linestring_is_correctly_sanitized(self): # Renamed
         raw_geojson_dict = {
             "type": "Feature",
+            "id": "ls001",
             "geometry": {"type": "LineString", "coordinates": [[10,20],[30,40]]},
-            "properties": {"name": "Original Line"}
+            "properties": {"name": "Original Line", "length": 100}
         }
         lamning = Lamning.objects.create(
             title='Sanitized LineString Lamning',
-            description='Test save sanitization line',
             geojson=json.dumps(raw_geojson_dict),
-            observation_type='FO',
-            user=self.user
+            user=self.user, description=""
         )
         retrieved = Lamning.objects.get(id=lamning.id)
         sanitized_geojson_stored = json.loads(retrieved.geojson)
@@ -236,23 +140,20 @@ class LamningModelTest(TestCase):
             "properties": {}
         }
         self.assertEqual(sanitized_geojson_stored, expected_geojson_dict)
-        # Centroid for LineString: ( (10+30)/2, (20+40)/2 ) = (20, 30)
         self.assertEqual(retrieved.center_lon, 20.0)
         self.assertEqual(retrieved.center_lat, 30.0)
 
 
-    def test_save_valid_feature_polygon_sanitized(self):
+    def test_save_valid_feature_polygon_is_correctly_sanitized(self): # Renamed
         raw_geojson_dict = {
             "type": "Feature",
             "geometry": {"type": "Polygon", "coordinates": [[[0,0],[10,0],[10,10],[0,10],[0,0]]]},
-            "properties": {"name": "Original Polygon"}
+            "properties": {"name": "Original Polygon", "area": 100}
         }
         lamning = Lamning.objects.create(
             title='Sanitized Polygon Lamning',
-            description='Test save sanitization polygon',
             geojson=json.dumps(raw_geojson_dict),
-            observation_type='FO',
-            user=self.user
+            user=self.user, description=""
         )
         retrieved = Lamning.objects.get(id=lamning.id)
         sanitized_geojson_stored = json.loads(retrieved.geojson)
@@ -276,8 +177,8 @@ class LamningModelTest(TestCase):
                 observation_type='FO',
                 user=self.user
             )
-        self.assertIn('geojson', cm.exception.error_dict)
-        self.assertTrue("Invalid JSON" in cm.exception.error_dict['geojson'][0].message)
+        self.assertIn('geojson', cm.exception.message_dict)
+        self.assertTrue("Invalid GeoJSON string" in cm.exception.message_dict['geojson'][0])
 
 
     def test_save_geojson_not_a_feature_raises_validation_error(self):
@@ -312,24 +213,8 @@ class LamningModelTest(TestCase):
         self.assertTrue("Geometry type must be one of" in cm.exception.error_dict['geojson'][0].message)
         self.assertTrue("Got 'MultiPolygon'." in cm.exception.error_dict['geojson'][0].message)
 
-    def test_save_feature_with_invalid_coordinates_raises_validation_error(self):
-        invalid_coords_geojson_str = json.dumps({
-            "type": "Feature",
-            "geometry": {"type": "Point", "coordinates": "not_a_list"},
-            "properties": {}
-        })
-        with self.assertRaises(ValidationError) as cm:
-            Lamning.objects.create(
-                title='Invalid Coords Test',
-                description='Test save invalid coords',
-                geojson=invalid_coords_geojson_str,
-                observation_type='FO',
-                user=self.user
-            )
-        self.assertIn('geojson', cm.exception.error_dict)
-        self.assertTrue("Geometry type must be one of" in cm.exception.error_dict['geojson'][0].message) # Check specific message part
-        self.assertTrue("Got 'MultiPolygon'." in cm.exception.error_dict['geojson'][0].message) # Check specific message part
-
+    # The test_save_feature_with_invalid_coordinates_raises_validation_error below is the correct one.
+    # The one above with the same name had incorrect assertions.
     def test_save_feature_with_invalid_coordinates_raises_validation_error(self):
         invalid_coords_geojson_str = json.dumps({
             "type": "Feature",
@@ -344,6 +229,8 @@ class LamningModelTest(TestCase):
                 observation_type='FO',
                 user=self.user
             )
-        self.assertIn('geojson', cm.exception.error_dict)
-        # Check for a message indicating coordinate validation failure from sanitize_geojson_object
-        self.assertTrue("Point 'coordinates' must be a list" in cm.exception.error_dict['geojson'][0].message)
+        self.assertIn('geojson', cm.exception.message_dict)
+        error_message = cm.exception.message_dict['geojson'][0]
+        self.assertTrue("Invalid GeoJSON string" in error_message)
+        # Check for part of the original ValueError message from the geojson library
+        self.assertTrue("not a JSON compliant number" in error_message or "coordinates must be a list or tuple" in error_message)
