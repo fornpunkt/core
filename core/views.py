@@ -26,7 +26,7 @@ from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
                          JsonResponse)
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
-from django.middleware.csrf import get_token, CsrfViewMiddleware
+from django.middleware.csrf import CsrfViewMiddleware
 from django.urls import reverse, reverse_lazy
 from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.decorators import method_decorator
@@ -43,8 +43,7 @@ from taggit.utils import edit_string_for_tags
 
 from .forms import LoginForm, SignUpForm
 from .models import (AccessToken, Annotation, Comment, CustomTag, Feedback,
-                     KMRLamningType, Lamning, LamningWikipediaLink,
-                     TaggedThing, UserDetails)
+                     KMRLamningType, Lamning, LamningWikipediaLink, UserDetails)
 from .utilities import (JsonApiResponse, UpstreamTimeoutExeption,
                         create_meta_description, fetch_raa_lamning_for_view,
                         get_soch_search_result, is_possible_raa_id, is_raa_id,
