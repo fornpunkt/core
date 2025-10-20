@@ -562,6 +562,19 @@ def api_accounts_export(request):
     if account[0].first_name:
         graph["schema:name"] = account[0].first_name
 
+    # Include ORCID iD if linked
+    try:
+        user_details = account[0].userdetails
+        if user_details.orcid_id:
+            graph["schema:identifier"] = {
+                "@type": "schema:PropertyValue",
+                "schema:propertyID": "ORCID",
+                "schema:value": user_details.orcid_id,
+                "schema:url": f"https://orcid.org/{user_details.orcid_id}"
+            }
+    except UserDetails.DoesNotExist:
+        pass
+
     return JsonApiResponse(ld_wrap_graph(graph), content_type="application/ld+json")
 
 
@@ -974,6 +987,102 @@ def activate_account(request, uidb64, token):
 
     messages.success(request, "Konto kunde inte aktiveras. Kontrollera att du har kopierat rätt länk.")
     return redirect("login")
+
+
+@login_required
+def orcid_login(request):
+    """Initiate ORCID OAuth flow."""
+    if not settings.ORCID_CLIENT_ID:
+        messages.error(request, "ORCID integration är inte konfigurerad.")
+        return redirect("settings")
+
+    # Store the next URL in session to redirect after OAuth
+    request.session['orcid_next'] = request.GET.get('next', 'settings')
+
+    # Build ORCID authorization URL
+    auth_url = (
+        f"{settings.ORCID_BASE_URL}/oauth/authorize"
+        f"?client_id={settings.ORCID_CLIENT_ID}"
+        f"&response_type=code"
+        f"&scope=/authenticate"
+        f"&redirect_uri={settings.ORCID_REDIRECT_URI}"
+    )
+    return redirect(auth_url)
+
+
+@login_required
+def orcid_callback(request):
+    """Handle ORCID OAuth callback."""
+    code = request.GET.get('code')
+    error = request.GET.get('error')
+
+    if error:
+        messages.error(request, f"ORCID autentisering misslyckades: {error}")
+        return redirect("settings")
+
+    if not code:
+        messages.error(request, "Ingen auktoriseringskod mottagen från ORCID.")
+        return redirect("settings")
+
+    try:
+        # Exchange code for access token
+        token_url = f"{settings.ORCID_BASE_URL}/oauth/token"
+        token_data = {
+            'client_id': settings.ORCID_CLIENT_ID,
+            'client_secret': settings.ORCID_CLIENT_SECRET,
+            'grant_type': 'authorization_code',
+            'code': code,
+            'redirect_uri': settings.ORCID_REDIRECT_URI,
+        }
+        token_response = requests.post(token_url, data=token_data)
+        token_response.raise_for_status()
+        token_json = token_response.json()
+
+        # Extract ORCID iD from response
+        orcid_id = token_json.get('orcid')
+
+        if not orcid_id:
+            messages.error(request, "Kunde inte hämta ORCID iD från svaret.")
+            return redirect("settings")
+
+        # Check if ORCID is already linked to another user
+        existing_user = UserDetails.objects.filter(orcid_id=orcid_id).exclude(user=request.user).first()
+        if existing_user:
+            messages.error(
+                request,
+                f"Detta ORCID iD är redan kopplat till ett annat konto."
+            )
+            return redirect("settings")
+
+        # Save ORCID iD to user's profile
+        user_details = request.user.userdetails
+        user_details.orcid_id = orcid_id
+        user_details.save()
+
+        messages.success(
+            request,
+            f"Ditt konto har kopplats till ORCID iD: {orcid_id}"
+        )
+
+    except requests.exceptions.RequestException as e:
+        messages.error(request, f"Ett fel uppstod vid kommunikation med ORCID: {str(e)}")
+        sentry_sdk.capture_exception(e)
+        return redirect("settings")
+
+    # Redirect to the next URL or settings
+    next_url = request.session.pop('orcid_next', 'settings')
+    return redirect(next_url)
+
+
+@login_required
+def orcid_disconnect(request):
+    """Disconnect ORCID from user account."""
+    if request.method == 'POST':
+        user_details = request.user.userdetails
+        user_details.orcid_id = None
+        user_details.save()
+        messages.success(request, "ORCID iD har kopplats bort från ditt konto.")
+    return redirect("settings")
 
 
 class ObservationTypesView(generic.TemplateView):

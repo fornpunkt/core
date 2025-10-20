@@ -47,6 +47,14 @@ class UserDetails(models.Model):
 
     user_description = models.TextField(blank=True)
 
+    orcid_id = models.CharField(
+        max_length=19,
+        blank=True,
+        null=True,
+        unique=True,
+        help_text="ORCID iD (e.g., 0000-0002-1825-0097)",
+    )
+
     def get_absolute_url(self):
         return reverse("profile", args=self.user.username)
 

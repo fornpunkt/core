@@ -35,6 +35,14 @@ if 'FP_ENVIRONMENT' in os.environ and os.environ['FP_ENVIRONMENT'] == 'productio
     LANTMATERIET_USERNAME = os.environ.get('LANTMATERIET_USERNAME')
     LANTMATERIET_PASSWORD = os.environ.get('LANTMATERIET_PASSWORD')
 
+    # ORCID OAuth settings
+    ORCID_CLIENT_ID = os.environ.get('ORCID_CLIENT_ID')
+    ORCID_CLIENT_SECRET = os.environ.get('ORCID_CLIENT_SECRET')
+    ORCID_REDIRECT_URI = os.environ.get('ORCID_REDIRECT_URI')
+    # Use production ORCID in production
+    ORCID_BASE_URL = 'https://orcid.org'
+    ORCID_API_BASE_URL = 'https://pub.orcid.org/v3.0'
+
     if os.getenv('DATABASE_URL', None) is None:
         raise Exception('DATABASE_URL environment variable not defined')
     DATABASES = {
@@ -66,6 +74,14 @@ else:
 
     LANTMATERIET_USERNAME = os.environ.get('LANTMATERIET_USERNAME')
     LANTMATERIET_PASSWORD = os.environ.get('LANTMATERIET_PASSWORD')
+
+    # ORCID OAuth settings (development)
+    ORCID_CLIENT_ID = os.environ.get('ORCID_CLIENT_ID')
+    ORCID_CLIENT_SECRET = os.environ.get('ORCID_CLIENT_SECRET')
+    ORCID_REDIRECT_URI = os.environ.get('ORCID_REDIRECT_URI', 'http://localhost:8000/auth/orcid/callback')
+    # Use sandbox ORCID in development
+    ORCID_BASE_URL = os.environ.get('ORCID_BASE_URL', 'https://sandbox.orcid.org')
+    ORCID_API_BASE_URL = os.environ.get('ORCID_API_BASE_URL', 'https://pub.sandbox.orcid.org/v3.0')
 
     DATABASES = {
         'default': {
