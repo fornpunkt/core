@@ -27,12 +27,12 @@
         {% endif %}
         <div class="mb-3">
             <label for="title" class="form-label">Titel:</label>
-            <input type="text" value="{{ lamning.title }}" maxlength="150" class="form-control" name="title" required />
+            <input type="text" maxlength="150" class="form-control" name="title" required {% if form.title.value %}value="{{ form.title.value }}"{% else %}value="{{ lamning.title }}"{% endif %} />
         </div>
 
         <div class="mb-3">
             <label for="description" class="form-label">Beskrivning:</label>
-            <textarea aria-describedby="descriptionHelpBlock" class="form-control" name="description" rows="7" required>{{ lamning.description }}</textarea>
+            <textarea aria-describedby="descriptionHelpBlock" class="form-control" name="description" rows="7" required>{% if form.description.value %}{{ form.description.value }}{% else %}{{ lamning.description }}{% endif %}</textarea>
             <div id="descriptionHelpBlock" class="form-text">
                 Tips: Du kan skapa länkar till andra lämningar genom att använda <abbr title="Riksantikvarieämbetet">RAÄ</abbr>s lämningsnummer eller FornPunkts lämningsidentifierare i din beskrivning. Exempel: <code>L1984:6664</code>, <code>FP-Ypn7ona</code>
             </div>
@@ -40,7 +40,7 @@
 
         <div class="mb-3">
             <label for="tags" class="form-label">Taggar:</label>
-            <input aria-describedby="tagsHelpBlock" type="text" value="{{ tags_edit_string }}" maxlength="150" class="form-control" name="tags" />
+            <input aria-describedby="tagsHelpBlock" type="text" maxlength="150" class="form-control" name="tags" {% if form.tags.value %}value="{{ form.tags.value }}"{% else %}value="{{ tags_edit_string }}"{% endif %} />
             <div id="tagsHelpBlock" class="form-text">
                 Lista med kommaseparerade taggar. Taggar får gärna användas för att indikera typ och källor. Exempel: <code>soldattorp, häradskartan</code>.
             </div>
@@ -49,6 +49,15 @@
         <div class="mb-3">
             <label for="observation_type" class="form-label">Observationstyp:</label>
             <select  class="form-select" name="observation_type">
+                {% if form.observation_type.value %}
+                <option {% if not form.observation_type.value %}selected{% endif %} value>---</option>
+                <option {% if 'FO' == form.observation_type.value %}selected{% endif %} value="FO">Fältobservation</option>
+                <option {% if 'RO' == form.observation_type.value %}selected{% endif %} value="RO">Fjärrobservation</option>
+                {# only show the machine observation alternative if the user is either an admin or the type is already machine observation #}
+                {% if user.is_staff or 'MO' == form.observation_type.value %}
+                <option {% if 'MO' == form.observation_type.value %}selected{% endif %} value="MO">Maskinobservation</option>
+                {% endif %}
+                {% else %}
                 <option {% if not lamning.observation_type %}selected{% endif %} value>---</option>
                 <option {% if 'FO' == lamning.observation_type %}selected{% endif %} value="FO">Fältobservation</option>
                 <option {% if 'RO' == lamning.observation_type %}selected{% endif %} value="RO">Fjärrobservation</option>
@@ -56,13 +65,14 @@
                 {% if user.is_staff or 'MO' == lamning.observation_type %}
                 <option {% if 'MO' == lamning.observation_type %}selected{% endif %} value="MO">Maskinobservation</option>
                 {% endif %}
+                {% endif %}
             </select>
         </div>
 
 
         {% include "core/_partials/map-edit-tools.html" %}
 
-        <textarea hidden="true" name="geojson">{{ lamning.geojson }}</textarea>
+        <textarea hidden="true" name="geojson">{% if form.geojson.value %}{{ form.geojson.value }}{% else %}{{ lamning.geojson }}{% endif %}</textarea>
         <div id="map"></div>
 
         {% include "core/_partials/copyright-notice.html" %}
