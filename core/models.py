@@ -360,3 +360,129 @@ class AccessToken(models.Model):
 
     def __str__(self):
         return f"{self.user} ({self.rights})"
+
+
+class ShadowLamning(models.Model):
+    """Shadow copy of RAA lamning data for efficient list serving"""
+
+    uuid = models.UUIDField(unique=True)
+    title = models.TextField()
+    description = models.TextField(blank=True)
+    geojson = models.TextField(blank=True)
+    center_lat = models.FloatField(null=True, blank=True)
+    center_lon = models.FloatField(null=True, blank=True)
+    lamning_type = models.TextField(blank=True)
+    last_synced = models.DateTimeField(auto_now=True)
+    created_time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_time"]
+        verbose_name = "Shadow Lamning"
+        verbose_name_plural = "Shadow Lamnings"
+
+    def __str__(self):
+        return f"{self.title} ({self.uuid})"
+
+    @property
+    def json_ld(self):
+        """Return a JSON-LD representation of the shadow lamning"""
+        graph = {
+            "@type": "schema:CreativeWork",
+            "@id": f"https://fornpunkt.se/raa/lamning/{self.uuid}",
+            "schema:name": self.title,
+            "schema:text": self.description,
+            "schema:identifier": str(self.uuid),
+            "schema:url": ld_make_identifier(f"http://kulturarvsdata.se/raa/lamning/{self.uuid}"),
+            "schema:provider": ld_make_identifier("https://www.raa.se/"),
+        }
+
+        if self.lamning_type:
+            graph["schema:additionalType"] = self.lamning_type
+
+        if self.geojson:
+            graph["schema:contentLocation"] = convert_geojson_to_schema_org(self.geojson)
+
+        return graph
+
+    @property
+    def verbose_geojson(self):
+        """Return GeoJSON with properties"""
+        if not self.geojson:
+            return None
+
+        geojson = json.loads(self.geojson)
+        if "properties" not in geojson:
+            geojson["properties"] = dict()
+        geojson["properties"]["title"] = self.title
+        geojson["properties"]["description"] = self.description
+        geojson["properties"]["uuid"] = str(self.uuid)
+        geojson["properties"]["uri"] = f"https://fornpunkt.se/raa/lamning/{self.uuid}"
+        geojson["properties"]["type"] = self.lamning_type
+
+        return geojson
+
+
+class List(models.Model):
+    """User-created lists of lamningar (both FP and RAA)"""
+
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    title = models.CharField(max_length=150)
+    description = models.TextField(blank=True)
+
+    # Many-to-many relationships to both internal and RAA lamningar
+    lamnings = models.ManyToManyField(Lamning, blank=True, related_name="in_lists")
+    shadow_lamnings = models.ManyToManyField(ShadowLamning, blank=True, related_name="in_lists")
+
+    created_time = models.DateTimeField(auto_now_add=True)
+    changed_time = models.DateTimeField(auto_now=True)
+    hidden = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ["-created_time"]
+        verbose_name = "List"
+        verbose_name_plural = "Lists"
+
+    def __str__(self):
+        return f"{self.title} by {self.user}"
+
+    @property
+    def hashid(self):
+        return h_encode(self.id)
+
+    @staticmethod
+    def resolve_hashid(hash_identifier):
+        return h_decode(hash_identifier)
+
+    def get_absolute_url(self):
+        return reverse("list_detail", args=[self.id])
+
+    def total_items(self):
+        """Return total number of items in list"""
+        return self.lamnings.count() + self.shadow_lamnings.count()
+
+    @property
+    def json_ld(self):
+        """Return a JSON-LD representation of the list"""
+        graph = {
+            "@type": "schema:Collection",
+            "@id": f"https://fornpunkt.se{self.get_absolute_url()}",
+            "schema:name": self.title,
+            "schema:description": self.description,
+            "schema:creator": self.user.username if self.user else "Unknown",
+            "schema:identifier": "FP-LIST-" + self.hashid,
+            "schema:url": ld_make_identifier(f"https://fornpunkt.se{self.get_absolute_url()}"),
+            "schema:dateCreated": self.created_time.isoformat(sep="T", timespec="minutes") + "Z",
+            "schema:dateModified": self.changed_time.isoformat(sep="T", timespec="minutes") + "Z",
+        }
+
+        # Add list members
+        items = []
+        for lamning in self.lamnings.all():
+            items.append(ld_make_identifier(f"https://fornpunkt.se{lamning.get_absolute_url()}"))
+        for shadow in self.shadow_lamnings.all():
+            items.append(ld_make_identifier(f"http://kulturarvsdata.se/raa/lamning/{shadow.uuid}"))
+
+        if items:
+            graph["schema:itemListElement"] = items
+
+        return graph

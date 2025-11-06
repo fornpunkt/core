@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Listor - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container pb-5">
+  <h1>Listor</h1>
+  <p class="text-muted">Utforska samlingar av lämningar skapade av FornPunkt-användare.</p>
+
+  {% if lists %}
+  <div class="list-group mb-4">
+    {% for list in lists %}
+    <a href="{% url 'list_detail' list.id %}" class="list-group-item list-group-item-action">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{ list.title }}</h5>
+        <small>{{ list.changed_time|date:"D d M Y" }}</small>
+      </div>
+      {% if list.description %}
+      <p class="mb-1">{% if list.description|length > 150 %}{{ list.description|slice:":150" }}...{% else %}{{ list.description }}{% endif %}</p>
+      {% endif %}
+      <small>{{ list.total_items }} objekt &middot; Skapad av {% include "core/_partials/rich-username.html" with user=list.user %}</small>
+    </a>
+    {% endfor %}
+  </div>
+
+  {% if is_paginated %}
+  <nav aria-label="Sidnumrering">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?sida=1">Första</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?sida={{ page_obj.previous_page_number }}">Föregående</a>
+      </li>
+      {% endif %}
+
+      <li class="page-item active">
+        <span class="page-link">
+          Sida {{ page_obj.number }} av {{ page_obj.paginator.num_pages }}
+        </span>
+      </li>
+
+      {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?sida={{ page_obj.next_page_number }}">Nästa</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?sida={{ page_obj.paginator.num_pages }}">Sista</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
+
+  {% else %}
+  <p class="alert alert-info">Det finns inga offentliga listor än.</p>
+  {% endif %}
+</div>
+{% endblock %}

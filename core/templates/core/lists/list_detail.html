@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ list.title }} - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container pb-5" itemscope itemtype="https://schema.org/Collection">
+  <div>
+    <div class="float-end d-print-none">
+      {% if user == list.user %}
+      <a class="btn btn-danger btn-sm mt-2" href="{% url 'list_delete' list.id %}">Radera</a>
+      <a class="btn btn-primary btn-sm mt-2" href="{% url 'list_edit' list.id %}">Redigera</a>
+      {% endif %}
+      <button type="button" data-bs-toggle="modal" data-bs-target="#shareModal" class="btn btn-primary btn-sm mt-2 js">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16"><path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"></path></svg>
+        Dela
+      </button>
+    </div>
+    <h1 itemprop="name">{{ list.title }}</h1>
+
+    <div class="bg-light p-3 rounded mb-3">
+      <p class="m-0" itemprop="creator" itemscope itemtype="https://schema.org/Person">
+        <strong>Skapad av:</strong> <span itemprop="name">{% include "core/_partials/rich-username.html" with user=list.user %}</span>
+      </p>
+      <p class="m-0 mt-1"><strong>Skapad:</strong> {{ list.created_time|date:'d F Y' }}</p>
+      <p class="m-0 mt-1"><strong>Senast ändrad:</strong> {{ list.changed_time|date:'d F Y' }}</p>
+      <p class="m-0 mt-1"><strong>Antal objekt:</strong> {{ total_items }}</p>
+      {% if list.hidden %}
+      <p class="m-0 mt-1"><span class="badge bg-secondary">Dold lista</span></p>
+      {% endif %}
+    </div>
+
+    {% if list.description %}
+    <div class="clearfix">
+      <div itemprop="description">{{ list.description|linebreaks }}</div>
+    </div>
+    {% endif %}
+
+    <h2 class="mt-4">Lämningar i listan</h2>
+
+    {% if total_items > 0 %}
+    <div class="list-group mb-4">
+      {% for lamning in fp_lamnings %}
+      <a href="{% url 'lamning' lamning.id %}" class="list-group-item list-group-item-action" itemprop="itemListElement">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ lamning.title }}</h5>
+          <small class="badge bg-primary">FP</small>
+        </div>
+        <p class="mb-1">{% if lamning.description|length > 200 %}{{ lamning.description|slice:":200" }}...{% else %}{{ lamning.description }}{% endif %}</p>
+        <small>Registrerad av {{ lamning.user.username }}</small>
+      </a>
+      {% endfor %}
+
+      {% for shadow in raa_lamnings %}
+      <a href="{% url 'raa_lamning' shadow.uuid %}" class="list-group-item list-group-item-action" itemprop="itemListElement">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ shadow.title }}</h5>
+          <small class="badge bg-secondary">RAÄ</small>
+        </div>
+        {% if shadow.description %}
+        <p class="mb-1">{% if shadow.description|length > 200 %}{{ shadow.description|slice:":200" }}...{% else %}{{ shadow.description }}{% endif %}</p>
+        {% endif %}
+        <small>{{ shadow.lamning_type }}</small>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="alert alert-info">Denna lista innehåller inga lämningar än.</p>
+    {% endif %}
+
+  </div>
+</div>
+<small class="bg-secondary text-white m-0 text-center p-2 d-block">
+  <a class="text-white" href="{% url 'list_jsonld' list.id %}" download="{{ list.hashid }}.jsonld">JSON-LD</a> &middot;
+  <a class="text-white" href="{% url 'list_geojson' list.id %}" download="{{ list.hashid }}.geojson">GeoJSON</a>
+</small>
+{% include "core/_partials/share-modal.html" %}
+{% endblock %}
+
+{% block css %}
+<link href="{% url 'list_jsonld' list.id %}" rel="alternate" type="application/ld+json" />
+<link href="{% url 'list_geojson' list.id %}" rel="alternate" type="application/geo+json" />
+{% endblock %}

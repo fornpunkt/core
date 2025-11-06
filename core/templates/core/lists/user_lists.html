@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Mina listor - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    {% include "core/_partials/sidebar.html" %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Mina listor</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <a href="{% url 'list_create' %}" class="btn btn-sm btn-primary">
+            Skapa ny lista
+          </a>
+        </div>
+      </div>
+
+      {% if lists %}
+      <div class="list-group mb-4">
+        {% for list in lists %}
+        <a href="{% url 'list_detail' list.id %}" class="list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ list.title }}</h5>
+            <small>{{ list.changed_time|date:"D d M Y" }}</small>
+          </div>
+          {% if list.description %}
+          <p class="mb-1">{% if list.description|length > 150 %}{{ list.description|slice:":150" }}...{% else %}{{ list.description }}{% endif %}</p>
+          {% endif %}
+          <small>{{ list.total_items }} objekt{% if list.hidden %} &middot; <span class="badge bg-secondary">Dold</span>{% endif %}</small>
+        </a>
+        {% endfor %}
+      </div>
+
+      {% if is_paginated %}
+      <nav aria-label="Sidnumrering">
+        <ul class="pagination">
+          {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?sida=1">Första</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?sida={{ page_obj.previous_page_number }}">Föregående</a>
+          </li>
+          {% endif %}
+
+          <li class="page-item active">
+            <span class="page-link">
+              Sida {{ page_obj.number }} av {{ page_obj.paginator.num_pages }}
+            </span>
+          </li>
+
+          {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?sida={{ page_obj.next_page_number }}">Nästa</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?sida={{ page_obj.paginator.num_pages }}">Sista</a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+
+      {% else %}
+      <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">Du har inte skapat några listor än</h4>
+        <p>Listor är ett bra sätt att organisera och dela samlingar av lämningar.</p>
+        <hr>
+        <a href="{% url 'list_create' %}" class="btn btn-primary">Skapa din första lista</a>
+      </div>
+      {% endif %}
+    </main>
+  </div>
+</div>
+{% endblock %}

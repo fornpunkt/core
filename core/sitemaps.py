@@ -2,14 +2,14 @@ from django.contrib.flatpages.sitemaps import FlatPageSitemap
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
-from .models import CustomTag, KMRLamningType, Lamning
+from .models import CustomTag, KMRLamningType, Lamning, List
 
 
 class StaticViewSitemap(Sitemap):
     '''Sitemap for public pages without, without being powered by the database.'''
 
     def items(self):
-        return ['dashboard', 'map', 'tag_list', 'raa_type_list', 'observationtypes']
+        return ['dashboard', 'map', 'tag_list', 'raa_type_list', 'observationtypes', 'list_index']
 
     def location(self, item):
         return reverse(item)
@@ -41,10 +41,20 @@ class RaaTypeSitemap(Sitemap):
     def location(self, item):
         return reverse('raa_type', kwargs={'slug': item.slug})
 
+class ListSitemap(Sitemap):
+    '''Sitemap for public lists'''
+
+    def items(self):
+        return List.objects.filter(hidden=False)
+
+    def lastmod(self, obj):
+        return obj.changed_time
+
 sitemaps = {
     'lamnings': LamningSitemap,
     'tags': TagSitemap,
     'raa_types': RaaTypeSitemap,
+    'lists': ListSitemap,
     'static': StaticViewSitemap,
     'flatpages': FlatPageSitemap,
 }

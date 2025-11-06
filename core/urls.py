@@ -65,6 +65,13 @@ observation_types_negotiation_formats = {
     'application/json': views.observationtypes_jsonld,
 }
 
+list_negotiation_formats = {
+    'text/html': views.ListDetailView.as_view(),
+    'application/ld+json': views.list_jsonld,
+    'application/geo+json': views.list_geojson,
+    'application/json': views.list_jsonld,
+}
+
 urlpatterns = [
     # icons and manifests
     path('favicon.ico', RedirectView.as_view(url='/static/favicon.ico')),
@@ -101,6 +108,16 @@ urlpatterns = [
     path('lamning/<hashid:pk>/radera', views.DeleteLamning.as_view(), name='delete_lamning'),
     path('lamning/<hashid:pk>', content_negotiation(lamning_negotiation_formats, views.LamningView.as_view()) , name='lamning'),
 
+    path('listor', views.ListIndexView.as_view(), name='list_index'),
+    path('listor/mina', views.UserListsView.as_view(), name='user_lists'),
+    path('listor/skapa', views.CreateListView.as_view(), name='list_create'),
+    path('listor.rss', feeds.AllListsFeed(), name='all_lists_rss'),
+    path('lista/<hashid:pk>.jsonld', views.list_jsonld, name='list_jsonld'),
+    path('lista/<hashid:pk>.geojson', views.list_geojson, name='list_geojson'),
+    path('lista/<hashid:pk>/redigera', views.UpdateListView.as_view(), name='list_edit'),
+    path('lista/<hashid:pk>/radera', views.DeleteListView.as_view(), name='list_delete'),
+    path('lista/<hashid:pk>', content_negotiation(list_negotiation_formats, views.ListDetailView.as_view()), name='list_detail'),
+
     path('taggar', views.TagListView.as_view(), name='tag_list'),
     path('tagg/<str:slug>.rss', feeds.TaggedLamningsFeed(), name='tag_rss'),
     path('tagg/<str:slug>.jsonld', views.tag_jsonld, name='tag_jsonld'),
@@ -132,6 +149,7 @@ urlpatterns = [
     path('apis/export/accounts', views.api_accounts_export, name='api_accounts_export'),
     path('apis/export/wikipedia-annotations', views.api_lamning_wikipedia_link_export, name='api_wikipedia_links_export'),
     path('apis/export/generic-annotations', views.api_lamning_annotation_link_export, name='api_annotation_links_export'),
+    path('apis/export/lists', views.api_lists_export, name='api_lists_export'),
 
     # create API v1
     path('apis/create/v1/lamning', views.api_lamning_create, name='api_lamning_create'),

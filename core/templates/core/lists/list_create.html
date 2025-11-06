@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Skapa lista - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    {% include "core/_partials/sidebar.html" %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="container mt-3 pb-5" style="max-width: 800px;">
+        <h1>Skapa ny lista</h1>
+        <p class="text-muted">Skapa en lista för att organisera och dela lämningar.</p>
+
+        <form method="post">
+          {% csrf_token %}
+
+          {% if form.errors %}
+          <div class="alert alert-danger" role="alert">
+            <ul class="m-0">
+              {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+
+          <div class="mb-3">
+            {{ form.title.label_tag }}
+            {{ form.title }}
+            {% if form.title.help_text %}
+            <div class="form-text">{{ form.title.help_text }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            {{ form.description.label_tag }}
+            {{ form.description }}
+            {% if form.description.help_text %}
+            <div class="form-text">{{ form.description.help_text }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3 form-check">
+            {{ form.hidden }}
+            {{ form.hidden.label_tag }}
+          </div>
+
+          <div class="alert alert-info" role="alert">
+            Du kan lägga till lämningar i listan efter att du har skapat den.
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">Skapa lista</button>
+            <a href="{% url 'user_lists' %}" class="btn btn-secondary">Avbryt</a>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+</div>
+{% endblock %}

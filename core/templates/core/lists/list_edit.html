@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Redigera {{ object.title }} - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    {% include "core/_partials/sidebar.html" %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="container mt-3 pb-5" style="max-width: 800px;">
+        <h1>Redigera lista</h1>
+
+        <form method="post">
+          {% csrf_token %}
+
+          {% if form.errors %}
+          <div class="alert alert-danger" role="alert">
+            <ul class="m-0">
+              {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+
+          <div class="mb-3">
+            {{ form.title.label_tag }}
+            {{ form.title }}
+            {% if form.title.help_text %}
+            <div class="form-text">{{ form.title.help_text }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            {{ form.description.label_tag }}
+            {{ form.description }}
+            {% if form.description.help_text %}
+            <div class="form-text">{{ form.description.help_text }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3 form-check">
+            {{ form.hidden }}
+            {{ form.hidden.label_tag }}
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">Spara ändringar</button>
+            <a href="{% url 'list_detail' object.id %}" class="btn btn-secondary">Avbryt</a>
+            <a href="{% url 'list_delete' object.id %}" class="btn btn-danger">Radera lista</a>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+</div>
+{% endblock %}

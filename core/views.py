@@ -41,9 +41,9 @@ from django.views.decorators.http import require_POST
 from geojson import FeatureCollection
 from taggit.utils import edit_string_for_tags
 
-from .forms import LoginForm, SignUpForm
+from .forms import ListForm, LoginForm, SignUpForm
 from .models import (AccessToken, Annotation, Comment, CustomTag, Feedback,
-                     KMRLamningType, Lamning, LamningWikipediaLink, UserDetails)
+                     KMRLamningType, Lamning, LamningWikipediaLink, List, ShadowLamning, UserDetails)
 from .utilities import (JsonApiResponse, UpstreamTimeoutExeption,
                         create_meta_description, fetch_raa_lamning_for_view,
                         get_soch_search_result, is_possible_raa_id, is_raa_id,
@@ -330,6 +330,8 @@ class UserView(generic.DetailView):
 
         context["number_of_observations"] = Lamning.objects.filter(user=self.object).count()
         context["number_of_comments"] = Comment.objects.filter(user=self.object).count()
+        context["number_of_lists"] = List.objects.filter(user=self.object).count()
+        context["user_lists"] = List.objects.filter(user=self.object).order_by("-changed_time")[:10]
 
         if context["number_of_observations"] > 0:
             context["tag_cloud_data"] = (
@@ -1177,4 +1179,206 @@ def lantmateriet_proxy(request, route):
     except requests.RequestException as e:
         sentry_sdk.capture_exception(e)
         return HttpResponse(status=504, content="Kunde inte hämta data från Lantmäteriet.")
+
+
+# List views
+
+class ListIndexView(generic.ListView):
+    """View for browsing public lists"""
+
+    model = List
+    template_name = "core/lists/list_index.html"
+    paginate_by = 20
+    page_kwarg = "sida"
+    context_object_name = "lists"
+
+    def get_queryset(self):
+        return List.objects.filter(hidden=False).order_by("-changed_time")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["description"] = "Utforska listor av lämningar skapade av FornPunkt-användare."
+        return context
+
+
+class UserListsView(LoginRequiredMixin, generic.ListView):
+    """View for user's own lists"""
+
+    model = List
+    template_name = "core/lists/user_lists.html"
+    paginate_by = 20
+    page_kwarg = "sida"
+    context_object_name = "lists"
+
+    def get_queryset(self):
+        return List.objects.filter(user=self.request.user).order_by("-changed_time")
+
+
+class ListDetailView(generic.DetailView):
+    """Detail view for a list"""
+
+    model = List
+    template_name = "core/lists/list_detail.html"
+    context_object_name = "list"
+
+    def get_context_data(self, **kwargs):
+        if self.object.hidden and (not self.request.user.is_authenticated or self.object.user != self.request.user):
+            raise Http404
+
+        context = super().get_context_data(**kwargs)
+        context["description"] = create_meta_description(self.object.description or self.object.title)
+        context["title"] = self.object.title
+        context["fp_lamnings"] = self.object.lamnings.filter(hidden=False)
+        context["raa_lamnings"] = self.object.shadow_lamnings.all()
+        context["total_items"] = self.object.total_items()
+        return context
+
+
+def list_jsonld(request, pk):
+    """JSON-LD representation of a list"""
+    list_obj = get_object_or_404(List, id=pk)
+
+    if list_obj.hidden and (not request.user.is_authenticated or list_obj.user != request.user):
+        raise Http404
+
+    graph = [list_obj.json_ld]
+
+    # Add all lamnings in the list to the graph
+    for lamning in list_obj.lamnings.filter(hidden=False):
+        graph.append(lamning.json_ld)
+
+    for shadow in list_obj.shadow_lamnings.all():
+        graph.append(shadow.json_ld)
+
+    return JsonApiResponse(ld_wrap_graph(graph), content_type="application/ld+json")
+
+
+def list_geojson(request, pk):
+    """GeoJSON representation of all lamnings in a list"""
+    list_obj = get_object_or_404(List, id=pk)
+
+    if list_obj.hidden and (not request.user.is_authenticated or list_obj.user != request.user):
+        raise Http404
+
+    features = []
+
+    # Add FP lamnings
+    for lamning in list_obj.lamnings.filter(hidden=False):
+        features.append(lamning.verbose_geojson)
+
+    # Add RAA lamnings (shadow)
+    for shadow in list_obj.shadow_lamnings.all():
+        if shadow.verbose_geojson:
+            features.append(shadow.verbose_geojson)
+
+    feature_collection = FeatureCollection(features)
+    return JsonApiResponse(feature_collection, content_type="application/geo+json")
+
+
+class CreateListView(LoginRequiredMixin, SuccessMessageMixin, generic.edit.CreateView):
+    """Create a new list"""
+
+    model = List
+    form_class = ListForm
+    template_name = "core/lists/list_create.html"
+    success_message = "Listan har skapats!"
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class UpdateListView(LoginRequiredMixin, SuccessMessageMixin, generic.edit.UpdateView):
+    """Update an existing list"""
+
+    model = List
+    form_class = ListForm
+    template_name = "core/lists/list_edit.html"
+    success_message = "Listan har uppdaterats!"
+
+    def get_object(self, queryset=None):
+        list_obj = super().get_object(queryset=None)
+        if list_obj.user != self.request.user:
+            raise Http404
+        return list_obj
+
+
+class DeleteListView(LoginRequiredMixin, generic.edit.DeleteView):
+    """Delete a list"""
+
+    model = List
+    template_name = "core/lists/list_delete.html"
+    success_url = reverse_lazy("user_lists")
+
+    def get_object(self, queryset=None):
+        list_obj = super().get_object(queryset=None)
+        if list_obj.user != self.request.user:
+            raise Http404
+        return list_obj
+
+
+def api_lists_export(request):
+    """Export all lists of a user to various formats"""
+    requested_format = request.GET.get("format", None)
+    scope = request.GET.get("scope", None)
+
+    access_token = get_access_token_from_request(request)
+    if access_token:
+        request.user = access_token.user
+
+    if request.user.is_anonymous:
+        return HttpResponseForbidden("Du måste vara inloggad för att exportera listor.")
+
+    if scope == "all" and request.user.is_superuser:
+        lists = List.objects.filter(hidden=False)
+    else:
+        lists = List.objects.filter(user=request.user)
+
+    if requested_format == "tsv":
+        response = HttpResponse(content_type="text/tsv")
+        writer = csv.writer(response, delimiter="\t")
+        writer.writerow(["id", "titel", "beskrivning", "antal_objekt", "användare", "skapad", "ändrad", "dold"])
+        for list_obj in lists:
+            writer.writerow(
+                [
+                    list_obj.hashid,
+                    list_obj.title,
+                    list_obj.description,
+                    list_obj.total_items(),
+                    list_obj.user.username if list_obj.user else "",
+                    list_obj.created_time,
+                    list_obj.changed_time,
+                    list_obj.hidden,
+                ]
+            )
+        return response
+    elif requested_format == "geojson":
+        # Export all lamnings from all lists as a single feature collection
+        all_features = []
+        for list_obj in lists:
+            for lamning in list_obj.lamnings.filter(hidden=False):
+                feature = lamning.verbose_geojson
+                if "properties" not in feature:
+                    feature["properties"] = {}
+                feature["properties"]["list_title"] = list_obj.title
+                feature["properties"]["list_id"] = list_obj.hashid
+                all_features.append(feature)
+
+            for shadow in list_obj.shadow_lamnings.all():
+                if shadow.verbose_geojson:
+                    feature = shadow.verbose_geojson
+                    if "properties" not in feature:
+                        feature["properties"] = {}
+                    feature["properties"]["list_title"] = list_obj.title
+                    feature["properties"]["list_id"] = list_obj.hashid
+                    all_features.append(feature)
+
+        feature_collection = FeatureCollection(all_features)
+        return JsonApiResponse(feature_collection, content_type="application/geo+json")
+    else:
+        # JSON-LD export
+        graph = []
+        for list_obj in lists:
+            graph.append(list_obj.json_ld)
+        return JsonApiResponse(ld_wrap_graph(graph), content_type="application/ld+json")
 

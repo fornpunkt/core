@@ -6,6 +6,8 @@ from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
 from django.utils.text import format_lazy
 
+from .models import List
+
 
 class SignUpForm(UserCreationForm):
     '''Custom signup form ensuring lowercase usernames'''
@@ -66,3 +68,29 @@ class LoginForm(AuthenticationForm):
                 self.confirm_login_allowed(self.user_cache)
 
         return self.cleaned_data
+
+
+class ListForm(forms.ModelForm):
+    '''Form for creating and editing lists'''
+
+    class Meta:
+        model = List
+        fields = ['title', 'description', 'hidden']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titel på listan'}),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Beskrivning (valfritt)',
+                'rows': 4
+            }),
+            'hidden': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+        labels = {
+            'title': 'Titel',
+            'description': 'Beskrivning',
+            'hidden': 'Göm lista (endast synlig för dig)',
+        }
+        help_texts = {
+            'title': 'Ge listan ett beskrivande namn',
+            'description': 'Beskriv vad listan innehåller eller syftet med den',
+        }

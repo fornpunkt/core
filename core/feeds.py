@@ -5,7 +5,7 @@ from django.contrib.syndication.views import Feed
 from django.urls import reverse
 from django.utils.feedgenerator import Rss201rev2Feed
 
-from .models import Comment, CustomTag, Lamning, UserDetails
+from .models import Comment, CustomTag, Lamning, List, UserDetails
 from .utilities import fetch_raa_lamning_for_view
 
 
@@ -203,3 +203,67 @@ class SkaderapporterFeed(Feed):
 
     def items(self):
         return Comment.objects.filter(hidden=False).filter(comment_type='SR').exclude(raa_lamning__isnull=True).order_by('-created_time')[:50]
+
+
+class UserListsFeed(Feed):
+    '''Feed for lists created by a given user'''
+
+    def get_object(self, request, slug):
+        user = User.objects.get(username=slug)
+        if not UserDetails.objects.get(user=user).profile_privacy == 'PU':
+            raise PermissionDenied()
+        return user
+
+    def title(self, item):
+        return f'Listor av {item.username}'
+
+    def link(self, item):
+        return reverse(viewname='profile', args=(item.username,))
+
+    def description(self, item):
+        return f'Senaste listorna skapade av användaren {item.username}.'
+
+    def item_title(self, item):
+        return item.title
+
+    def item_description(self, item):
+        return item.description or f'En lista med {item.total_items()} lämningar.'
+
+    def item_author_name(self, item):
+        return item.user.username if item.user else "Unknown"
+
+    def item_link(self, item):
+        return item.get_absolute_url()
+
+    def item_pubdate(self, item):
+        return item.changed_time
+
+    def items(self, obj):
+        return List.objects.filter(user=obj).filter(hidden=False).order_by('-changed_time')[:30]
+
+
+class AllListsFeed(Feed):
+    '''Feed for all public lists'''
+
+    language = 'sv'
+    title = 'Listor - FornPunkt'
+    description = 'Senaste offentliga listorna på FornPunkt.'
+    link = '/listor'
+
+    def item_title(self, item):
+        return item.title
+
+    def item_description(self, item):
+        return item.description or f'En lista med {item.total_items()} lämningar.'
+
+    def item_author_name(self, item):
+        return item.user.username if item.user else "Unknown"
+
+    def item_link(self, item):
+        return item.get_absolute_url()
+
+    def item_pubdate(self, item):
+        return item.changed_time
+
+    def items(self):
+        return List.objects.filter(hidden=False).order_by('-changed_time')[:30]

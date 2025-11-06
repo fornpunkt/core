@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import AccessToken, Annotation, Lamning, LamningWikipediaLink, Comment, Feedback, CustomTag, KMRLamningType, UserDetails
+from .models import AccessToken, Annotation, Lamning, LamningWikipediaLink, Comment, Feedback, CustomTag, KMRLamningType, UserDetails, List, ShadowLamning
 
 class LamningAdmin(admin.ModelAdmin):
     list_display = ['title', 'user', 'created_time', 'changed_time']
@@ -48,6 +48,18 @@ class UserDetailsAdmin(admin.ModelAdmin):
     list_filter = ['profile_privacy']
     search_fields = ['user']
 
+class ShadowLamningAdmin(admin.ModelAdmin):
+    list_display = ['title', 'uuid', 'lamning_type', 'created_time', 'last_synced']
+    list_filter = ['created_time', 'last_synced', 'lamning_type']
+    search_fields = ['title', 'uuid', 'description']
+    readonly_fields = ['last_synced']
+
+class ListAdmin(admin.ModelAdmin):
+    list_display = ['title', 'user', 'created_time', 'changed_time', 'hidden']
+    list_filter = ['created_time', 'changed_time', 'user', 'hidden']
+    search_fields = ['title', 'description']
+    filter_horizontal = ['lamnings', 'shadow_lamnings']
+
 admin.site.register(Lamning, LamningAdmin)
 admin.site.register(LamningWikipediaLink, LamningWikipediaLinkAdmin)
 admin.site.register(Annotation, AnnotationAdmin)
@@ -57,3 +69,5 @@ admin.site.register(CustomTag, CustomTagAdmin)
 admin.site.register(KMRLamningType, KMRLamningTypeAdmin)
 admin.site.register(AccessToken, AccessTokenAdmin)
 admin.site.register(UserDetails, UserDetailsAdmin)
+admin.site.register(ShadowLamning, ShadowLamningAdmin)
+admin.site.register(List, ListAdmin)

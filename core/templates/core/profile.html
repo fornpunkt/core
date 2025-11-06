@@ -61,7 +61,7 @@
           </div>
           <div class="col-4">
             <div class="p-3 text-bg-primary border rounded">
-              <h3 class="h4 mb-0">0</h3>
+              <h3 class="h4 mb-0">{{ number_of_lists }}</h3>
               <p class="mb-0">Listor</p>
             </div>
           </div>
@@ -77,6 +77,9 @@
         </li>
         <li class="nav-item" role="presentation">
           <button class="nav-link" id="statistik-tab" data-bs-toggle="tab" data-bs-target="#statistik" type="button" role="tab" aria-controls="Statistik" aria-selected="false">Statistik</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="listor-tab" data-bs-toggle="tab" data-bs-target="#listor" type="button" role="tab" aria-controls="Listor" aria-selected="false">Listor</button>
         </li>
       </ul>
 
@@ -144,6 +147,32 @@
             {% empty %}
               <p>Denna användaren har ännu inte använt några taggar.</p>
             {% endfor %}
+          </div>
+        </div>
+        <div class="tab-pane fade" id="listor" role="tabpanel" aria-labelledby="listor-tab">
+          <div class="container mt-2">
+            <h2>Listor</h2>
+            {% if number_of_lists > 0 %}
+            <div class="list-group mb-2">
+            {% for list in user_lists %}
+              <a href="{% url 'list_detail' list.id %}" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">{{ list.title }}</h5>
+                  <small>{{ list.changed_time|date:"D d M Y" }}</small>
+                </div>
+                {% if list.description %}
+                <p class="mb-1">{% if list.description|length > 150 %}{{ list.description|slice:":150" }}...{% else %}{{ list.description }}{% endif %}</p>
+                {% endif %}
+                <small>{{ list.total_items }} objekt{% if list.hidden %} &middot; <span class="badge bg-secondary">Dold</span>{% endif %}</small>
+              </a>
+            {% endfor %}
+            </div>
+            {% if number_of_lists > 10 %}
+            <p><a href="{% url 'user_lists' %}">Visa alla listor</a></p>
+            {% endif %}
+            {% else %}
+            <p>Denna användaren har inte skapat några listor än.</p>
+            {% endif %}
           </div>
         </div>
       </div>

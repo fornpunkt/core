@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Radera {{ object.title }} - FornPunkt{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    {% include "core/_partials/sidebar.html" %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="container mt-3 pb-5" style="max-width: 800px;">
+        <h1>Radera lista</h1>
+
+        <div class="alert alert-danger" role="alert">
+          <h4 class="alert-heading">Varning!</h4>
+          <p>Är du säker på att du vill radera listan <strong>{{ object.title }}</strong>?</p>
+          <hr>
+          <p class="mb-0">Denna åtgärd kan inte ångras. Lämningarna i listan kommer inte att raderas, bara själva listan.</p>
+        </div>
+
+        <form method="post">
+          {% csrf_token %}
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-danger">Ja, radera listan</button>
+            <a href="{% url 'list_detail' object.id %}" class="btn btn-secondary">Avbryt</a>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+</div>
+{% endblock %}
