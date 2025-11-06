@@ -10,24 +10,11 @@ from ...models import AccessToken
 
 class LamningCreateViewTestCase(TestCase):
     '''Tests for the view responsible for creating annotation links'''
-    @classmethod
-    def setUpTestData(cls):
-        # Create a user
-        cls.user = User.objects.create_user(
-            username='testuser',
-            password='12345',
-        )
-        cls.user.save()
-
-        # create an access token for the user with read rights
-        access_token = AccessToken.objects.create(
-            user=cls.user,
-            rights='w',
-        )
-        access_token.save()
-        cls.user_access_token_write = access_token.token
+    fixtures = ['users.json', 'access_tokens.json']
 
     def setUp(self):
+        self.user = User.objects.get(username='testuser')
+        self.user_access_token_write = AccessToken.objects.get(user=self.user, rights='w').token
         self.client = Client(enforce_csrf_checks=True)
         self.url = reverse('api_lamning_create')
 

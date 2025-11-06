@@ -1,0 +1,36 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 100,
+    "fields": {
+      "username": "testsuperuser",
+      "password": "pbkdf2_sha256$870000$gdIteG82w9JbIaiROvf8K4$M0im+ftAxdOrrGAU1TMdWPzr1XAWk6yj2/0TnLhs3eA=",
+      "is_superuser": true,
+      "is_staff": true,
+      "is_active": true,
+      "email": "",
+      "first_name": "",
+      "last_name": ""
+    }
+  },
+  {
+    "model": "core.accesstoken",
+    "pk": 10,
+    "fields": {
+      "user": 100,
+      "rights": "r",
+      "token": "aaaa567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+      "created_time": "2024-01-01T12:00:00Z"
+    }
+  },
+  {
+    "model": "core.accesstoken",
+    "pk": 11,
+    "fields": {
+      "user": 100,
+      "rights": "w",
+      "token": "bbbb567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+      "created_time": "2024-01-01T12:00:00Z"
+    }
+  }
+]

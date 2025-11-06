@@ -8,10 +8,10 @@ from ...models import Comment, Lamning
 
 class DashboardViewTest(TestCase):
     '''Tests for the dashboard view'''
-    @classmethod
-    def setUpTestData(cls):
-        cls.user = User.objects.create_user(username='testuser', password='31(21)2HJHJ')
-        cls.user.save()
+    fixtures = ['users.json']
+
+    def setUp(self):
+        self.user = User.objects.get(username='testuser')
 
     def test_no_lamningar(self):
         '''If no lamningar exist, an appropriate message is displayed.'''
@@ -60,7 +60,7 @@ class DashboardViewTest(TestCase):
             user=self.user,
         )
 
-        another_user  = User.objects.create_user(username='testuser2', password='31(21)2Hdsd=8JHJ')
+        another_user = User.objects.get(username='testuser2')
 
         Comment.objects.create(
             user=another_user,
@@ -77,7 +77,7 @@ class DashboardViewTest(TestCase):
     @skip('TODO, not implemented')
     def test_comment_reply(self):
         '''Checks if a new comment to an observation by someone else but which you have commented earlier is shown'''
-        another_user  = User.objects.create_user(username='testuser2', password='31(21)2Hdsd=8JHJ')
+        another_user = User.objects.get(username='testuser2')
 
         lamning = Lamning.objects.create(
             title='Testlämning',

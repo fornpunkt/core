@@ -1,0 +1,50 @@
+[
+  {
+    "model": "core.lamning",
+    "pk": 1,
+    "fields": {
+      "user": 3,
+      "title": "Testlämning",
+      "description": "Testlämning",
+      "geojson": "{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[13.0743,60.5963]}}",
+      "center_lat": 60.5963,
+      "center_lon": 13.0743,
+      "observation_type": "FO",
+      "hidden": false,
+      "created_time": "2024-01-01T12:00:00Z",
+      "changed_time": "2024-01-01T12:00:00Z"
+    }
+  },
+  {
+    "model": "core.lamning",
+    "pk": 2,
+    "fields": {
+      "user": 1,
+      "title": "Testlämning",
+      "description": "Testlämning",
+      "geojson": "{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[13.0743,60.5963]}}",
+      "center_lat": 60.5963,
+      "center_lon": 13.0743,
+      "observation_type": "FO",
+      "hidden": false,
+      "created_time": "2024-01-01T12:00:00Z",
+      "changed_time": "2024-01-01T12:00:00Z"
+    }
+  },
+  {
+    "model": "core.lamning",
+    "pk": 3,
+    "fields": {
+      "user": 1,
+      "title": "Remote Observation Test",
+      "description": "Testlämning fjärrobservation",
+      "geojson": "{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[13.0743,60.5963]}}",
+      "center_lat": 60.5963,
+      "center_lon": 13.0743,
+      "observation_type": "RO",
+      "hidden": false,
+      "created_time": "2024-01-01T12:00:00Z",
+      "changed_time": "2024-01-01T12:00:00Z"
+    }
+  }
+]

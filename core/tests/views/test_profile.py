@@ -6,26 +6,21 @@ from ...models import User, UserDetails
 
 class ProfileViewTest(TestCase):
     '''Tests for the profile view'''
-    @classmethod
-    def setUpTestData(cls):
-        cls.members_only_user = User.objects.create_user(username='jskdk', password='31(21)2HJHJ')
-        cls.members_only_user.save()
-        members_only_user_details = UserDetails.objects.get(user=cls.members_only_user)
+    fixtures = ['users.json', 'profile_users.json']
+
+    def setUp(self):
+        self.members_only_user = User.objects.get(username='jskdk')
+        members_only_user_details = UserDetails.objects.get(user=self.members_only_user)
         members_only_user_details.profile_privacy = 'ME'
         members_only_user_details.save()
 
-        cls.public_user = User.objects.create_user(username='ksdsgdgh', password='31(21)2HJHJ')
-        cls.public_user.save()
-        public_user_details = UserDetails.objects.get(user=cls.public_user)
+        self.public_user = User.objects.get(username='ksdsgdgh')
+        public_user_details = UserDetails.objects.get(user=self.public_user)
         public_user_details.profile_privacy = 'PU'
         public_user_details.save()
 
-        # private profile should be the default so no need to update UserDetails
-        cls.private_user = User.objects.create_user(username='test', password='31(21)2HJHJ')
-        cls.private_user.save()
-
-        cls.inactive_user = User.objects.create_user(username='banned', password='hjhj', is_active=False)
-        cls.inactive_user.save()
+        self.private_user = User.objects.get(username='test')
+        self.inactive_user = User.objects.get(username='banned')
 
     def test_guest_cant_see_members_only_profile(self):
         response = self.client.get(reverse('profile', kwargs={'slug': self.members_only_user.username}))

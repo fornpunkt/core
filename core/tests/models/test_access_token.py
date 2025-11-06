@@ -3,10 +3,9 @@ from django.contrib.auth.models import User
 from ...models import AccessToken
 
 class AccessTokenTestCase(TestCase):
-    def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='testpassword')
-        self.access_token = AccessToken.objects.create(user=self.user, rights='r')
+    fixtures = ['users.json', 'access_tokens.json']
 
     def test_access_token(self):
         '''Smoke test for the access token model'''
-        self.assertEqual(len(self.access_token.token), 64)
+        access_token = AccessToken.objects.get(pk=1)
+        self.assertEqual(len(access_token.token), 64)

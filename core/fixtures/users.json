@@ -1,0 +1,44 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "username": "testuser",
+      "password": "pbkdf2_sha256$870000$u4lNNAd3lj41coDyHeBa8F$gzDklg99CAYjDprYa/VmZsG0m2uZQKQABGZJqx9Aqr8=",
+      "is_superuser": false,
+      "is_staff": false,
+      "is_active": true,
+      "email": "",
+      "first_name": "",
+      "last_name": ""
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "username": "testuser2",
+      "password": "pbkdf2_sha256$870000$u4lNNAd3lj41coDyHeBa8F$gzDklg99CAYjDprYa/VmZsG0m2uZQKQABGZJqx9Aqr8=",
+      "is_superuser": false,
+      "is_staff": false,
+      "is_active": true,
+      "email": "",
+      "first_name": "",
+      "last_name": ""
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "username": "test",
+      "password": "pbkdf2_sha256$870000$u4lNNAd3lj41coDyHeBa8F$gzDklg99CAYjDprYa/VmZsG0m2uZQKQABGZJqx9Aqr8=",
+      "is_superuser": false,
+      "is_staff": false,
+      "is_active": true,
+      "email": "",
+      "first_name": "",
+      "last_name": ""
+    }
+  }
+]

@@ -5,27 +5,20 @@ from ...models import CustomTag, Lamning, User
 
 class CustomTagModelTest(TestCase):
     """Tests the CustomTag model"""
+    fixtures = ['users.json', 'lamnings.json']
 
-    @classmethod
-    def setUpTestData(cls):
+    def setUp(self):
         # tags are normaly created by being associated with a lamning so we do the same here
 
-        cls.user = User.objects.create_user(username="test", password="31(21)2HJHJ")
-        cls.user.save()
+        self.user = User.objects.get(username="test")
 
-        cls.lamning = Lamning.objects.create(
-            title="Testlämning",
-            description="Testlämning",
-            geojson='{"type":"Feature","geometry":{"type":"Point","coordinates":[13.0743,60.5963]}}',
-            observation_type="FO",
-            user=cls.user,
-        )
+        self.lamning = Lamning.objects.get(pk=1)
 
         # full tag sterilization must be tested through the form/create view it seems like
-        cls.lamning.tags.add("Kolbotten", "Resmila")
-        cls.lamning.save()
+        self.lamning.tags.add("Kolbotten", "Resmila")
+        self.lamning.save()
 
-        cls.tag = CustomTag.objects.get(name="Resmila")
+        self.tag = CustomTag.objects.get(name="Resmila")
 
     def test_tag(self):
         """Smoke test for the CustomTag model"""

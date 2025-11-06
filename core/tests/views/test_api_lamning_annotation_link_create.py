@@ -8,48 +8,16 @@ from ...models import AccessToken
 
 class AnnotationLinkCreateViewTestCase(TestCase):
     '''Tests for the view responsible for creating annotation links'''
-    @classmethod
-    def setUpTestData(cls):
-        # Create a superuser
-        cls.superuser = User.objects.create_user(
-            username='testsuperuser',
-            password='12345',
-            is_superuser=True,
-        )
-        cls.superuser.save()
-
-        # Create a user
-        cls.user = User.objects.create_user(
-            username='testuser',
-            password='12345',
-        )
-        cls.user.save()
-
-        # create an access token for the superuser with read rights
-        access_token = AccessToken.objects.create(
-            user=cls.superuser,
-            rights='r',
-        )
-        access_token.save()
-        cls.superuser_access_token_read = access_token.token
-
-        # create an access token for the superuser with write rights
-        access_token = AccessToken.objects.create(
-            user=cls.superuser,
-            rights='w',
-        )
-        access_token.save()
-        cls.superuser_access_token_write = access_token.token
-
-        # create an access token for the user with write rights
-        access_token = AccessToken.objects.create(
-            user=cls.user,
-            rights='w',
-        )
-        access_token.save()
-        cls.user_access_token_write = access_token.token
+    fixtures = ['users.json', 'access_tokens.json', 'superuser.json']
 
     def setUp(self):
+        self.superuser = User.objects.get(username='testsuperuser')
+        self.user = User.objects.get(username='testuser')
+
+        self.superuser_access_token_read = AccessToken.objects.get(user=self.superuser, rights='r').token
+        self.superuser_access_token_write = AccessToken.objects.get(user=self.superuser, rights='w').token
+        self.user_access_token_write = AccessToken.objects.get(user=self.user, rights='w').token
+
         self.client = Client()
         self.url = reverse('api_annotation_links_create')
 

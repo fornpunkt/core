@@ -7,10 +7,10 @@ from ...models import Lamning
 
 class LamningListViewTest(TestCase):
     '''Tests for the lamning list view'''
-    @classmethod
-    def setUpTestData(cls):
-        cls.user = User.objects.create_user(username='testuser', password='31(21)2HJHJ')
-        cls.user.save()
+    fixtures = ['users.json']
+
+    def setUp(self):
+        self.user = User.objects.get(username='testuser')
 
     def test_no_lamningar(self):
         '''If no lamningar exist, an appropriate message is displayed.'''

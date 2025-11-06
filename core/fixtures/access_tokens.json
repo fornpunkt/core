@@ -1,0 +1,22 @@
+[
+  {
+    "model": "core.accesstoken",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "rights": "r",
+      "token": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+      "created_time": "2024-01-01T12:00:00Z"
+    }
+  },
+  {
+    "model": "core.accesstoken",
+    "pk": 2,
+    "fields": {
+      "user": 1,
+      "rights": "w",
+      "token": "fedcba0987654321fedcba0987654321fedcba0987654321fedcba0987654321",
+      "created_time": "2024-01-01T12:00:00Z"
+    }
+  }
+]

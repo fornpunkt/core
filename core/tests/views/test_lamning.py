@@ -7,22 +7,16 @@ from ...models import Lamning
 
 class LamningViewTest(TestCase):
     '''Tests for the lamning view'''
-    @classmethod
-    def setUpTestData(cls):
-        cls.user = User.objects.create_user(username='test', password='31(21)2HJHJ')
-        cls.user.save()
+    fixtures = ['users.json', 'lamnings.json']
+
+    def setUp(self):
+        self.user = User.objects.get(username='test')
 
     def test_lamning(self):
         '''Tests that the lamning view works'''
         self.client.force_login(user=self.user)
 
-        lamning = Lamning.objects.create(
-            title='Testlämning',
-            description='Testlämning',
-            geojson='{"type":"Feature","geometry":{"type":"Point","coordinates":[13.0743,60.5963]}}',
-            observation_type='FO',
-            user=self.user
-        )
+        lamning = Lamning.objects.get(pk=1)
         lamning.tags.add('testtagg', 'testtagg_2')
         lamning.save()
 
@@ -35,13 +29,7 @@ class LamningViewTest(TestCase):
     def test_lamning_jsonld_content_negotiation(self):
         '''Tests that the lamning view returns jsonld when the Content-Type is jsonld'''
 
-        lamning = Lamning.objects.create(
-            title='Testlämning',
-            description='Testlämning',
-            geojson='{"type":"Feature","geometry":{"type":"Point","coordinates":[13.0743,60.5963]}}',
-            observation_type='FO',
-            user=self.user
-        )
+        lamning = Lamning.objects.get(pk=1)
         lamning.tags.add('testtagg', 'testtagg_2')
         lamning.save()
 
@@ -52,13 +40,7 @@ class LamningViewTest(TestCase):
     def test_lamning_content_negotiation_prioritization(self):
         '''Tests that the lamning view returns the correct content type when multiple content types are requested'''
 
-        lamning = Lamning.objects.create(
-            title='Testlämning',
-            description='Testlämning',
-            geojson='{"type":"Feature","geometry":{"type":"Point","coordinates":[13.0743,60.5963]}}',
-            observation_type='FO',
-            user=self.user
-        )
+        lamning = Lamning.objects.get(pk=1)
         lamning.tags.add('testtagg', 'testtagg_2')
         lamning.save()
 
@@ -66,17 +48,11 @@ class LamningViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response['Content-Type'], 'application/geo+json')
 
-    
+
     def test_lamning_content_negotiation_fallback(self):
         '''Tests that the lamning view returns the correct content type when none is requested'''
 
-        lamning = Lamning.objects.create(
-            title='Testlämning',
-            description='Testlämning',
-            geojson='{"type":"Feature","geometry":{"type":"Point","coordinates":[13.0743,60.5963]}}',
-            observation_type='FO',
-            user=self.user
-        )
+        lamning = Lamning.objects.get(pk=1)
         lamning.tags.add('testtagg', 'testtagg_2')
         lamning.save()
 
@@ -87,15 +63,7 @@ class LamningViewTest(TestCase):
     def test_remote_observation_lamning_comment(self):
         '''Tests that the lamning view presents a custom comment promt for remote observations'''
 
-        lamning = Lamning.objects.create(
-            title='Testlämning',
-            description='Testlämning',
-            geojson='{"type":"Feature","geometry":{"type":"Point","coordinates":[13.0743,60.5963]}}',
-            observation_type='RO',
-            user=self.user
-        )
-        lamning.tags.add('testtagg', 'testtagg_2')
-        lamning.save()
+        lamning = Lamning.objects.get(pk=3)
 
         response = self.client.get(reverse('lamning', kwargs={'pk': lamning.pk}))
         self.assertEqual(response.status_code, 200)
@@ -104,13 +72,7 @@ class LamningViewTest(TestCase):
     def test_non_remote_observation_lamning_comment(self):
         '''Tests that the lamning view does not present a custom comment promt for non remote observations'''
 
-        lamning = Lamning.objects.create(
-            title='Testlämning',
-            description='Testlämning',
-            geojson='{"type":"Feature","geometry":{"type":"Point","coordinates":[13.0743,60.5963]}}',
-            observation_type='FO',
-            user=self.user
-        )
+        lamning = Lamning.objects.get(pk=1)
 
         response = self.client.get(reverse('lamning', kwargs={'pk': lamning.pk}))
         self.assertEqual(response.status_code, 200)
