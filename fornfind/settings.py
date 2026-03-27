@@ -173,6 +173,8 @@ LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'dashboard'
 LOGIN_URL = '/auth/login/'
 
+SECURE_REFERRER_POLICY = 'origin' # for OSM https://wiki.openstreetmap.org/wiki/Blocked_tiles#If_you_are_the_owner/a_developer_of_the_application/website
+
 if 'FP_ENVIRONMENT' in os.environ and os.environ['FP_ENVIRONMENT'] == 'production':
     DEFAULT_FROM_EMAIL = 'support@fornpunkt.se'
     EMAIL_HOST = os.environ['FP_EMAIL_HOST']
