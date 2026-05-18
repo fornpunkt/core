@@ -4,3 +4,6 @@ env/*
 *.sqlite3
 .venv/*
 .coverage
+.devenv*
+devenv.local.nix
+.direnv

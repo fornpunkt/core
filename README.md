@@ -4,12 +4,15 @@ This code repository holds the core monolith serving FornPunk.se.
  
 ### Development environment setup
  
-If you are not familiar with Django, the easiest way to set up your environment is to use [just](https://just.systems/).  
+The development environment is managed with [devenv](https://devenv.sh/). Once devenv is installed, run:
  
 ```
-just setup
-just run
+devenv shell
+setup
+run
 ```
+ 
+Entering the shell installs Python 3.11.7 and the dependencies from `requirements.txt` into a virtual environment. `setup` runs database migrations and `run` starts the development server.
  
 ### Testing
  
