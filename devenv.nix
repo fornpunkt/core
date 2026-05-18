@@ -3,7 +3,9 @@
 {
   languages.python = {
     enable = true;
-    version = "3.11.7";
+    version = lib.removePrefix "python-" (
+      lib.removeSuffix "\n" (builtins.readFile ./runtime.txt)
+    );
     venv = {
       enable = true;
       requirements = ./requirements.txt;

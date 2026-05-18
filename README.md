@@ -12,7 +12,7 @@ setup
 run
 ```
  
-Entering the shell installs Python 3.11.7 and the dependencies from `requirements.txt` into a virtual environment. `setup` runs database migrations and `run` starts the development server.
+Entering the shell installs the Python version pinned in `runtime.txt` along with the dependencies from `requirements.txt` into a virtual environment. `setup` runs database migrations and `run` starts the development server.
  
 ### Testing
  
