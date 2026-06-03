@@ -217,6 +217,18 @@ def lamning_geojson(request, pk):
     return JsonApiResponse(lamning.verbose_geojson, content_type="application/geo+json")
 
 
+def lamning_markdown(request, pk):
+    """Markdown representation of a lamning"""
+    lamning = get_object_or_404(Lamning, id=pk)
+
+    headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, OPTIONS, HEAD",
+    }
+
+    return HttpResponse(lamning.markdown, content_type="text/markdown; charset=utf-8", headers=headers)
+
+
 class CreateLamning(LoginRequiredMixin, generic.edit.CreateView):
     """Create lamning form"""
 

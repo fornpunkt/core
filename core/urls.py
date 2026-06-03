@@ -43,6 +43,7 @@ lamning_negotiation_formats = {
     'application/geo+json': views.lamning_geojson,
     'application/rss+xml': feeds.LamningCommentFeed(),
     'application/json': views.lamning_jsonld,
+    'text/markdown': views.lamning_markdown,
 }
 
 raa_lamning_negotiation_formats = {
@@ -96,6 +97,7 @@ urlpatterns = [
     path('lamning/<hashid:pk>/embed', views.LamningEmbedView.as_view(), name='lamning_embed'),
     path('lamning/<hashid:pk>.jsonld', views.lamning_jsonld, name='lamning_jsonld'),
     path('lamning/<hashid:pk>.geojson', views.lamning_geojson, name='lamning_geojson'),
+    path('lamning/<hashid:pk>.md', views.lamning_markdown, name='lamning_markdown'),
     path('lamning/<hashid:pk>.rss', feeds.LamningCommentFeed(), name='lamning_comment_rss'),
     path('lamning/<hashid:pk>/redigera', views.UpdateLamning.as_view(), name='update_lamning'),
     path('lamning/<hashid:pk>/radera', views.DeleteLamning.as_view(), name='delete_lamning'),

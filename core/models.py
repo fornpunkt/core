@@ -192,6 +192,21 @@ class Lamning(models.Model):
 
         return graph
 
+    @property
+    def markdown(self):
+        markdown_string = f"## {self.title}\n\n"
+        markdown_string += f"{self.description}\n\n"
+        markdown_string += f"**Skapad av**: {self.user.username}\n\n"
+        markdown_string += f"**Skapad den**: {self.created_time.strftime('%Y-%m-%d %H:%M')}\n\n"
+        markdown_string += "**Taggar**: ".join([f"[{tag.name}](https://fornpunkt.se/tagg/{tag.slug})" for tag in self.tags.all()])
+        if self.observation_type:
+            observation_type = "fältobservation" if self.observation_type == "FO" else "fjärrobservation"
+            markdown_string += f"\n\n**Observationstyp**: {observation_type}"
+        markdown_string += f"\n\n**URI/Länk:** [https://fornpunkt.se{self.get_absolute_url()}](https://fornpunkt.se{self.get_absolute_url()})"
+        markdown_string += f"\n\n**GeoJSON:**\n\n```json\n{self.geojson}\n```\n\n"
+
+        return markdown_string
+
     def __str__(self):
         return f"{self.title} by {self.user} at {self.created_time}"
 
