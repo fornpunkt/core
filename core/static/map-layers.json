@@ -2430,9 +2430,9 @@
   {
     "type": "iiif",
     "serviceOptions": {
-      "url": "https://annotations.allmaps.org/images/2cf2d71bc517ccb0"
+      "url": "https://annotations.allmaps.org/maps/0247a2d28a12f367"
     },
-    "display_name": "[Visby] - Wiblingen, Fredik Adolfs samling",
-    "publisher": "Riksarkivet"
+    "display_name": "Karta över Visby stad, 1912",
+    "publisher": "Bibliothèque nationale de France"
   }
 ]

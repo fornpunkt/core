@@ -195,13 +195,18 @@ function searchLayerIndex(queryString) {
     const li = document.createElement('li');
     const layerHash = hashLayer(result);
 
+    const allmapsEditor = result.serviceOptions.url.startsWith('https://annotations.allmaps.org') ? `<a class="float-end" target="_blank" href="https://viewer.allmaps.org/?url=${result.serviceOptions.url}">Öppna i Allmaps</a>` : '';
+
     li.classList.add('list-group-item', 'bg-light');
     li.innerHTML = `<div>
                       <label class="form-check-label switch-control-label" for="switch-layer-${layerHash}">${result.display_name}</label>
                       <div class="form-check form-switch float-end">
                         <input class="form-check-input" type="checkbox" role="switch" id="switch-layer-${layerHash}">
                       </div>
-                      <small><i class="text-body-secondary d-block">${result.publisher}</i></small>
+                      <small>
+                        <i class="text-body-secondary d-block float-start">${result.publisher}</i>
+                        ${allmapsEditor}
+                      </small>
                     </div>`;
     layerSearchResultContainer.appendChild(li);
   });
