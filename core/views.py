@@ -337,8 +337,7 @@ class UserView(generic.DetailView):
         elif self.object == self.request.user:
             should_show_profile = True
 
-        if not should_show_profile:
-            raise PermissionDenied()
+        context["should_show_profile"] = should_show_profile
 
         context["number_of_observations"] = Lamning.objects.filter(user=self.object).count()
         context["number_of_comments"] = Comment.objects.filter(user=self.object).count()

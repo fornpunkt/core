@@ -29,7 +29,7 @@ class ProfileViewTest(TestCase):
 
     def test_guest_cant_see_members_only_profile(self):
         response = self.client.get(reverse('profile', kwargs={'slug': self.members_only_user.username}))
-        self.assertEqual(response.status_code, 403)
+        self.assertContains(response, "Du kan inte se denna profil.")
         self.assertEqual(response['Content-Type'], 'text/html; charset=utf-8')
 
     def test_member_can_see_members_only_profile(self):
@@ -48,13 +48,13 @@ class ProfileViewTest(TestCase):
 
     def test_guest_cant_see_private_profile(self):
         response = self.client.get(reverse('profile', kwargs={'slug': self.private_user.username}))
-        self.assertEqual(response.status_code, 403)
+        self.assertContains(response, 'Du kan inte se denna profil.')
         self.assertEqual(response['Content-Type'], 'text/html; charset=utf-8')
 
     def test_member_cant_see_private_profile(self):
         self.client.force_login(user=self.members_only_user)
         response = self.client.get(reverse('profile', kwargs={'slug': self.private_user.username}))
-        self.assertEqual(response.status_code, 403)
+        self.assertContains(response, 'Du kan inte se denna profil.')
         self.assertEqual(response['Content-Type'], 'text/html; charset=utf-8')
     
     def test_self_can_see_private_profile(self):
@@ -66,13 +66,13 @@ class ProfileViewTest(TestCase):
     
     def test_guest_cant_see_inactive_profile(self):
         response = self.client.get(reverse('profile', kwargs={'slug': self.inactive_user.username}))
-        self.assertEqual(response.status_code, 403)
+        self.assertContains(response, 'Du kan inte se denna profil.')
         self.assertEqual(response['Content-Type'], 'text/html; charset=utf-8')
 
     def test_member_cant_see_inactive_profile(self):
         self.client.force_login(user=self.private_user)
         response = self.client.get(reverse('profile', kwargs={'slug': self.inactive_user.username}))
-        self.assertEqual(response.status_code, 403)
+        self.assertContains(response, 'Du kan inte se denna profil.')
         self.assertEqual(response['Content-Type'], 'text/html; charset=utf-8')
 
     def test_guest_can_see_public_profile(self):
