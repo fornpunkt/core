@@ -254,6 +254,14 @@ class KMRLamningType(models.Model):
     raa_id = models.IntegerField()
     description = models.TextField()
     slug = models.SlugField(max_length=75)
+    other_comments = models.TextField(blank=True) # RAÄ: Kommentar
+    protection_description = models.TextField(blank=True) # RAÄ: Antikvarisk bedömning
+
+    related_tags = models.ManyToManyField(
+        CustomTag,
+        blank=True,
+        related_name="relaterade_taggar"
+    )
 
     class Meta:
         ordering = ["name"]

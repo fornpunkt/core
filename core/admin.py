@@ -26,7 +26,15 @@ class AnnotationAdmin(admin.ModelAdmin):
 class KMRLamningTypeAdmin(admin.ModelAdmin):
     list_display = ['name', 'raa_id', 'slug']
     list_filter = ['raa_id']
-    search_fields = ['name', 'description']
+    search_fields = ['name', 'description', 'protection_description', 'other_comments']
+    autocomplete_fields = ['related_tags']
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related('related_tags')
+
+    @admin.display(description='Relaterade taggar')
+    def related_tag_list(self, obj):
+        return ', '.join(t.name for t in obj.related_tags.all())
 
 class CustomTagAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug', 'created_time']
